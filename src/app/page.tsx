@@ -1,103 +1,193 @@
-import Image from "next/image";
+import Link from 'next/link';
+import { formatDistanceToNow } from 'date-fns';
 
-export default function Home() {
+import Navigation from '@/components/Navigation';
+import Widget from '@/components/Widget';
+import { getAllPosts } from '@/lib/blog';
+import { fetchGitHubActivity, fetchGitHubRepos } from '@/lib/github';
+
+export default async function Home() {
+  const [activity, projects, posts] = await Promise.all([
+    fetchGitHubActivity(),
+    fetchGitHubRepos(),
+    Promise.resolve(getAllPosts()),
+  ]);
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="page-container animate-entrance">
+      <header>
+        <div className="mb-8">
+          <h1 className="text-2xl font-semibold mb-2">
+            Nexus - A developer crafting tools and thoughts.
+          </h1>
+          <p className="text-base text-color-text-subdue">
+            Welcome to my digital dashboard
+          </p>
+        </div>
+        <Navigation />
+      </header>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      <main className="page-columns">
+        {/* Narrow Column */}
+        <div className="masonry-narrow">
+          <Widget title="System Status">
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Build Status</span>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                  <span className="text-xs text-color-text-subdue">Passing</span>
+                </div>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Deployment</span>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                  <span className="text-xs text-color-text-subdue">Live</span>
+                </div>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Last Updated</span>
+                <span className="text-xs text-color-text-subdue">2 min ago</span>
+              </div>
+            </div>
+          </Widget>
+
+          <Widget title="GitHub Stats">
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Repositories</span>
+                <span className="text-xs text-color-text-highlight font-medium">{projects.length}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Total Stars</span>
+                <span className="text-xs text-color-text-highlight font-medium">
+                  {projects.reduce((acc, p) => acc + p.stars, 0)}
+                </span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Languages</span>
+                <span className="text-xs text-color-text-highlight font-medium">
+                  {new Set(projects.map(p => p.language).filter(Boolean)).size}
+                </span>
+              </div>
+            </div>
+          </Widget>
+        </div>
+
+        {/* Wide Column */}
+        <div className="masonry-wide">
+          <Widget title="Live GitHub Feed">
+            {activity.length === 0 ? (
+              <p className="text-sm text-color-text-subdue">No recent activity</p>
+            ) : (
+              <div className="space-y-3">
+                {activity.slice(0, 3).map((item) => (
+                  <div key={item.id} className="flex justify-between items-start">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-color-text-highlight truncate">
+                        {item.repo}
+                      </p>
+                      <p className="text-sm text-color-text-paragraph">
+                        "{item.message}"
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2 flex-shrink-0 ml-4">
+                      <div className={`w-2 h-2 rounded-full ${
+                        item.type === 'commit' ? 'bg-green-500' :
+                        item.type === 'create' ? 'bg-blue-500' :
+                        'bg-gray-500'
+                      }`}></div>
+                      <span className="text-xs text-color-text-subdue">
+                        {formatDistanceToNow(new Date(item.timestamp))} ago
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </Widget>
+
+          <div className="masonry-grid">
+            <Widget title="Featured Articles">
+              {posts.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-sm text-color-text-subdue mb-2">No blog posts yet</p>
+                  <p className="text-xs text-color-text-subdue">
+                    Add markdown files to <code>src/posts/</code> to get started
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {posts.slice(0, 2).map((post) => (
+                    <Link key={post.id} href={`/blog/${post.id}`}>
+                      <div className="card cursor-pointer">
+                        <h4 className="card-title">{post.title}</h4>
+                        <div className="card-meta">
+                          Published {formatDistanceToNow(new Date(post.date))} ago • 
+                          {post.readingTime} min read • 
+                          {post.language?.toUpperCase()}
+                        </div>
+                        {post.excerpt && (
+                          <p className="text-sm text-color-text-paragraph">
+                            {post.excerpt}
+                          </p>
+                        )}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </Widget>
+
+            <Widget title="Spotlight Projects">
+              {projects.length === 0 ? (
+                <p className="text-sm text-color-text-subdue text-center py-8">
+                  No GitHub repositories found
+                </p>
+              ) : (
+                <div className="space-y-4">
+                  {projects.filter(p => p.featured).slice(0, 2).map((project) => (
+                    <Link key={project.id} href="/projects">
+                      <div className="card cursor-pointer">
+                        <h4 className="card-title">{project.name}</h4>
+                        <div className="card-meta">
+                          {project.technologies.slice(0, 3).join(' • ')}
+                        </div>
+                        <p className="text-sm text-color-text-paragraph">
+                          {project.description}
+                        </p>
+                        <div className="flex gap-4 mt-3 text-xs text-color-text-subdue">
+                          <span>⭐ {project.stars}</span>
+                          <span>🍴 {project.forks}</span>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                  {projects.filter(p => p.featured).length === 0 && 
+                    projects.slice(0, 2).map((project) => (
+                      <Link key={project.id} href="/projects">
+                        <div className="card cursor-pointer">
+                          <h4 className="card-title">{project.name}</h4>
+                          <div className="card-meta">
+                            {project.technologies.slice(0, 3).join(' • ')}
+                          </div>
+                          <p className="text-sm text-color-text-paragraph">
+                            {project.description}
+                          </p>
+                          <div className="flex gap-4 mt-3 text-xs text-color-text-subdue">
+                            <span>⭐ {project.stars}</span>
+                            <span>🍴 {project.forks}</span>
+                          </div>
+                        </div>
+                      </Link>
+                    ))
+                  }
+                </div>
+              )}
+            </Widget>
+          </div>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
