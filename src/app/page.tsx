@@ -1,5 +1,5 @@
 import { formatDistanceToNow } from "date-fns";
-import { ExternalLink, Github } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import CommitChart from "@/components/CommitChart";
 import LanguageChart from "@/components/LanguageChart";
@@ -192,12 +192,14 @@ export default async function Home() {
                       <Link key={project.id} href="/projects">
                         <div className="card cursor-pointer overflow-hidden">
                           {/* Project Cover Image */}
-                          <div className="aspect-video bg-color-separator rounded mb-3 flex items-center justify-center">
+                          <div className="aspect-video bg-color-separator rounded mb-3 flex items-center justify-center relative">
                             {project.coverImage ? (
-                              <img
+                              <Image
                                 src={project.coverImage}
                                 alt={`${project.name} preview`}
                                 className="w-full h-full object-cover"
+                                fill
+                                sizes="(max-width: 768px) 100vw, 33vw"
                               />
                             ) : (
                               <div className="text-center p-6">
@@ -242,12 +244,14 @@ export default async function Home() {
                       <Link key={project.id} href="/projects">
                         <div className="card cursor-pointer overflow-hidden">
                           {/* Project Cover Image */}
-                          <div className="aspect-video bg-color-separator rounded mb-3 flex items-center justify-center">
+                          <div className="aspect-video bg-color-separator rounded mb-3 flex items-center justify-center relative">
                             {project.coverImage ? (
-                              <img
+                              <Image
                                 src={project.coverImage}
                                 alt={`${project.name} preview`}
                                 className="w-full h-full object-cover"
+                                fill
+                                sizes="(max-width: 768px) 100vw, 50vw"
                               />
                             ) : (
                               <div className="text-center p-6">

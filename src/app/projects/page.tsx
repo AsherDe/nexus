@@ -1,7 +1,7 @@
 import { formatDistanceToNow } from "date-fns";
 import { ExternalLink, Github } from "lucide-react";
+import Image from "next/image";
 import Navigation from "@/components/Navigation";
-import TechIcon from "@/components/TechIcon";
 import Widget from "@/components/Widget";
 import { fetchGitHubActivity, fetchGitHubRepos } from "@/lib/github";
 
@@ -38,12 +38,14 @@ export default async function ProjectsPage() {
               {featuredProjects.map((project) => (
                 <div key={project.id} className="card overflow-hidden">
                   {/* Project Cover Image */}
-                  <div className="aspect-video bg-color-separator rounded mb-4 flex items-center justify-center">
+                  <div className="aspect-video bg-color-separator rounded mb-4 flex items-center justify-center relative">
                     {project.coverImage ? (
-                      <img
+                      <Image
                         src={project.coverImage}
                         alt={`${project.name} preview`}
                         className="w-full h-full object-cover"
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                     ) : (
                       <div className="text-center p-8">
