@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -16,6 +17,8 @@ export default function ProfileImage({
   showLink = true, 
   className = "" 
 }: ProfileImageProps) {
+  const [isHovered, setIsHovered] = useState(false);
+
   const imageElement = (
     <div className="relative">
       <Image
@@ -25,14 +28,10 @@ export default function ProfileImage({
         height={height}
         className={`rounded-full shadow-sm transition-all duration-500 ${className}`}
         style={{
-          animation: 'none',
+          animation: isHovered ? 'breathing 2s ease-in-out infinite' : 'none',
         }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.animation = 'breathing 2s ease-in-out infinite';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.animation = 'none';
-        }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       />
     </div>
   );
