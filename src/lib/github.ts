@@ -61,6 +61,7 @@ export interface Project {
   topics: string[];
   updatedAt: string;
   createdAt: string;
+  coverImage?: string;
 }
 
 export interface RecentActivity {
@@ -68,22 +69,31 @@ export interface RecentActivity {
   repo: string;
   message: string;
   timestamp: string;
-  type: 'commit' | 'push' | 'create' | 'other';
+  type: "commit" | "push" | "create" | "other";
 }
 
-const GITHUB_API_BASE = 'https://api.github.com';
+export interface LanguageStats {
+  [key: string]: number;
+}
+
+export interface CommitData {
+  date: string;
+  commits: number;
+}
+
+const GITHUB_API_BASE = "https://api.github.com";
 
 // 从环境变量获取GitHub用户名和token
-const GITHUB_USERNAME = process.env.GITHUB_USERNAME || 'octocat';
+const GITHUB_USERNAME = process.env.GITHUB_USERNAME || "octocat";
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
 const githubHeaders: HeadersInit = {
-  'Accept': 'application/vnd.github.v3+json',
-  'User-Agent': 'Nexus-Dashboard/1.0',
+  Accept: "application/vnd.github.v3+json",
+  "User-Agent": "Nexus-Dashboard/1.0",
 };
 
 if (GITHUB_TOKEN) {
-  githubHeaders['Authorization'] = `Bearer ${GITHUB_TOKEN}`;
+  githubHeaders["Authorization"] = `Bearer ${GITHUB_TOKEN}`;
 }
 
 export async function fetchGitHubRepos(): Promise<Project[]> {
@@ -93,7 +103,7 @@ export async function fetchGitHubRepos(): Promise<Project[]> {
       {
         headers: githubHeaders,
         next: { revalidate: 300 }, // 缓存5分钟
-      }
+      },
     );
 
     if (!response.ok) {
@@ -101,27 +111,33 @@ export async function fetchGitHubRepos(): Promise<Project[]> {
     }
 
     const repos: GitHubRepo[] = await response.json();
-    
+
     return repos
-      .filter(repo => !repo.name.includes('.github')) // 过滤掉.github等特殊仓库
-      .map(repo => ({
+      .filter((repo) => !repo.name.includes(".github")) // 过滤掉.github等特殊仓库
+      .map((repo) => ({
         id: repo.name,
         name: repo.name,
-        description: repo.description || 'No description provided',
-        technologies: [repo.language, ...repo.topics].filter(Boolean) as string[],
+        description: repo.description || "No description provided",
+        technologies: [repo.language, ...repo.topics].filter(
+          Boolean,
+        ) as string[],
         stars: repo.stargazers_count,
         forks: repo.forks_count,
         githubUrl: repo.html_url,
         liveUrl: repo.homepage || undefined,
-        featured: repo.stargazers_count > 10 || repo.topics.includes('featured'),
+        featured:
+          repo.stargazers_count > 10 || repo.topics.includes("featured"),
         language: repo.language,
         topics: repo.topics,
         updatedAt: repo.updated_at,
         createdAt: repo.created_at,
       }))
-      .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+      .sort(
+        (a, b) =>
+          new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+      );
   } catch (error) {
-    console.error('Error fetching GitHub repos:', error);
+    console.error("Error fetching GitHub repos:", error);
     // 返回示例数据作为fallback
     return getFallbackProjects();
   }
@@ -134,7 +150,7 @@ export async function fetchGitHubActivity(): Promise<RecentActivity[]> {
       {
         headers: githubHeaders,
         next: { revalidate: 60 }, // 缓存1分钟
-      }
+      },
     );
 
     if (!response.ok) {
@@ -142,34 +158,35 @@ export async function fetchGitHubActivity(): Promise<RecentActivity[]> {
     }
 
     const events: GitHubEvent[] = await response.json();
-    
-    return events
-      .filter(event => ['PushEvent', 'CreateEvent'].includes(event.type))
-      .slice(0, 5)
-      .map(event => {
-        let message = '';
-        let type: 'commit' | 'push' | 'create' | 'other' = 'other';
 
-        if (event.type === 'PushEvent' && event.payload.commits?.length) {
+    return events
+      .filter((event) => ["PushEvent", "CreateEvent"].includes(event.type))
+      .slice(0, 5)
+      .map((event) => {
+        let message = "";
+        let type: "commit" | "push" | "create" | "other" = "other";
+
+        if (event.type === "PushEvent" && event.payload.commits?.length) {
           message = event.payload.commits[0].message;
-          type = 'commit';
-        } else if (event.type === 'CreateEvent') {
+          type = "commit";
+        } else if (event.type === "CreateEvent") {
           message = `Created ${event.payload.ref_type}: ${event.payload.ref}`;
-          type = 'create';
+          type = "create";
         } else {
-          message = `${event.type.replace('Event', '')} activity`;
+          message = `${event.type.replace("Event", "")} activity`;
         }
 
         return {
           id: event.id,
-          repo: event.repo.name.split('/')[1], // 只取仓库名
-          message: message.length > 60 ? message.substring(0, 60) + '...' : message,
+          repo: event.repo.name.split("/")[1], // 只取仓库名
+          message:
+            message.length > 60 ? message.substring(0, 60) + "..." : message,
           timestamp: event.created_at,
           type,
         };
       });
   } catch (error) {
-    console.error('Error fetching GitHub activity:', error);
+    console.error("Error fetching GitHub activity:", error);
     return getFallbackActivity();
   }
 }
@@ -177,16 +194,17 @@ export async function fetchGitHubActivity(): Promise<RecentActivity[]> {
 function getFallbackProjects(): Project[] {
   return [
     {
-      id: 'nexus-dashboard',
-      name: 'nexus-dashboard',
-      description: 'A minimalist personal dashboard inspired by Glance, built with modern web technologies.',
-      technologies: ['TypeScript', 'Next.js', 'Tailwind CSS'],
+      id: "nexus-dashboard",
+      name: "nexus-dashboard",
+      description:
+        "A minimalist personal dashboard inspired by Glance, built with modern web technologies.",
+      technologies: ["TypeScript", "Next.js", "Tailwind CSS"],
       stars: 0,
       forks: 0,
-      githubUrl: '#',
+      githubUrl: "#",
       featured: true,
-      language: 'TypeScript',
-      topics: ['dashboard', 'nextjs'],
+      language: "TypeScript",
+      topics: ["dashboard", "nextjs"],
       updatedAt: new Date().toISOString(),
       createdAt: new Date().toISOString(),
     },
@@ -196,11 +214,73 @@ function getFallbackProjects(): Project[] {
 function getFallbackActivity(): RecentActivity[] {
   return [
     {
-      id: '1',
-      repo: 'nexus-dashboard',
-      message: 'Initial commit - Set up project structure',
+      id: "1",
+      repo: "nexus-dashboard",
+      message: "Initial commit - Set up project structure",
       timestamp: new Date().toISOString(),
-      type: 'commit',
+      type: "commit",
     },
   ];
+}
+
+export async function fetchLanguageStats(): Promise<LanguageStats> {
+  try {
+    const repos = await fetchGitHubRepos();
+    const languageStats: LanguageStats = {};
+
+    // Count languages from repositories
+    repos.forEach((repo) => {
+      if (repo.language) {
+        languageStats[repo.language] = (languageStats[repo.language] || 0) + 1;
+      }
+    });
+
+    return languageStats;
+  } catch (error) {
+    console.error("Error fetching language stats:", error);
+    // Return fallback data
+    return {
+      TypeScript: 5,
+      JavaScript: 3,
+      Python: 2,
+      CSS: 1,
+    };
+  }
+}
+
+export async function fetchCommitActivity(): Promise<CommitData[]> {
+  try {
+    // Use existing activity data and transform it
+    const activity = await fetchGitHubActivity();
+
+    // Group by date and count commits
+    const commitsByDate: { [key: string]: number } = {};
+
+    activity
+      .filter((item) => item.type === "commit")
+      .forEach((item) => {
+        const date = new Date(item.timestamp).toISOString().split("T")[0];
+        commitsByDate[date] = (commitsByDate[date] || 0) + 1;
+      });
+
+    // Convert to array format
+    return Object.entries(commitsByDate).map(([date, commits]) => ({
+      date,
+      commits,
+    }));
+  } catch (error) {
+    console.error("Error fetching commit activity:", error);
+    // Return fallback data
+    const fallbackData: CommitData[] = [];
+    const now = new Date();
+    for (let i = 30; i >= 0; i -= 3) {
+      const date = new Date(now);
+      date.setDate(now.getDate() - i);
+      fallbackData.push({
+        date: date.toISOString().split("T")[0],
+        commits: Math.floor(Math.random() * 3) + 1,
+      });
+    }
+    return fallbackData;
+  }
 }
