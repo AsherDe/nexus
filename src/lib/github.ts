@@ -238,12 +238,12 @@ export async function fetchCommitActivity(): Promise<CommitData[]> {
     // Get user's repositories first
     const repos = await fetchGitHubRepos();
     const commitsByDate: { [key: string]: number } = {};
-    
+
     // Calculate date range for last 6 months
     const sixMonthsAgo = new Date();
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
     const since = sixMonthsAgo.toISOString();
-    
+
     // Fetch commits from all repositories in parallel
     const commitPromises = repos.slice(0, 10).map(async (repo) => {
       try {
@@ -252,15 +252,19 @@ export async function fetchCommitActivity(): Promise<CommitData[]> {
           {
             headers: githubHeaders,
             next: { revalidate: 3600 }, // Cache for 1 hour
-          }
+          },
         );
-        
+
         if (response.ok) {
           const commits = await response.json();
-          return commits.map((commit: { commit: { author: { date: string } } }) => ({
-            date: new Date(commit.commit.author.date).toISOString().split("T")[0],
-            repo: repo.name,
-          }));
+          return commits.map(
+            (commit: { commit: { author: { date: string } } }) => ({
+              date: new Date(commit.commit.author.date)
+                .toISOString()
+                .split("T")[0],
+              repo: repo.name,
+            }),
+          );
         }
         return [];
       } catch (error) {
@@ -271,7 +275,7 @@ export async function fetchCommitActivity(): Promise<CommitData[]> {
 
     // Wait for all commit data and aggregate
     const allCommits = (await Promise.all(commitPromises)).flat();
-    
+
     // Group commits by date
     allCommits.forEach((commit) => {
       commitsByDate[commit.date] = (commitsByDate[commit.date] || 0) + 1;
@@ -284,18 +288,20 @@ export async function fetchCommitActivity(): Promise<CommitData[]> {
         commits,
       }))
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-      
   } catch (error) {
     console.error("Error fetching commit activity:", error);
     // Return fallback data with realistic pattern
     const fallbackData: CommitData[] = [];
     const now = new Date();
-    for (let i = 180; i >= 0; i -= 7) { // Weekly data points over 6 months
+    for (let i = 180; i >= 0; i -= 7) {
+      // Weekly data points over 6 months
       const date = new Date(now);
       date.setDate(now.getDate() - i);
       // Simulate realistic commit patterns (more commits on weekdays)
       const isWeekday = date.getDay() >= 1 && date.getDay() <= 5;
-      const commitCount = isWeekday ? Math.floor(Math.random() * 5) + 1 : Math.floor(Math.random() * 2);
+      const commitCount = isWeekday
+        ? Math.floor(Math.random() * 5) + 1
+        : Math.floor(Math.random() * 2);
       fallbackData.push({
         date: date.toISOString().split("T")[0],
         commits: commitCount,

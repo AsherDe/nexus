@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import MDXContent from "@/components/MDXContent";
 import Navigation from "@/components/Navigation";
 import { getAllPostIds, getPostData } from "@/lib/blog";
 
@@ -67,31 +68,7 @@ export default async function BlogPost({ params }: { params: Params }) {
 
             <div className="h-px bg-color-separator"></div>
 
-            <div
-              className="prose prose-invert max-w-none"
-              // biome-ignore lint/security/noDangerouslySetInnerHtml: Required for rendering processed markdown content
-              dangerouslySetInnerHTML={{ __html: post.content }}
-              style={
-                {
-                  "--tw-prose-body": "var(--color-text-paragraph)",
-                  "--tw-prose-headings": "var(--color-text-highlight)",
-                  "--tw-prose-lead": "var(--color-text-paragraph)",
-                  "--tw-prose-links": "var(--color-primary)",
-                  "--tw-prose-bold": "var(--color-text-highlight)",
-                  "--tw-prose-counters": "var(--color-text-subdue)",
-                  "--tw-prose-bullets": "var(--color-text-subdue)",
-                  "--tw-prose-hr": "var(--color-separator)",
-                  "--tw-prose-quotes": "var(--color-text-paragraph)",
-                  "--tw-prose-quote-borders": "var(--color-separator)",
-                  "--tw-prose-captions": "var(--color-text-subdue)",
-                  "--tw-prose-code": "var(--color-text-highlight)",
-                  "--tw-prose-pre-code": "var(--color-text-paragraph)",
-                  "--tw-prose-pre-bg": "var(--color-widget-background)",
-                  "--tw-prose-th-borders": "var(--color-separator)",
-                  "--tw-prose-td-borders": "var(--color-separator)",
-                } as React.CSSProperties
-              }
-            />
+            <MDXContent content={post.content} />
           </article>
 
           <footer className="mt-12 pt-8 border-t border-color-separator">

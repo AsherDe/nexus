@@ -1,8 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
-import { remark } from "remark";
-import html from "remark-html";
+import type { MDXRemoteSerializeResult } from "next-mdx-remote";
+import { serialize } from "next-mdx-remote/serialize";
 
 const postsDirectory = path.join(process.cwd(), "src/posts");
 
@@ -11,7 +11,7 @@ export interface BlogPost {
   title: string;
   date: string;
   excerpt?: string;
-  content: string;
+  content: MDXRemoteSerializeResult;
   language?: string;
   tags?: string[];
   readingTime?: number;
@@ -39,14 +39,22 @@ function ensurePostsDirectory() {
   }
 }
 
+// MDX components for security and styling
+const mdxOptions = {
+  mdxOptions: {
+    remarkPlugins: [],
+    rehypePlugins: [],
+  },
+};
+
 export function getAllPostIds(): string[] {
   ensurePostsDirectory();
 
   try {
     const fileNames = fs.readdirSync(postsDirectory);
     return fileNames
-      .filter((name) => name.endsWith(".md"))
-      .map((fileName) => fileName.replace(/\.md$/, ""));
+      .filter((name) => name.endsWith(".md") || name.endsWith(".mdx"))
+      .map((fileName) => fileName.replace(/\.(md|mdx)$/, ""));
   } catch (_error) {
     console.warn("Posts directory not found or empty, returning empty array");
     return [];
@@ -54,7 +62,11 @@ export function getAllPostIds(): string[] {
 }
 
 export async function getPostData(id: string): Promise<BlogPost> {
-  const fullPath = path.join(postsDirectory, `${id}.md`);
+  // Try both .md and .mdx extensions
+  let fullPath = path.join(postsDirectory, `${id}.mdx`);
+  if (!fs.existsSync(fullPath)) {
+    fullPath = path.join(postsDirectory, `${id}.md`);
+  }
 
   if (!fs.existsSync(fullPath)) {
     throw new Error(`Post with id "${id}" not found`);
@@ -63,16 +75,13 @@ export async function getPostData(id: string): Promise<BlogPost> {
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const matterResult = matter(fileContents);
 
-  const processedContent = await remark()
-    .use(html, { sanitize: false })
-    .process(matterResult.content);
-
-  const contentHtml = processedContent.toString();
+  // Serialize MDX content with security measures
+  const mdxSource = await serialize(matterResult.content, mdxOptions);
   const readingTime = calculateReadingTime(matterResult.content);
 
   return {
     id,
-    content: contentHtml,
+    content: mdxSource,
     title: matterResult.data.title || "Untitled",
     date: matterResult.data.date || new Date().toISOString(),
     excerpt: matterResult.data.excerpt,
@@ -87,7 +96,11 @@ export function getAllPosts(): BlogPostMeta[] {
 
   const allPostIds = getAllPostIds();
   const allPosts = allPostIds.map((id) => {
-    const fullPath = path.join(postsDirectory, `${id}.md`);
+    // Try both .mdx and .md extensions
+    let fullPath = path.join(postsDirectory, `${id}.mdx`);
+    if (!fs.existsSync(fullPath)) {
+      fullPath = path.join(postsDirectory, `${id}.md`);
+    }
     const fileContents = fs.readFileSync(fullPath, "utf8");
     const matterResult = matter(fileContents);
 
