@@ -2,8 +2,11 @@ import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
 import { Suspense } from "react";
 import CommitActivityChart from "@/components/CommitActivityChart";
+import DailyAgenda from "@/components/DailyAgenda";
+import FleetingNotes from "@/components/FleetingNotes";
 import GitHubFeed from "@/components/GitHubFeed";
 import GitHubStats from "@/components/GitHubStats";
+import InvestmentPhilosophy from "@/components/InvestmentPhilosophy";
 import {
   ChartSkeleton,
   FeedSkeleton,
@@ -20,21 +23,15 @@ export default async function Home() {
   const posts = getAllPosts();
   return (
     <div className="page-container animate-entrance">
-      <header>
-        <div className="mb-8">
-          <h1 className="text-2xl font-semibold mb-2">
-            Nexus - A technologist exploring how we learn and build.
-          </h1>
-          <p className="text-base text-color-text-subdue">
-            Welcome to my digital garden.
-          </p>
-        </div>
+      {/* Navigation at top */}
+      <header className="mb-10">
         <Navigation />
       </header>
 
-      <main className="page-columns">
-        {/* Narrow Column */}
-        <div className="masonry-narrow">
+      {/* 3-Column Dashboard Layout */}
+      <main className="dashboard-grid">
+        {/* Left Column - Status Overview */}
+        <div className="dashboard-left">
           <Widget title="System Status">
             <div className="space-y-3">
               <div className="flex justify-between items-center">
@@ -66,13 +63,11 @@ export default async function Home() {
             <GitHubStats />
           </Suspense>
 
-          <Suspense fallback={<ChartSkeleton title="Tech Stack" />}>
-            <TechStackChart />
-          </Suspense>
+          <DailyAgenda />
         </div>
 
-        {/* Wide Column */}
-        <div className="masonry-wide">
+        {/* Main Column - Core Feed & Output */}
+        <div className="dashboard-main">
           <Suspense fallback={<FeedSkeleton />}>
             <GitHubFeed />
           </Suspense>
@@ -81,44 +76,53 @@ export default async function Home() {
             <CommitActivityChart />
           </Suspense>
 
-          <div className="masonry-grid">
-            <Widget title="Featured Articles">
-              {posts.length === 0 ? (
-                <div className="text-center py-8">
-                  <p className="text-sm text-color-text-subdue mb-2">
-                    No blog posts yet
-                  </p>
-                  <p className="text-xs text-color-text-subdue">
-                    Add markdown files to <code>src/posts/</code> to get started
-                  </p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {posts.slice(0, 2).map((post) => (
-                    <Link key={post.id} href={`/blog/${post.id}`}>
-                      <div className="card cursor-pointer">
-                        <h4 className="card-title">{post.title}</h4>
-                        <div className="card-meta">
-                          Published {formatDistanceToNow(new Date(post.date))}{" "}
-                          ago •{post.readingTime} min read •
-                          {post.language?.toUpperCase()}
-                        </div>
-                        {post.excerpt && (
-                          <p className="text-sm text-color-text-paragraph">
-                            {post.excerpt}
-                          </p>
-                        )}
+          <Widget title="Featured Articles">
+            {posts.length === 0 ? (
+              <div className="text-center py-8">
+                <p className="text-sm text-color-text-subdue mb-2">
+                  No blog posts yet
+                </p>
+                <p className="text-xs text-color-text-subdue">
+                  Add markdown files to <code>src/posts/</code> to get started
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {posts.slice(0, 3).map((post) => (
+                  <Link key={post.id} href={`/blog/${post.id}`}>
+                    <div className="card cursor-pointer">
+                      <h4 className="card-title">{post.title}</h4>
+                      <div className="card-meta">
+                        Published {formatDistanceToNow(new Date(post.date))}{" "}
+                        ago •{post.readingTime} min read •
+                        {post.language?.toUpperCase()}
                       </div>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </Widget>
+                      {post.excerpt && (
+                        <p className="text-sm text-color-text-paragraph">
+                          {post.excerpt}
+                        </p>
+                      )}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </Widget>
 
-            <Suspense fallback={<ProjectsSkeleton />}>
-              <SpotlightProjects />
-            </Suspense>
-          </div>
+          <Suspense fallback={<ProjectsSkeleton />}>
+            <SpotlightProjects />
+          </Suspense>
+        </div>
+
+        {/* Right Column - Insights & Philosophy */}
+        <div className="dashboard-right">
+          <InvestmentPhilosophy />
+
+          <Suspense fallback={<ChartSkeleton title="Tech Stack" />}>
+            <TechStackChart />
+          </Suspense>
+
+          <FleetingNotes />
         </div>
       </main>
     </div>
