@@ -1,7 +1,9 @@
-import Navigation from '@/components/Navigation';
-import Widget from '@/components/Widget';
-import { fetchGitHubRepos, fetchGitHubActivity } from '@/lib/github';
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from "date-fns";
+import { ExternalLink, Github } from "lucide-react";
+import Navigation from "@/components/Navigation";
+import TechIcon from "@/components/TechIcon";
+import Widget from "@/components/Widget";
+import { fetchGitHubActivity, fetchGitHubRepos } from "@/lib/github";
 
 export default async function ProjectsPage() {
   const [projects, activity] = await Promise.all([
@@ -9,8 +11,8 @@ export default async function ProjectsPage() {
     fetchGitHubActivity(),
   ]);
 
-  const featuredProjects = projects.filter(p => p.featured);
-  const otherProjects = projects.filter(p => !p.featured);
+  const featuredProjects = projects.filter((p) => p.featured);
+  const otherProjects = projects.filter((p) => !p.featured);
 
   return (
     <div className="page-container animate-entrance">
@@ -34,7 +36,29 @@ export default async function ProjectsPage() {
             </h2>
             <div className="dynamic-columns">
               {featuredProjects.map((project) => (
-                <div key={project.id} className="card">
+                <div key={project.id} className="card overflow-hidden">
+                  {/* Project Cover Image */}
+                  <div className="aspect-video bg-color-separator rounded mb-4 flex items-center justify-center">
+                    {project.coverImage ? (
+                      <img
+                        src={project.coverImage}
+                        alt={`${project.name} preview`}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="text-center p-8">
+                        <div className="w-16 h-16 bg-color-primary rounded-lg mx-auto mb-3 flex items-center justify-center">
+                          <span className="text-color-background font-mono text-2xl">
+                            {project.name.charAt(0).toUpperCase()}
+                          </span>
+                        </div>
+                        <p className="text-sm text-color-text-subdue">
+                          Project Preview
+                        </p>
+                      </div>
+                    )}
+                  </div>
+
                   <div className="flex items-start justify-between mb-2">
                     <h3 className="card-title">{project.name}</h3>
                     {project.language && (
@@ -43,14 +67,15 @@ export default async function ProjectsPage() {
                       </span>
                     )}
                   </div>
-                  
+
                   <div className="card-meta">
-                    Updated {formatDistanceToNow(new Date(project.updatedAt))} ago
+                    Updated {formatDistanceToNow(new Date(project.updatedAt))}{" "}
+                    ago
                     {project.topics.length > 0 && (
                       <div className="flex gap-1 mt-2 flex-wrap">
                         {project.topics.slice(0, 3).map((topic) => (
-                          <span 
-                            key={topic} 
+                          <span
+                            key={topic}
                             className="px-2 py-0.5 text-xs bg-color-widget-background border border-color-separator rounded text-color-text-subdue"
                           >
                             {topic}
@@ -69,23 +94,25 @@ export default async function ProjectsPage() {
                       <span>⭐ {project.stars}</span>
                       <span>🍴 {project.forks}</span>
                     </div>
-                    
+
                     <div className="flex gap-2">
-                      <a 
+                      <a
                         href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn text-xs px-3 py-1.5"
+                        className="btn text-xs px-3 py-1.5 flex items-center gap-1"
                       >
+                        <Github size={14} />
                         GitHub
                       </a>
                       {project.liveUrl && (
-                        <a 
+                        <a
                           href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="btn-primary text-xs px-3 py-1.5"
+                          className="btn-primary text-xs px-3 py-1.5 flex items-center gap-1"
                         >
+                          <ExternalLink size={14} />
                           Live Demo
                         </a>
                       )}
@@ -112,14 +139,14 @@ export default async function ProjectsPage() {
                     </span>
                   )}
                 </div>
-                
+
                 <div className="card-meta">
                   Updated {formatDistanceToNow(new Date(project.updatedAt))} ago
                   {project.topics.length > 0 && (
                     <div className="flex gap-1 mt-2 flex-wrap">
                       {project.topics.slice(0, 3).map((topic) => (
-                        <span 
-                          key={topic} 
+                        <span
+                          key={topic}
                           className="px-2 py-0.5 text-xs bg-color-widget-background border border-color-separator rounded text-color-text-subdue"
                         >
                           {topic}
@@ -138,23 +165,25 @@ export default async function ProjectsPage() {
                     <span>⭐ {project.stars}</span>
                     <span>🍴 {project.forks}</span>
                   </div>
-                  
+
                   <div className="flex gap-2">
-                    <a 
+                    <a
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="btn text-xs px-3 py-1.5"
+                      className="btn text-xs px-3 py-1.5 flex items-center gap-1"
                     >
+                      <Github size={14} />
                       GitHub
                     </a>
                     {project.liveUrl && (
-                      <a 
+                      <a
                         href={project.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn-primary text-xs px-3 py-1.5"
+                        className="btn-primary text-xs px-3 py-1.5 flex items-center gap-1"
                       >
+                        <ExternalLink size={14} />
                         Live Demo
                       </a>
                     )}
@@ -181,11 +210,15 @@ export default async function ProjectsPage() {
                     </p>
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0 ml-4">
-                    <div className={`w-2 h-2 rounded-full ${
-                      item.type === 'commit' ? 'bg-green-500' :
-                      item.type === 'create' ? 'bg-blue-500' :
-                      'bg-gray-500'
-                    }`}></div>
+                    <div
+                      className={`w-2 h-2 rounded-full ${
+                        item.type === "commit"
+                          ? "bg-green-500"
+                          : item.type === "create"
+                            ? "bg-blue-500"
+                            : "bg-gray-500"
+                      }`}
+                    ></div>
                     <span className="text-xs text-color-text-subdue">
                       {formatDistanceToNow(new Date(item.timestamp))} ago
                     </span>
