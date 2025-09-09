@@ -28,10 +28,10 @@ export default async function Home() {
       <header>
         <div className="mb-8">
           <h1 className="text-2xl font-semibold mb-2">
-            Nexus - A developer crafting tools and thoughts.
+            Nexus - A technologist exploring how we learn and build.
           </h1>
           <p className="text-base text-color-text-subdue">
-            Welcome to my digital dashboard
+            Welcome to my digital garden.
           </p>
         </div>
         <Navigation />
