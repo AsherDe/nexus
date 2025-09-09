@@ -12,7 +12,7 @@ export function WidgetSkeleton({
       <div className="space-y-3">
         {Array.from({ length: rows }, (_, index) => (
           <div
-            key={`skeleton-row-${Math.random()}-${index}`}
+            key={`skeleton-${title.replace(/\s+/g, "-").toLowerCase()}-${index}`}
             className="flex justify-between items-center"
           >
             <div className="h-4 bg-color-separator rounded animate-pulse w-2/3"></div>
@@ -30,7 +30,7 @@ export function FeedSkeleton() {
       <div className="space-y-3">
         {Array.from({ length: 3 }, (_, index) => (
           <div
-            key={`feed-skeleton-${Math.random()}-${index}`}
+            key={`feed-skeleton-${index}`}
             className="flex justify-between items-start"
           >
             <div className="flex-1 min-w-0 space-y-2">

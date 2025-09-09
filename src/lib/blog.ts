@@ -39,12 +39,14 @@ function ensurePostsDirectory() {
   }
 }
 
-// MDX components for security and styling
+// MDX serialization options
 const mdxOptions = {
   mdxOptions: {
     remarkPlugins: [],
     rehypePlugins: [],
   },
+  scope: {},
+  parseFrontmatter: false, // We handle frontmatter separately with gray-matter
 };
 
 export function getAllPostIds(): string[] {
@@ -75,7 +77,7 @@ export async function getPostData(id: string): Promise<BlogPost> {
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const matterResult = matter(fileContents);
 
-  // Serialize MDX content with security measures
+  // Serialize the markdown/MDX content for rendering
   const mdxSource = await serialize(matterResult.content, mdxOptions);
   const readingTime = calculateReadingTime(matterResult.content);
 
