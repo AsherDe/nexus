@@ -14,21 +14,6 @@ interface GitHubRepo {
   pushed_at: string;
 }
 
-interface GitHubCommit {
-  sha: string;
-  commit: {
-    message: string;
-    author: {
-      name: string;
-      date: string;
-    };
-  };
-  repository?: {
-    name: string;
-    full_name: string;
-  };
-}
-
 interface GitHubEvent {
   id: string;
   type: string;
@@ -93,7 +78,7 @@ const githubHeaders: HeadersInit = {
 };
 
 if (GITHUB_TOKEN) {
-  githubHeaders["Authorization"] = `Bearer ${GITHUB_TOKEN}`;
+  githubHeaders.Authorization = `Bearer ${GITHUB_TOKEN}`;
 }
 
 export async function fetchGitHubRepos(): Promise<Project[]> {
@@ -180,7 +165,7 @@ export async function fetchGitHubActivity(): Promise<RecentActivity[]> {
           id: event.id,
           repo: event.repo.name.split("/")[1], // 只取仓库名
           message:
-            message.length > 60 ? message.substring(0, 60) + "..." : message,
+            message.length > 60 ? `${message.substring(0, 60)}...` : message,
           timestamp: event.created_at,
           type,
         };

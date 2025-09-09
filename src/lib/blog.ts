@@ -1,10 +1,10 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import { remark } from 'remark';
-import html from 'remark-html';
+import fs from "node:fs";
+import path from "node:path";
+import matter from "gray-matter";
+import { remark } from "remark";
+import html from "remark-html";
 
-const postsDirectory = path.join(process.cwd(), 'src/posts');
+const postsDirectory = path.join(process.cwd(), "src/posts");
 
 export interface BlogPost {
   id: string;
@@ -41,42 +41,42 @@ function ensurePostsDirectory() {
 
 export function getAllPostIds(): string[] {
   ensurePostsDirectory();
-  
+
   try {
     const fileNames = fs.readdirSync(postsDirectory);
     return fileNames
-      .filter(name => name.endsWith('.md'))
-      .map(fileName => fileName.replace(/\.md$/, ''));
-  } catch (error) {
-    console.warn('Posts directory not found or empty, returning empty array');
+      .filter((name) => name.endsWith(".md"))
+      .map((fileName) => fileName.replace(/\.md$/, ""));
+  } catch (_error) {
+    console.warn("Posts directory not found or empty, returning empty array");
     return [];
   }
 }
 
 export async function getPostData(id: string): Promise<BlogPost> {
   const fullPath = path.join(postsDirectory, `${id}.md`);
-  
+
   if (!fs.existsSync(fullPath)) {
     throw new Error(`Post with id "${id}" not found`);
   }
-  
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
+
+  const fileContents = fs.readFileSync(fullPath, "utf8");
   const matterResult = matter(fileContents);
-  
+
   const processedContent = await remark()
     .use(html, { sanitize: false })
     .process(matterResult.content);
-  
+
   const contentHtml = processedContent.toString();
   const readingTime = calculateReadingTime(matterResult.content);
 
   return {
     id,
     content: contentHtml,
-    title: matterResult.data.title || 'Untitled',
+    title: matterResult.data.title || "Untitled",
     date: matterResult.data.date || new Date().toISOString(),
     excerpt: matterResult.data.excerpt,
-    language: matterResult.data.language || 'en',
+    language: matterResult.data.language || "en",
     tags: matterResult.data.tags || [],
     readingTime,
   };
@@ -84,21 +84,21 @@ export async function getPostData(id: string): Promise<BlogPost> {
 
 export function getAllPosts(): BlogPostMeta[] {
   ensurePostsDirectory();
-  
+
   const allPostIds = getAllPostIds();
-  const allPosts = allPostIds.map(id => {
+  const allPosts = allPostIds.map((id) => {
     const fullPath = path.join(postsDirectory, `${id}.md`);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const fileContents = fs.readFileSync(fullPath, "utf8");
     const matterResult = matter(fileContents);
-    
+
     const readingTime = calculateReadingTime(matterResult.content);
 
     return {
       id,
-      title: matterResult.data.title || 'Untitled',
+      title: matterResult.data.title || "Untitled",
       date: matterResult.data.date || new Date().toISOString(),
       excerpt: matterResult.data.excerpt,
-      language: matterResult.data.language || 'en',
+      language: matterResult.data.language || "en",
       tags: matterResult.data.tags || [],
       readingTime,
     } as BlogPostMeta;
@@ -108,20 +108,24 @@ export function getAllPosts(): BlogPostMeta[] {
 }
 
 export function getPostsByLanguage(language: string): BlogPostMeta[] {
-  return getAllPosts().filter(post => post.language === language);
+  return getAllPosts().filter((post) => post.language === language);
 }
 
 export function getPostsByTag(tag: string): BlogPostMeta[] {
-  return getAllPosts().filter(post => post.tags?.includes(tag));
+  return getAllPosts().filter((post) => post.tags?.includes(tag));
 }
 
 export function getAllTags(): string[] {
   const allPosts = getAllPosts();
   const tags = new Set<string>();
-  
-  allPosts.forEach(post => {
-    post.tags?.forEach(tag => tags.add(tag));
-  });
-  
+
+  for (const post of allPosts) {
+    if (post.tags) {
+      for (const tag of post.tags) {
+        tags.add(tag);
+      }
+    }
+  }
+
   return Array.from(tags).sort();
 }
