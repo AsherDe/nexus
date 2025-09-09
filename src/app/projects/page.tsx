@@ -16,18 +16,7 @@ export default async function ProjectsPage() {
 
   return (
     <div className="page-container animate-entrance">
-      <header>
-        <div className="mb-8">
-          <h1 className="text-2xl font-semibold mb-2">
-            Projects - The Workshop
-          </h1>
-          <p className="text-base text-color-text-subdue">
-            Real-time view of my GitHub repositories and development activity
-          </p>
-        </div>
         <Navigation />
-      </header>
-
       <main className="space-y-8">
         {featuredProjects.length > 0 && (
           <section>

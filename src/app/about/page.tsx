@@ -6,11 +6,9 @@ import Widget from "@/components/Widget";
 export default function About() {
   return (
     <div className="page-container animate-entrance">
-      <header>
+        <Navigation />
+      <main className="max-w-4xl">
         <div className="mb-8">
-          <Link href="/" className="inline-flex items-center gap-2 text-color-text-subdue hover:text-color-primary transition-colors mb-4">
-            ← Back to home
-          </Link>
           <div className="flex items-start gap-6">
             <ProfileImage showLink={false} />
             <div className="flex-1">
@@ -21,10 +19,7 @@ export default function About() {
             </div>
           </div>
         </div>
-        <Navigation />
-      </header>
-
-      <main className="max-w-4xl">
+        
         <div className="space-y-6">
           <Widget title="The Portrait">
             <div className="prose">
