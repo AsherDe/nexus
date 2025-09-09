@@ -2,6 +2,7 @@
 
 import { formatDistanceToNow } from "date-fns";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import type { RecentActivity } from "@/lib/github";
 import { FeedSkeleton } from "./loading/WidgetSkeleton";
 import Widget from "./Widget";
@@ -9,6 +10,7 @@ import Widget from "./Widget";
 export default function GitHubFeed() {
   const [activity, setActivity] = useState<RecentActivity[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     async function loadGitHubActivity() {
@@ -41,9 +43,13 @@ export default function GitHubFeed() {
           {activity.slice(0, 3).map((item) => (
             <div key={item.id} className="flex justify-between items-start">
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-color-text-highlight truncate">
+                <button
+                  type="button"
+                  className="card-title text-left cursor-pointer hover:text-color-text-highlight transition-colors truncate"
+                  onClick={() => router.push('/projects')}
+                >
                   {item.repo}
-                </p>
+                </button>
                 <p className="text-sm text-color-text-paragraph">
                   "{item.message}"
                 </p>
