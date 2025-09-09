@@ -2,8 +2,11 @@ import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
 import { Suspense } from "react";
 import CommitActivityChart from "@/components/CommitActivityChart";
+import DailyAgenda from "@/components/DailyAgenda";
+import FleetingNotes from "@/components/FleetingNotes";
 import GitHubFeed from "@/components/GitHubFeed";
 import GitHubStats from "@/components/GitHubStats";
+import InvestmentPhilosophy from "@/components/InvestmentPhilosophy";
 import {
   ChartSkeleton,
   FeedSkeleton,
@@ -25,52 +28,54 @@ export default async function Home() {
         <Navigation />
       </header>
 
-      {/* Multi-Column Dashboard Content */}
+      {/* 3-Column Dashboard Layout */}
       <main className="dashboard-grid">
-        <Widget title="System Status">
-          <div className="space-y-3">
-            <div className="flex justify-between items-center">
-              <span className="text-sm">Build Status</span>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-green-500"></div>
+        {/* Left Column - Status Overview */}
+        <div className="dashboard-left">
+          <Widget title="System Status">
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Build Status</span>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                  <span className="text-xs text-color-text-subdue">
+                    Passing
+                  </span>
+                </div>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Deployment</span>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                  <span className="text-xs text-color-text-subdue">Live</span>
+                </div>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Last Updated</span>
                 <span className="text-xs text-color-text-subdue">
-                  Passing
+                  2 min ago
                 </span>
               </div>
             </div>
-            <div className="flex justify-between items-center">
-              <span className="text-sm">Deployment</span>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                <span className="text-xs text-color-text-subdue">Live</span>
-              </div>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-sm">Last Updated</span>
-              <span className="text-xs text-color-text-subdue">
-                2 min ago
-              </span>
-            </div>
-          </div>
-        </Widget>
+          </Widget>
 
-        <Suspense fallback={<WidgetSkeleton title="GitHub Stats" rows={3} />}>
-          <GitHubStats />
-        </Suspense>
+          <Suspense fallback={<WidgetSkeleton title="GitHub Stats" rows={3} />}>
+            <GitHubStats />
+          </Suspense>
 
-        <Suspense fallback={<FeedSkeleton />}>
-          <GitHubFeed />
-        </Suspense>
+          <DailyAgenda />
+        </div>
 
-        <Suspense fallback={<ChartSkeleton title="Commit Activity" />}>
-          <CommitActivityChart />
-        </Suspense>
+        {/* Main Column - Core Feed & Output */}
+        <div className="dashboard-main">
+          <Suspense fallback={<FeedSkeleton />}>
+            <GitHubFeed />
+          </Suspense>
 
-        <Suspense fallback={<ChartSkeleton title="Tech Stack" />}>
-          <TechStackChart />
-        </Suspense>
+          <Suspense fallback={<ChartSkeleton title="Commit Activity" />}>
+            <CommitActivityChart />
+          </Suspense>
 
-        <div className="widget-wide">
           <Widget title="Featured Articles">
             {posts.length === 0 ? (
               <div className="text-center py-8">
@@ -103,12 +108,21 @@ export default async function Home() {
               </div>
             )}
           </Widget>
-        </div>
 
-        <div className="widget-wide">
           <Suspense fallback={<ProjectsSkeleton />}>
             <SpotlightProjects />
           </Suspense>
+        </div>
+
+        {/* Right Column - Insights & Philosophy */}
+        <div className="dashboard-right">
+          <InvestmentPhilosophy />
+
+          <Suspense fallback={<ChartSkeleton title="Tech Stack" />}>
+            <TechStackChart />
+          </Suspense>
+
+          <FleetingNotes />
         </div>
       </main>
     </div>
