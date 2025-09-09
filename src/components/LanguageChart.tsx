@@ -1,6 +1,7 @@
 "use client";
 
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
+import { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -14,6 +15,39 @@ interface LanguageChartProps {
 }
 
 export default function LanguageChart({ languageStats }: LanguageChartProps) {
+  const [tooltipColors, setTooltipColors] = useState({
+    backgroundColor: "var(--color-popover-background)",
+    titleColor: "var(--color-text-highlight)",
+    bodyColor: "var(--color-text-paragraph)",
+    borderColor: "var(--color-separator)",
+  });
+
+  // Update tooltip colors when theme changes
+  useEffect(() => {
+    const updateTooltipColors = () => {
+      const isDark =
+        document.documentElement.getAttribute("data-theme") !== "light";
+      setTooltipColors({
+        backgroundColor: isDark ? "hsl(240, 8%, 12%)" : "hsl(0, 0%, 100%)",
+        titleColor: isDark ? "hsl(0, 0%, 85%)" : "hsl(0, 0%, 10%)",
+        bodyColor: isDark ? "hsl(0, 0%, 73%)" : "hsl(0, 0%, 20%)",
+        borderColor: isDark ? "hsl(240, 8%, 15%)" : "hsl(0, 0%, 90%)",
+      });
+    };
+
+    // Initial update
+    updateTooltipColors();
+
+    // Watch for theme changes
+    const observer = new MutationObserver(updateTooltipColors);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   // Calculate percentages and sort by usage
   const total = Object.values(languageStats).reduce(
     (sum, count) => sum + count,
@@ -84,11 +118,14 @@ export default function LanguageChart({ languageStats }: LanguageChartProps) {
         display: false, // We'll create a custom legend
       },
       tooltip: {
-        backgroundColor: "var(--color-popover-background)",
-        titleColor: "var(--color-text-highlight)",
-        bodyColor: "var(--color-text-paragraph)",
-        borderColor: "var(--color-separator)",
+        backgroundColor: tooltipColors.backgroundColor,
+        titleColor: tooltipColors.titleColor,
+        bodyColor: tooltipColors.bodyColor,
+        borderColor: tooltipColors.borderColor,
         borderWidth: 1,
+        padding: 12,
+        cornerRadius: 8,
+        displayColors: true,
         callbacks: {
           label: (context: { raw: unknown; label: string }) => {
             const percentage = (
