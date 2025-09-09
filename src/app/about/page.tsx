@@ -16,7 +16,7 @@ export default function About() {
             <div className="flex-1">
               <h1 className="text-3xl font-semibold mb-2">About Me</h1>
               <p className="text-base text-color-text-paragraph">
-                A technologist exploring how we learn and build.
+                A Student exploring how we learn and build.
               </p>
             </div>
           </div>

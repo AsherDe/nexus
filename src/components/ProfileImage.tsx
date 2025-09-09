@@ -23,7 +23,7 @@ export default function ProfileImage({
         alt="Ji Yude"
         width={width}
         height={height}
-        className={`rounded-lg shadow-sm transition-all duration-500 ${className}`}
+        className={`rounded-full shadow-sm transition-all duration-500 ${className}`}
         style={{
           animation: 'none',
         }}
