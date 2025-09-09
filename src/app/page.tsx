@@ -1,28 +1,23 @@
 import { formatDistanceToNow } from "date-fns";
-import Image from "next/image";
 import Link from "next/link";
-import CommitChart from "@/components/CommitChart";
-import LanguageChart from "@/components/LanguageChart";
+import { Suspense } from "react";
+import CommitActivityChart from "@/components/CommitActivityChart";
+import GitHubFeed from "@/components/GitHubFeed";
+import GitHubStats from "@/components/GitHubStats";
+import {
+  ChartSkeleton,
+  FeedSkeleton,
+  ProjectsSkeleton,
+  WidgetSkeleton,
+} from "@/components/loading/WidgetSkeleton";
 import Navigation from "@/components/Navigation";
-import TechIcon from "@/components/TechIcon";
+import SpotlightProjects from "@/components/SpotlightProjects";
+import TechStackChart from "@/components/TechStackChart";
 import Widget from "@/components/Widget";
 import { getAllPosts } from "@/lib/blog";
-import {
-  fetchCommitActivity,
-  fetchGitHubActivity,
-  fetchGitHubRepos,
-  fetchLanguageStats,
-} from "@/lib/github";
 
 export default async function Home() {
-  const [activity, projects, posts, languageStats, commitData] =
-    await Promise.all([
-      fetchGitHubActivity(),
-      fetchGitHubRepos(),
-      Promise.resolve(getAllPosts()),
-      fetchLanguageStats(),
-      fetchCommitActivity(),
-    ]);
+  const posts = getAllPosts();
   return (
     <div className="page-container animate-entrance">
       <header>
@@ -67,82 +62,24 @@ export default async function Home() {
             </div>
           </Widget>
 
-          <Widget title="GitHub Stats">
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-sm">Repositories</span>
-                <span className="text-xs text-color-text-highlight font-medium">
-                  {projects.length}
-                </span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm">Total Stars</span>
-                <span className="text-xs text-color-text-highlight font-medium">
-                  {projects.reduce((acc, p) => acc + p.stars, 0)}
-                </span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm">Languages</span>
-                <span className="text-xs text-color-text-highlight font-medium">
-                  {
-                    new Set(projects.map((p) => p.language).filter(Boolean))
-                      .size
-                  }
-                </span>
-              </div>
-            </div>
-          </Widget>
+          <Suspense fallback={<WidgetSkeleton title="GitHub Stats" rows={3} />}>
+            <GitHubStats />
+          </Suspense>
 
-          <Widget title="Tech Stack">
-            <LanguageChart languageStats={languageStats} />
-          </Widget>
+          <Suspense fallback={<ChartSkeleton title="Tech Stack" />}>
+            <TechStackChart />
+          </Suspense>
         </div>
 
         {/* Wide Column */}
         <div className="masonry-wide">
-          <Widget title="Live GitHub Feed">
-            {activity.length === 0 ? (
-              <p className="text-sm text-color-text-subdue">
-                No recent activity
-              </p>
-            ) : (
-              <div className="space-y-3">
-                {activity.slice(0, 3).map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex justify-between items-start"
-                  >
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-color-text-highlight truncate">
-                        {item.repo}
-                      </p>
-                      <p className="text-sm text-color-text-paragraph">
-                        "{item.message}"
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2 flex-shrink-0 ml-4">
-                      <div
-                        className={`w-2 h-2 rounded-full ${
-                          item.type === "commit"
-                            ? "bg-green-500"
-                            : item.type === "create"
-                              ? "bg-blue-500"
-                              : "bg-gray-500"
-                        }`}
-                      ></div>
-                      <span className="text-xs text-color-text-subdue">
-                        {formatDistanceToNow(new Date(item.timestamp))} ago
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </Widget>
+          <Suspense fallback={<FeedSkeleton />}>
+            <GitHubFeed />
+          </Suspense>
 
-          <Widget title="Commit Activity">
-            <CommitChart commitData={commitData} />
-          </Widget>
+          <Suspense fallback={<ChartSkeleton title="Commit Activity" />}>
+            <CommitActivityChart />
+          </Suspense>
 
           <div className="masonry-grid">
             <Widget title="Featured Articles">
@@ -178,122 +115,9 @@ export default async function Home() {
               )}
             </Widget>
 
-            <Widget title="Spotlight Projects">
-              {projects.length === 0 ? (
-                <p className="text-sm text-color-text-subdue text-center py-8">
-                  No GitHub repositories found
-                </p>
-              ) : (
-                <div className="space-y-4">
-                  {projects
-                    .filter((p) => p.featured)
-                    .slice(0, 2)
-                    .map((project) => (
-                      <Link key={project.id} href="/projects">
-                        <div className="card cursor-pointer overflow-hidden">
-                          {/* Project Cover Image */}
-                          <div className="aspect-video bg-color-separator rounded mb-3 flex items-center justify-center relative">
-                            {project.coverImage ? (
-                              <Image
-                                src={project.coverImage}
-                                alt={`${project.name} preview`}
-                                className="w-full h-full object-cover"
-                                fill
-                                sizes="(max-width: 768px) 100vw, 33vw"
-                              />
-                            ) : (
-                              <div className="text-center p-6">
-                                <div className="w-12 h-12 bg-color-primary rounded-lg mx-auto mb-2 flex items-center justify-center">
-                                  <span className="text-color-background font-mono text-lg">
-                                    {project.name.charAt(0).toUpperCase()}
-                                  </span>
-                                </div>
-                                <p className="text-xs text-color-text-subdue">
-                                  Project Preview
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <h4 className="card-title">{project.name}</h4>
-                          <div className="card-meta">
-                            <div className="flex items-center gap-2 flex-wrap">
-                              {project.technologies.slice(0, 3).map((tech) => (
-                                <div
-                                  key={tech}
-                                  className="flex items-center gap-1"
-                                >
-                                  <TechIcon technology={tech} size="sm" />
-                                  <span className="text-xs">{tech}</span>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                          <p className="text-sm text-color-text-paragraph">
-                            {project.description}
-                          </p>
-                          <div className="flex gap-4 mt-3 text-xs text-color-text-subdue">
-                            <span>⭐ {project.stars}</span>
-                            <span>🍴 {project.forks}</span>
-                          </div>
-                        </div>
-                      </Link>
-                    ))}
-                  {projects.filter((p) => p.featured).length === 0 &&
-                    projects.slice(0, 2).map((project) => (
-                      <Link key={project.id} href="/projects">
-                        <div className="card cursor-pointer overflow-hidden">
-                          {/* Project Cover Image */}
-                          <div className="aspect-video bg-color-separator rounded mb-3 flex items-center justify-center relative">
-                            {project.coverImage ? (
-                              <Image
-                                src={project.coverImage}
-                                alt={`${project.name} preview`}
-                                className="w-full h-full object-cover"
-                                fill
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                              />
-                            ) : (
-                              <div className="text-center p-6">
-                                <div className="w-12 h-12 bg-color-primary rounded-lg mx-auto mb-2 flex items-center justify-center">
-                                  <span className="text-color-background font-mono text-lg">
-                                    {project.name.charAt(0).toUpperCase()}
-                                  </span>
-                                </div>
-                                <p className="text-xs text-color-text-subdue">
-                                  Project Preview
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <h4 className="card-title">{project.name}</h4>
-                          <div className="card-meta">
-                            <div className="flex items-center gap-2 flex-wrap">
-                              {project.technologies.slice(0, 3).map((tech) => (
-                                <div
-                                  key={tech}
-                                  className="flex items-center gap-1"
-                                >
-                                  <TechIcon technology={tech} size="sm" />
-                                  <span className="text-xs">{tech}</span>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                          <p className="text-sm text-color-text-paragraph">
-                            {project.description}
-                          </p>
-                          <div className="flex gap-4 mt-3 text-xs text-color-text-subdue">
-                            <span>⭐ {project.stars}</span>
-                            <span>🍴 {project.forks}</span>
-                          </div>
-                        </div>
-                      </Link>
-                    ))}
-                </div>
-              )}
-            </Widget>
+            <Suspense fallback={<ProjectsSkeleton />}>
+              <SpotlightProjects />
+            </Suspense>
           </div>
         </div>
       </main>
