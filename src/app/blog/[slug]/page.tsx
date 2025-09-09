@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import MDXContent from "@/components/MDXContent";
+import { MDXRemote } from "next-mdx-remote/rsc";
 import Navigation from "@/components/Navigation";
 import { getAllPostIds, getPostData } from "@/lib/blog";
 
@@ -18,7 +18,7 @@ export async function generateStaticParams() {
 
 export default async function BlogPost({ params }: { params: Params }) {
   try {
-    const post = await getPostData(params.slug);
+    const post = getPostData(params.slug);
 
     return (
       <div className="page-container animate-entrance">
@@ -68,7 +68,9 @@ export default async function BlogPost({ params }: { params: Params }) {
 
             <div className="h-px bg-color-separator"></div>
 
-            <MDXContent content={post.content} />
+            <div className="prose prose-invert max-w-none">
+              <MDXRemote source={post.content} />
+            </div>
           </article>
 
           <footer className="mt-12 pt-8 border-t border-color-separator">

@@ -1,8 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
-import type { MDXRemoteSerializeResult } from "next-mdx-remote";
-import { serialize } from "next-mdx-remote/serialize";
 
 const postsDirectory = path.join(process.cwd(), "src/posts");
 
@@ -11,7 +9,7 @@ export interface BlogPost {
   title: string;
   date: string;
   excerpt?: string;
-  content: MDXRemoteSerializeResult;
+  content: string;
   language?: string;
   tags?: string[];
   readingTime?: number;
@@ -39,15 +37,6 @@ function ensurePostsDirectory() {
   }
 }
 
-// MDX serialization options
-const mdxOptions = {
-  mdxOptions: {
-    remarkPlugins: [],
-    rehypePlugins: [],
-  },
-  scope: {},
-  parseFrontmatter: false, // We handle frontmatter separately with gray-matter
-};
 
 export function getAllPostIds(): string[] {
   ensurePostsDirectory();
@@ -63,7 +52,7 @@ export function getAllPostIds(): string[] {
   }
 }
 
-export async function getPostData(id: string): Promise<BlogPost> {
+export function getPostData(id: string): BlogPost {
   // Try both .md and .mdx extensions
   let fullPath = path.join(postsDirectory, `${id}.mdx`);
   if (!fs.existsSync(fullPath)) {
@@ -77,13 +66,11 @@ export async function getPostData(id: string): Promise<BlogPost> {
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const matterResult = matter(fileContents);
 
-  // Serialize the markdown/MDX content for rendering
-  const mdxSource = await serialize(matterResult.content, mdxOptions);
   const readingTime = calculateReadingTime(matterResult.content);
 
   return {
     id,
-    content: mdxSource,
+    content: matterResult.content, // Return raw markdown content
     title: matterResult.data.title || "Untitled",
     date: matterResult.data.date || new Date().toISOString(),
     excerpt: matterResult.data.excerpt,
