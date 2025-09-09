@@ -1,4 +1,5 @@
 import { formatDistanceToNow } from "date-fns";
+import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import CommitActivityChart from "@/components/CommitActivityChart";
@@ -21,13 +22,38 @@ export default async function Home() {
   return (
     <div className="page-container animate-entrance">
       <header>
-        <div className="mb-8">
-          <h1 className="text-2xl font-semibold mb-2">
-            Nexus - A technologist exploring how we learn and build.
-          </h1>
-          <p className="text-base text-color-text-subdue">
-            Welcome to my digital garden.
-          </p>
+        <div className="mb-8 flex items-start gap-6">
+          <Link href="/about" className="flex-shrink-0 group">
+            <div className="relative">
+              <Image
+                src="/digital_me.png"
+                alt="Ji Yude"
+                width={120}
+                height={120}
+                className="rounded-lg shadow-sm transition-all duration-500 group-hover:animate-pulse"
+                style={{
+                  animation: 'none',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.animation = 'breathing 2s ease-in-out infinite';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.animation = 'none';
+                }}
+              />
+            </div>
+          </Link>
+          <div className="flex-1">
+            <h1 className="text-2xl font-semibold mb-2">
+              Ji Yude
+            </h1>
+            <p className="text-base text-color-text-paragraph mb-3">
+              A technologist exploring how we learn and build.
+            </p>
+            <p className="text-sm text-color-text-subdue">
+              Welcome to my digital garden.
+            </p>
+          </div>
         </div>
         <Navigation />
       </header>
