@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import Navigation from '@/components/Navigation';
-import { getAllPosts } from '@/lib/blog';
-import { format } from 'date-fns';
+import { format } from "date-fns";
+import Link from "next/link";
+import Navigation from "@/components/Navigation";
+import { getAllPosts } from "@/lib/blog";
 
 export default function BlogPage() {
   const posts = getAllPosts();
@@ -10,11 +10,10 @@ export default function BlogPage() {
     <div className="page-container animate-entrance">
       <header>
         <div className="mb-8">
-          <h1 className="text-2xl font-semibold mb-2">
-            Blog - The Library
-          </h1>
+          <h1 className="text-2xl font-semibold mb-2">Blog - The Library</h1>
           <p className="text-base text-color-text-subdue">
-            Knowledge sharing and thoughts on development, design, and technology
+            Knowledge sharing and thoughts on development, design, and
+            technology
           </p>
         </div>
         <Navigation />
@@ -25,7 +24,8 @@ export default function BlogPage() {
           <div className="widget text-center py-12">
             <p className="text-lg mb-4">No blog posts yet</p>
             <p className="text-sm text-color-text-subdue">
-              Create your first post by adding a markdown file to the <code>src/posts</code> directory.
+              Create your first post by adding a markdown file to the{" "}
+              <code>src/posts</code> directory.
             </p>
           </div>
         ) : (
@@ -34,17 +34,15 @@ export default function BlogPage() {
               <Link key={post.id} href={`/blog/${post.id}`}>
                 <article className="card cursor-pointer">
                   <h2 className="card-title">{post.title}</h2>
-                  
+
                   <div className="card-meta">
-                    {format(new Date(post.date), 'MMMM d, yyyy')} • 
-                    {post.readingTime} min read • 
-                    {post.language?.toUpperCase()}
-                    
+                    {format(new Date(post.date), "MMMM d, yyyy")} •
+                    {post.readingTime} min read •{post.language?.toUpperCase()}
                     {post.tags && post.tags.length > 0 && (
                       <div className="flex gap-2 mt-2">
                         {post.tags.map((tag) => (
-                          <span 
-                            key={tag} 
+                          <span
+                            key={tag}
                             className="px-2 py-1 text-xs bg-color-separator rounded text-color-text-base"
                           >
                             {tag}

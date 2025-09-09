@@ -7,34 +7,34 @@
   --color-background: hsl(240, 8%, 9%);
   --color-widget-background: hsl(240, 8%, 10%);
   --color-popover-background: hsl(240, 8%, 12%);
-  
+
   --color-text-highlight: hsl(0, 0%, 85%);
   --color-text-paragraph: hsl(0, 0%, 73%);
   --color-text-base: hsl(0, 0%, 58%);
   --color-text-subdue: hsl(0, 0%, 35%);
-  
+
   --color-positive: var(--color-primary);
   --color-negative: hsl(0, 70%, 70%);
   --color-separator: hsl(240, 8%, 15%);
-  
+
   /* Light mode overrides */
   &[data-theme="light"] {
     --color-background: hsl(0, 0%, 98%);
     --color-widget-background: hsl(0, 0%, 100%);
     --color-popover-background: hsl(0, 0%, 100%);
-    
+
     --color-text-highlight: hsl(0, 0%, 10%);
     --color-text-paragraph: hsl(0, 0%, 20%);
     --color-text-base: hsl(0, 0%, 40%);
     --color-text-subdue: hsl(0, 0%, 60%);
-    
+
     --color-separator: hsl(0, 0%, 90%);
   }
-  
+
   /* Typography - JetBrains Mono for everything */
-  --font-family-mono: 'JetBrains Mono', monospace;
-  --font-family-sans: 'JetBrains Mono', monospace;
-  
+  --font-family-mono: "JetBrains Mono", monospace;
+  --font-family-sans: "JetBrains Mono", monospace;
+
   --font-size-h1: 1.7rem;
   --font-size-h2: 1.5rem;
   --font-size-h3: 1.3rem;
@@ -43,12 +43,12 @@
   --font-size-h6: 1.1rem;
   --font-size-base: 1rem;
   --font-size-small: 0.9rem;
-  
+
   /* Layout & Spacing */
   --widget-gap: 23px;
   --border-radius: 5px;
   --line-height: 1.6;
-  
+
   /* Transitions */
   --transition-fast: 0.15s ease-out;
   --transition-normal: 0.25s ease-out;
@@ -82,23 +82,42 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color var(--transition-normal), color var(--transition-normal);
+  transition:
+    background-color var(--transition-normal),
+    color var(--transition-normal);
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--color-text-highlight);
   font-weight: 600;
   margin: 0 0 1rem 0;
   line-height: 1.2;
 }
 
-h1 { font-size: var(--font-size-h1); }
-h2 { font-size: var(--font-size-h2); }
-h3 { font-size: var(--font-size-h3); }
-h4 { font-size: var(--font-size-h4); }
-h5 { font-size: var(--font-size-h5); }
-h6 { font-size: var(--font-size-h6); }
+h1 {
+  font-size: var(--font-size-h1);
+}
+h2 {
+  font-size: var(--font-size-h2);
+}
+h3 {
+  font-size: var(--font-size-h3);
+}
+h4 {
+  font-size: var(--font-size-h4);
+}
+h5 {
+  font-size: var(--font-size-h5);
+}
+h6 {
+  font-size: var(--font-size-h6);
+}
 
 p {
   margin: 0 0 1rem 0;
@@ -180,7 +199,7 @@ pre code {
   .page-columns {
     flex-direction: column;
   }
-  
+
   .masonry-narrow {
     flex: 1;
   }
@@ -430,12 +449,12 @@ pre code {
   .page-container {
     padding: 1rem;
   }
-  
+
   .nav {
     flex-wrap: wrap;
     gap: 1rem;
   }
-  
+
   .theme-toggle {
     top: 1rem;
     right: 1rem;
@@ -446,9 +465,10 @@ pre code {
 
 /* Skeleton Loading States */
 .skeleton {
-  background: linear-gradient(90deg, 
-    var(--color-separator) 25%, 
-    var(--color-widget-background) 50%, 
+  background: linear-gradient(
+    90deg,
+    var(--color-separator) 25%,
+    var(--color-widget-background) 50%,
     var(--color-separator) 75%
   );
   background-size: 200% 100%;
@@ -495,12 +515,24 @@ pre code {
   margin-bottom: 1rem;
 }
 
-.prose h1 { font-size: var(--font-size-h1); }
-.prose h2 { font-size: var(--font-size-h2); }
-.prose h3 { font-size: var(--font-size-h3); }
-.prose h4 { font-size: var(--font-size-h4); }
-.prose h5 { font-size: var(--font-size-h5); }
-.prose h6 { font-size: var(--font-size-h6); }
+.prose h1 {
+  font-size: var(--font-size-h1);
+}
+.prose h2 {
+  font-size: var(--font-size-h2);
+}
+.prose h3 {
+  font-size: var(--font-size-h3);
+}
+.prose h4 {
+  font-size: var(--font-size-h4);
+}
+.prose h5 {
+  font-size: var(--font-size-h5);
+}
+.prose h6 {
+  font-size: var(--font-size-h6);
+}
 
 .prose p {
   margin-bottom: 1.5rem;

@@ -5,9 +5,16 @@ interface WidgetProps {
   hover?: boolean;
 }
 
-export default function Widget({ title, children, className = '', hover = true }: WidgetProps) {
+export default function Widget({
+  title,
+  children,
+  className = "",
+  hover = true,
+}: WidgetProps) {
   return (
-    <div className={`widget animate-widget-entrance ${hover ? '' : 'hover:transform-none hover:shadow-none'} ${className}`}>
+    <div
+      className={`widget animate-widget-entrance ${hover ? "" : "hover:transform-none hover:shadow-none"} ${className}`}
+    >
       {title && (
         <div className="widget-header">
           <h3 className="widget-title">{title}</h3>
