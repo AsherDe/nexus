@@ -90,8 +90,11 @@ export default function LanguageChart({ languageStats }: LanguageChartProps) {
         borderColor: "var(--color-separator)",
         borderWidth: 1,
         callbacks: {
-          label: (context: any) => {
-            const percentage = ((context.raw / total) * 100).toFixed(1);
+          label: (context: { raw: unknown; label: string }) => {
+            const percentage = (
+              ((context.raw as number) / total) *
+              100
+            ).toFixed(1);
             return `${context.label}: ${percentage}%`;
           },
         },
