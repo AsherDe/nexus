@@ -24,6 +24,12 @@ export default function Navigation() {
       >
         Projects
       </Link>
+      <Link
+        href="/about"
+        className={clsx("nav-link", { active: pathname === "/about" })}
+      >
+        About
+      </Link>
     </nav>
   );
 }

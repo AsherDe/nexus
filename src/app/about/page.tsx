@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import Navigation from "@/components/Navigation";
+import ProfileImage from "@/components/ProfileImage";
 import Widget from "@/components/Widget";
 
 export default function About() {
@@ -12,15 +12,7 @@ export default function About() {
             ← Back to home
           </Link>
           <div className="flex items-start gap-6">
-            <div className="flex-shrink-0">
-              <Image
-                src="/digital_me.png"
-                alt="Ji Yude"
-                width={120}
-                height={120}
-                className="rounded-lg shadow-sm"
-              />
-            </div>
+            <ProfileImage showLink={false} />
             <div className="flex-1">
               <h1 className="text-3xl font-semibold mb-2">About Me</h1>
               <p className="text-base text-color-text-paragraph">
