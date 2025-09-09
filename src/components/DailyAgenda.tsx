@@ -23,7 +23,9 @@ export default function DailyAgenda() {
             Next Event
           </h4>
           <div className="space-y-1">
-            <div className="text-sm text-color-text-base">{nextEvent.title}</div>
+            <div className="text-sm text-color-text-base">
+              {nextEvent.title}
+            </div>
             <div className="flex justify-between text-xs text-color-text-subdue">
               <span>{nextEvent.time}</span>
               <span>{nextEvent.timeRemaining}</span>

@@ -93,8 +93,8 @@ export default async function Home() {
                     <div className="card cursor-pointer">
                       <h4 className="card-title">{post.title}</h4>
                       <div className="card-meta">
-                        Published {formatDistanceToNow(new Date(post.date))}{" "}
-                        ago •{post.readingTime} min read •
+                        Published {formatDistanceToNow(new Date(post.date))} ago
+                        •{post.readingTime} min read •
                         {post.language?.toUpperCase()}
                       </div>
                       {post.excerpt && (

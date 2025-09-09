@@ -11,11 +11,11 @@ interface ProfileImageProps {
   className?: string;
 }
 
-export default function ProfileImage({ 
-  width = 120, 
-  height = 120, 
-  showLink = true, 
-  className = "" 
+export default function ProfileImage({
+  width = 120,
+  height = 120,
+  showLink = true,
+  className = "",
 }: ProfileImageProps) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -28,7 +28,7 @@ export default function ProfileImage({
         height={height}
         className={`rounded-full shadow-sm transition-all duration-500 ${className}`}
         style={{
-          animation: isHovered ? 'breathing 2s ease-in-out infinite' : 'none',
+          animation: isHovered ? "breathing 2s ease-in-out infinite" : "none",
         }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}

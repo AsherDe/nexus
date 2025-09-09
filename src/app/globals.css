@@ -59,8 +59,8 @@
 @theme inline {
   --color-background: var(--color-background);
   --color-foreground: var(--color-text-base);
-  --font-sans: 'JetBrains Mono', monospace;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: "JetBrains Mono", monospace;
+  --font-mono: "JetBrains Mono", monospace;
 }
 
 /* Base Styles */
@@ -250,17 +250,17 @@ pre code {
   .dashboard-grid {
     grid-template-columns: 1fr 1fr;
   }
-  
+
   .dashboard-left {
     grid-column: 1;
     grid-row: 1;
   }
-  
+
   .dashboard-main {
     grid-column: 2;
     grid-row: 1;
   }
-  
+
   .dashboard-right {
     grid-column: 1 / -1;
     grid-row: 2;
@@ -274,7 +274,7 @@ pre code {
   .dashboard-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .dashboard-left,
   .dashboard-main,
   .dashboard-right {
@@ -511,7 +511,8 @@ pre code {
 }
 
 @keyframes breathing {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 1;
   }

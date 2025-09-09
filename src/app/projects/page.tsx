@@ -16,7 +16,7 @@ export default async function ProjectsPage() {
 
   return (
     <div className="page-container animate-entrance">
-        <Navigation />
+      <Navigation />
       <main className="space-y-8">
         {featuredProjects.length > 0 && (
           <section>

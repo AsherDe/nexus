@@ -8,7 +8,7 @@ export default function BlogPage() {
 
   return (
     <div className="page-container animate-entrance">
-        <Navigation />
+      <Navigation />
       <main className="max-w-4xl">
         {posts.length === 0 ? (
           <div className="widget text-center py-12">
