@@ -37,7 +37,6 @@ function ensurePostsDirectory() {
   }
 }
 
-
 export function getAllPostIds(): string[] {
   ensurePostsDirectory();
 

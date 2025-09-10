@@ -8,17 +8,7 @@ export default function BlogPage() {
 
   return (
     <div className="page-container animate-entrance">
-      <header>
-        <div className="mb-8">
-          <h1 className="text-2xl font-semibold mb-2">Blog - The Library</h1>
-          <p className="text-base text-color-text-subdue">
-            Knowledge sharing and thoughts on development, design, and
-            technology
-          </p>
-        </div>
-        <Navigation />
-      </header>
-
+      <Navigation />
       <main className="max-w-4xl">
         {posts.length === 0 ? (
           <div className="widget text-center py-12">

@@ -19,7 +19,8 @@
 
   /* Light mode overrides */
   &[data-theme="light"] {
-    --color-background: hsl(0, 0%, 98%);
+    --color-primary: hsl(220, 91%, 54%);
+    --color-background: hsl(220, 23%, 95%);
     --color-widget-background: hsl(0, 0%, 100%);
     --color-popover-background: hsl(0, 0%, 100%);
 
@@ -28,7 +29,9 @@
     --color-text-base: hsl(0, 0%, 40%);
     --color-text-subdue: hsl(0, 0%, 60%);
 
-    --color-separator: hsl(0, 0%, 90%);
+    --color-positive: hsl(109, 58%, 40%);
+    --color-negative: hsl(347, 87%, 44%);
+    --color-separator: hsl(220, 23%, 85%);
   }
 
   /* Typography - JetBrains Mono for everything */
@@ -59,8 +62,8 @@
 @theme inline {
   --color-background: var(--color-background);
   --color-foreground: var(--color-text-base);
-  --font-sans: 'JetBrains Mono', monospace;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: "JetBrains Mono", monospace;
+  --font-mono: "JetBrains Mono", monospace;
 }
 
 /* Base Styles */
@@ -250,17 +253,17 @@ pre code {
   .dashboard-grid {
     grid-template-columns: 1fr 1fr;
   }
-  
+
   .dashboard-left {
     grid-column: 1;
     grid-row: 1;
   }
-  
+
   .dashboard-main {
     grid-column: 2;
     grid-row: 1;
   }
-  
+
   .dashboard-right {
     grid-column: 1 / -1;
     grid-row: 2;
@@ -274,7 +277,7 @@ pre code {
   .dashboard-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .dashboard-left,
   .dashboard-main,
   .dashboard-right {
@@ -511,7 +514,8 @@ pre code {
 }
 
 @keyframes breathing {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 1;
   }
@@ -650,8 +654,9 @@ pre code {
 }
 
 .prose p {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
   font-family: var(--font-family-paragraph);
+  line-height: 1.8;
 }
 
 .prose a {

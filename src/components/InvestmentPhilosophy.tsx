@@ -9,14 +9,14 @@ export default function InvestmentPhilosophy() {
         "My core holdings, VTI (Total US Market) and VXUS (Total International Market), give me ownership in thousands of companies worldwide. I'm not betting on a single winner; I'm betting on human progress.",
     },
     {
-      icon: "🛡️", 
+      icon: "🛡️",
       title: "Risk Management",
       description:
         "A position in BND (Total Bond Market) acts as a stabilizer. It's not for growth, but for resilience during market downturns, allowing me to stay the course.",
     },
     {
       icon: "⏳",
-      title: "Long-Term Horizon", 
+      title: "Long-Term Horizon",
       description:
         "This is a multi-decade strategy. I focus on consistent contribution and automated rebalancing, ignoring market noise. The goal is financial independence, not overnight riches.",
     },
