@@ -38,35 +38,35 @@ export default function GitHubFeed() {
       {activity.length === 0 ? (
         <p className="text-sm text-color-text-subdue">No recent activity</p>
       ) : (
-        <div className="space-y-3">
-          {activity.slice(0, 3).map((item) => (
-            <div key={item.id} className="flex justify-between items-start">
-              <div className="flex-1 min-w-0">
+        <div className="space-y-2">
+          {activity.slice(0, 2).map((item) => (
+            <div key={item.id} className="space-y-1">
+              <div className="flex items-center justify-between">
                 <button
                   type="button"
-                  className="card-title text-left cursor-pointer hover:text-color-text-highlight transition-colors truncate"
+                  className="text-sm font-medium text-left cursor-pointer hover:text-color-text-highlight transition-colors truncate flex-1 min-w-0"
                   onClick={() => router.push("/projects")}
                 >
                   {item.repo}
                 </button>
-                <p className="text-sm text-color-text-paragraph">
-                  "{item.message}"
-                </p>
+                <div className="flex items-center gap-1 flex-shrink-0 ml-2">
+                  <div
+                    className={`w-1.5 h-1.5 rounded-full ${
+                      item.type === "commit"
+                        ? "bg-green-500"
+                        : item.type === "create"
+                          ? "bg-blue-500"
+                          : "bg-gray-500"
+                    }`}
+                  ></div>
+                  <span className="text-xs text-color-text-subdue">
+                    {formatDistanceToNow(new Date(item.timestamp), { addSuffix: false })}
+                  </span>
+                </div>
               </div>
-              <div className="flex items-center gap-2 flex-shrink-0 ml-4">
-                <div
-                  className={`w-2 h-2 rounded-full ${
-                    item.type === "commit"
-                      ? "bg-green-500"
-                      : item.type === "create"
-                        ? "bg-blue-500"
-                        : "bg-gray-500"
-                  }`}
-                ></div>
-                <span className="text-xs text-color-text-subdue">
-                  {formatDistanceToNow(new Date(item.timestamp))} ago
-                </span>
-              </div>
+              <p className="text-xs text-color-text-paragraph line-clamp-2 leading-tight">
+                {item.message}
+              </p>
             </div>
           ))}
         </div>
