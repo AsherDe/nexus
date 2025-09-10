@@ -35,9 +35,10 @@ This is **Nexus**, a personal dashboard and blog system built with Next.js 15, i
 - Uses environment variables `GITHUB_USERNAME` and `GITHUB_TOKEN`
 
 **Components** (`src/components/`):
-- `Widget.tsx`: Main dashboard widget container
+- `Widget.tsx`: Main dashboard widget container with external titles
 - `ThemeToggle.tsx`: Light/dark theme switching
 - `Navigation.tsx`: Site navigation
+- Widget Structure: External title + content container for flat design
 
 **Content** (`src/posts/`):
 - Markdown files with frontmatter (title, date, excerpt, language, tags)
@@ -54,10 +55,28 @@ This is **Nexus**, a personal dashboard and blog system built with Next.js 15, i
 
 ### Styling System
 
-- Uses CSS variables defined in `globals.css` for theming
-- Glance-inspired color palette (muted tones, high contrast)
-- JetBrains Mono typography throughout
-- Custom Tailwind classes with semantic naming (e.g., `text-color-text-highlight`)
+- **Design Philosophy**: High-density, flat design inspired by Glance dashboard
+- **Information Hierarchy**: Content-first approach with external widget titles
+- **Typography**: Multi-level text hierarchy with JetBrains Mono
+  - Primary: `--color-text-primary` (90% white) - Main headings
+  - Secondary: `--color-text-secondary` (80% white) - Subheadings  
+  - Body: `--color-text-body` (70% white) - Content text
+  - Meta: `--color-text-meta` (55% white) - Metadata
+  - Muted: `--color-text-muted` (40% white) - Supporting text
+  - Disabled: `--color-text-disabled` (30% white) - Widget titles
+- **Spacing System**: 
+  - `--micro-gap: 4px` - Tight element spacing
+  - `--content-gap: 8px` - Related content spacing  
+  - `--element-gap: 12px` - Element separation
+  - `--widget-gap: 16px` - Widget separation
+- **Flat Design Principles**:
+  - No shadows or borders on widgets
+  - External widget titles (very small, uppercase, muted)
+  - Background contrast for element separation
+  - Minimal border radius (3px)
+- **Font Scale**: xxs(0.7rem) → xs(0.8rem) → sm(0.9rem) → base(1rem) → md(1.15rem) → lg(1.35rem) → xl(1.6rem)
+- **CSS Variables**: Comprehensive system in `globals.css` for consistent theming
+- **Utility Classes**: Custom spacing, typography, and layout utilities
 
 ### Environment Setup
 

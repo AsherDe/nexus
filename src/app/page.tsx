@@ -2,16 +2,14 @@ import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
 import { Suspense } from "react";
 import CommitActivityChart from "@/components/CommitActivityChart";
-import DailyAgenda from "@/components/DailyAgenda";
-import FleetingNotes from "@/components/FleetingNotes";
+import CurrentFocus from "@/components/CurrentFocus";
+import GermanChallenge from "@/components/GermanChallenge";
 import GitHubFeed from "@/components/GitHubFeed";
-import GitHubStats from "@/components/GitHubStats";
-import InvestmentPhilosophy from "@/components/InvestmentPhilosophy";
+import InvestmentPortfolio from "@/components/InvestmentPortfolio";
 import {
   ChartSkeleton,
   FeedSkeleton,
   ProjectsSkeleton,
-  WidgetSkeleton,
 } from "@/components/loading/WidgetSkeleton";
 import Navigation from "@/components/Navigation";
 import SpotlightProjects from "@/components/SpotlightProjects";
@@ -23,8 +21,8 @@ export default async function Home() {
   const posts = getAllPosts();
   return (
     <div className="page-container animate-entrance">
-      {/* Navigation at top */}
-      <header className="mb-10">
+      {/* Navigation at top - tighter spacing */}
+      <header className="mb-6">
         <Navigation />
       </header>
 
@@ -32,42 +30,6 @@ export default async function Home() {
       <main className="dashboard-grid">
         {/* Left Column - Status Overview */}
         <div className="dashboard-left">
-          <Widget title="System Status">
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-sm">Build Status</span>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                  <span className="text-xs text-color-text-subdue">
-                    Passing
-                  </span>
-                </div>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm">Deployment</span>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                  <span className="text-xs text-color-text-subdue">Live</span>
-                </div>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm">Last Updated</span>
-                <span className="text-xs text-color-text-subdue">
-                  2 min ago
-                </span>
-              </div>
-            </div>
-          </Widget>
-
-          <Suspense fallback={<WidgetSkeleton title="GitHub Stats" rows={3} />}>
-            <GitHubStats />
-          </Suspense>
-
-          <DailyAgenda />
-        </div>
-
-        {/* Main Column - Core Feed & Output */}
-        <div className="dashboard-main">
           <Suspense fallback={<FeedSkeleton />}>
             <GitHubFeed />
           </Suspense>
@@ -76,29 +38,45 @@ export default async function Home() {
             <CommitActivityChart />
           </Suspense>
 
+          <Suspense fallback={<ChartSkeleton title="Tech Stack" />}>
+            <TechStackChart />
+          </Suspense>
+        </div>
+
+        {/* Main Column - Core Feed & Output */}
+        <div className="dashboard-main">
+          <CurrentFocus />
+          <GermanChallenge />
+          <Suspense fallback={<ProjectsSkeleton />}>
+            <SpotlightProjects />
+          </Suspense>
+        </div>
+
+        {/* Right Column - Insights & Philosophy */}
+        <div className="dashboard-right">
+          <InvestmentPortfolio />
           <Widget title="Featured Articles">
             {posts.length === 0 ? (
-              <div className="text-center py-8">
-                <p className="text-sm text-color-text-subdue mb-2">
-                  No blog posts yet
-                </p>
-                <p className="text-xs text-color-text-subdue">
+              <div className="text-center py-4">
+                <p className="text-meta text-muted mb-1">No blog posts yet</p>
+                <p className="text-xxs text-disabled">
                   Add markdown files to <code>src/posts/</code> to get started
                 </p>
               </div>
             ) : (
-              <div className="space-y-4">
-                {posts.slice(0, 3).map((post) => (
+              <div className="space-y-content">
+                {posts.slice(0, 2).map((post) => (
                   <Link key={post.id} href={`/blog/${post.id}`}>
-                    <div className="card cursor-pointer">
-                      <h4 className="card-title">{post.title}</h4>
-                      <div className="card-meta">
-                        Published {formatDistanceToNow(new Date(post.date))} ago
-                        •{post.readingTime} min read •
-                        {post.language?.toUpperCase()}
+                    <div className="card-color-only cursor-pointer">
+                      <h4 className="card-title text-secondary font-medium leading-tight">
+                        {post.title}
+                      </h4>
+                      <div className="card-meta text-xxs text-meta">
+                        {formatDistanceToNow(new Date(post.date))} ago •{" "}
+                        {post.readingTime}m
                       </div>
                       {post.excerpt && (
-                        <p className="text-sm text-color-text-paragraph">
+                        <p className="text-xs text-body leading-normal line-clamp-2">
                           {post.excerpt}
                         </p>
                       )}
@@ -108,21 +86,6 @@ export default async function Home() {
               </div>
             )}
           </Widget>
-
-          <Suspense fallback={<ProjectsSkeleton />}>
-            <SpotlightProjects />
-          </Suspense>
-        </div>
-
-        {/* Right Column - Insights & Philosophy */}
-        <div className="dashboard-right">
-          <InvestmentPhilosophy />
-
-          <Suspense fallback={<ChartSkeleton title="Tech Stack" />}>
-            <TechStackChart />
-          </Suspense>
-
-          <FleetingNotes />
         </div>
       </main>
     </div>

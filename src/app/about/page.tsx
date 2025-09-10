@@ -11,6 +11,10 @@ import {
   User,
   Wrench,
   Target,
+  Code,
+  BarChart3,
+  Search,
+  Layers,
 } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import ProfileImage from "@/components/ProfileImage";
@@ -219,7 +223,7 @@ export default function About() {
           >
             <div className="space-y-3">
               <a
-                href="https://github.com/asheroto"
+                href="https://github.com/asherde"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-sm hover:text-color-primary transition-colors"
@@ -248,47 +252,62 @@ export default function About() {
             </div>
           </Widget>
 
-          {/* Tech Toolkit Widget */}
+          {/* Core Capabilities Widget */}
           <Widget
             title={
               <div className="flex items-center gap-2">
-                <Wrench className="w-5 h-5" />
-                <span>My Toolkit</span>
+                <Layers className="w-5 h-5" />
+                <span>Core Capabilities</span>
               </div>
             }
           >
-            <div className="grid grid-cols-3 gap-4">
-              <div className="flex flex-col items-center gap-2 text-center">
-                <TechIcon technology="typescript" size="md" />
-                <span className="text-xs text-color-text-paragraph">
-                  TypeScript
-                </span>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-2 p-2.5 bg-color-widget-background border border-color-separator rounded-lg">
+                <div className="flex items-center gap-2">
+                  <Brain className="w-4 h-4 text-color-primary flex-shrink-0" />
+                  <h4 className="text-xs font-bold text-primary leading-tight">
+                    Machine Learning
+                  </h4>
+                </div>
+                <p className="text-xs text-color-text-paragraph leading-tight">
+                  ViT and CNN expertise with medical imaging applications
+                </p>
               </div>
-              <div className="flex flex-col items-center gap-2 text-center">
-                <TechIcon technology="python" size="md" />
-                <span className="text-xs text-color-text-paragraph">
-                  Python
-                </span>
+
+              <div className="space-y-2 p-2.5 bg-color-widget-background border border-color-separator rounded-lg">
+                <div className="flex items-center gap-2">
+                  <Code className="w-4 h-4 text-color-primary flex-shrink-0" />
+                  <h4 className="text-xs font-bold text-primary leading-tight">
+                    Full-Stack Development
+                  </h4>
+                </div>
+                <p className="text-xs text-color-text-paragraph leading-tight">
+                  Next.js, TypeScript, and Python solutions
+                </p>
               </div>
-              <div className="flex flex-col items-center gap-2 text-center">
-                <TechIcon technology="next.js" size="md" />
-                <span className="text-xs text-color-text-paragraph">
-                  Next.js
-                </span>
+
+              <div className="space-y-2 p-2.5 bg-color-widget-background border border-color-separator rounded-lg">
+                <div className="flex items-center gap-2">
+                  <BarChart3 className="w-4 h-4 text-color-primary flex-shrink-0" />
+                  <h4 className="text-xs font-bold text-primary leading-tight">
+                    Information Design
+                  </h4>
+                </div>
+                <p className="text-xs text-color-text-paragraph leading-tight">
+                  Swiss design and data visualization passion
+                </p>
               </div>
-              <div className="flex flex-col items-center gap-2 text-center">
-                <TechIcon technology="react" size="md" />
-                <span className="text-xs text-color-text-paragraph">React</span>
-              </div>
-              <div className="flex flex-col items-center gap-2 text-center">
-                <TechIcon technology="tailwind" size="md" />
-                <span className="text-xs text-color-text-paragraph">
-                  Tailwind
-                </span>
-              </div>
-              <div className="flex flex-col items-center gap-2 text-center">
-                <TechIcon technology="go" size="md" />
-                <span className="text-xs text-color-text-paragraph">Go</span>
+
+              <div className="space-y-2 p-2.5 bg-color-widget-background border border-color-separator rounded-lg">
+                <div className="flex items-center gap-2">
+                  <Search className="w-4 h-4 text-color-primary flex-shrink-0" />
+                  <h4 className="text-xs font-bold text-primary leading-tight">
+                    Independent Research
+                  </h4>
+                </div>
+                <p className="text-xs text-color-text-paragraph leading-tight">
+                  Synapse: 0-to-1 browser interaction modeling
+                </p>
               </div>
             </div>
           </Widget>

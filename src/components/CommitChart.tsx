@@ -112,7 +112,7 @@ export default function CommitChart({ commitData }: CommitChartProps) {
           color: "var(--color-text-subdue)",
           font: {
             family: "JetBrains Mono",
-            size: 11,
+            size: 9,
           },
         },
       },
@@ -126,7 +126,7 @@ export default function CommitChart({ commitData }: CommitChartProps) {
           color: "var(--color-text-subdue)",
           font: {
             family: "JetBrains Mono",
-            size: 11,
+            size: 9,
           },
           stepSize: 1,
         },
@@ -142,27 +142,25 @@ export default function CommitChart({ commitData }: CommitChartProps) {
     totalCommits > 0 ? (totalCommits / 6).toFixed(1) : "0";
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       {/* Stats */}
-      <div className="flex justify-between items-center">
-        <div className="text-center">
-          <div className="text-lg font-semibold text-color-text-highlight">
+      <div className="flex justify-between items-center text-center">
+        <div>
+          <div className="text-base font-semibold text-color-text-highlight">
             {totalCommits}
           </div>
-          <div className="text-xs text-color-text-subdue">
-            Total commits (6 months)
-          </div>
+          <div className="text-xs text-color-text-subdue">Total</div>
         </div>
-        <div className="text-center">
-          <div className="text-lg font-semibold text-color-text-highlight">
+        <div>
+          <div className="text-base font-semibold text-color-text-highlight">
             {avgCommitsPerMonth}
           </div>
-          <div className="text-xs text-color-text-subdue">Avg per month</div>
+          <div className="text-xs text-color-text-subdue">Avg/mo</div>
         </div>
       </div>
 
       {/* Chart */}
-      <div className="relative h-32">
+      <div className="relative h-24">
         <Line data={chartData} options={options} />
       </div>
     </div>

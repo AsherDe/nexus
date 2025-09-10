@@ -1,57 +1,80 @@
 @import "tailwindcss";
 
-/* CSS Variables - Core Design System */
+/* CSS Variables - Core Design System - Glance Inspired */
 :root {
-  /* Colors - Glance Inspired */
-  --color-primary: hsl(43, 50%, 70%);
-  --color-background: hsl(240, 8%, 9%);
-  --color-widget-background: hsl(240, 8%, 10%);
-  --color-popover-background: hsl(240, 8%, 12%);
+  /* Colors - High-density Flat Design */
+  --color-primary: hsl(43, 55%, 75%); /* Slightly more vibrant accent */
+  --color-link: hsl(43, 80%, 65%); /* Golden color for links */
+  --color-link-hover: hsl(0, 0%, 95%); /* White on hover */
+  --color-background: hsl(240, 8%, 8%); /* Deeper background for better contrast */
+  --color-widget-background: hsl(240, 8%, 9%); /* Minimal contrast - flat design */
+  --color-popover-background: hsl(240, 8%, 11%);
 
-  --color-text-highlight: hsl(0, 0%, 85%);
-  --color-text-paragraph: hsl(0, 0%, 73%);
-  --color-text-base: hsl(0, 0%, 58%);
-  --color-text-subdue: hsl(0, 0%, 35%);
+  /* Refined Typography Hierarchy - More levels for better information density */
+  --color-text-primary: hsl(0, 0%, 90%); /* Main headings - brightest */
+  --color-text-secondary: hsl(0, 0%, 80%); /* Subheadings - bright white */
+  --color-text-body: hsl(0, 0%, 70%); /* Body text - good readability */
+  --color-text-meta: hsl(0, 0%, 55%); /* Metadata - dimmed but readable */
+  --color-text-muted: hsl(0, 0%, 40%); /* Supporting text - subtle */
+  --color-text-disabled: hsl(0, 0%, 30%); /* Disabled state - very dim */
 
   --color-positive: var(--color-primary);
-  --color-negative: hsl(0, 70%, 70%);
-  --color-separator: hsl(240, 8%, 15%);
+  --color-negative: hsl(0, 68%, 72%);
+  --color-separator: hsl(240, 8%, 12%); /* Subtle separators for flat design */
 
-  /* Light mode overrides */
+  /* Light mode overrides - Flat design hierarchy */
   &[data-theme="light"] {
-    --color-primary: hsl(220, 91%, 54%);
-    --color-background: hsl(220, 23%, 95%);
-    --color-widget-background: hsl(0, 0%, 100%);
+    --color-primary: hsl(220, 85%, 50%);
+    --color-link: hsl(43, 80%, 45%); /* Golden color for links in light mode */
+    --color-link-hover: hsl(0, 0%, 15%); /* Dark on hover in light mode */
+    --color-background: hsl(220, 23%, 97%); /* Softer background */
+    --color-widget-background: hsl(220, 23%, 98%); /* Minimal contrast */
     --color-popover-background: hsl(0, 0%, 100%);
 
-    --color-text-highlight: hsl(0, 0%, 10%);
-    --color-text-paragraph: hsl(0, 0%, 20%);
-    --color-text-base: hsl(0, 0%, 40%);
-    --color-text-subdue: hsl(0, 0%, 60%);
+    /* Light mode typography hierarchy */
+    --color-text-primary: hsl(0, 0%, 8%); /* Darkest for main headings */
+    --color-text-secondary: hsl(0, 0%, 15%); /* Dark for subheadings */
+    --color-text-body: hsl(0, 0%, 25%); /* Body text */
+    --color-text-meta: hsl(0, 0%, 45%); /* Metadata */
+    --color-text-muted: hsl(0, 0%, 60%); /* Supporting text */
+    --color-text-disabled: hsl(0, 0%, 75%); /* Disabled state */
 
-    --color-positive: hsl(109, 58%, 40%);
-    --color-negative: hsl(347, 87%, 44%);
-    --color-separator: hsl(220, 23%, 85%);
+    --color-positive: hsl(109, 60%, 42%);
+    --color-negative: hsl(347, 85%, 46%);
+    --color-separator: hsl(220, 23%, 88%); /* Subtle separators */
   }
 
-  /* Typography - JetBrains Mono for everything */
+  /* Typography - JetBrains Mono with refined hierarchy */
   --font-family-mono: var(--font-jetbrains-mono), monospace;
   --font-family-sans: var(--font-jetbrains-mono), monospace;
   --font-family-paragraph: var(--font-jetbrains-mono), monospace;
 
-  --font-size-h1: 1.7rem;
-  --font-size-h2: 1.5rem;
-  --font-size-h3: 1.3rem;
-  --font-size-h4: 1.2rem;
-  --font-size-h5: 1.15rem;
-  --font-size-h6: 1.1rem;
-  --font-size-base: 1rem;
-  --font-size-small: 0.9rem;
+  /* Font Scale - Tight hierarchy for high information density */
+  --font-size-xl: 1.6rem; /* Widget main titles - uppercase */
+  --font-size-lg: 1.35rem; /* Section headings */
+  --font-size-md: 1.15rem; /* Subsection headings */
+  --font-size-base: 1rem; /* Body text */
+  --font-size-sm: 0.9rem; /* Secondary information */
+  --font-size-xs: 0.8rem; /* Metadata, timestamps */
+  --font-size-xxs: 0.7rem; /* Labels, captions */
 
-  /* Layout & Spacing */
-  --widget-gap: 23px;
-  --border-radius: 5px;
-  --line-height: 1.6;
+  /* Font Weights - Multiple levels for hierarchy */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Layout & Spacing - Tight grid system */
+  --widget-gap: 16px; /* Tighter gaps for information density */
+  --widget-padding: 18px; /* Reduced internal padding */
+  --element-gap: 12px; /* Between elements within widgets */
+  --content-gap: 8px; /* Between related content items */
+  --micro-gap: 4px; /* Between tightly related elements */
+
+  --border-radius: 3px; /* Minimal rounding - flatter design */
+  --line-height-tight: 1.3; /* For headings */
+  --line-height-normal: 1.5; /* For body text */
+  --line-height-relaxed: 1.6; /* For reading content */
 
   /* Transitions */
   --transition-fast: 0.15s ease-out;
@@ -61,9 +84,33 @@
 
 @theme inline {
   --color-background: var(--color-background);
-  --color-foreground: var(--color-text-base);
+  --color-foreground: var(--color-text-body);
+  --color-primary: var(--color-primary);
   --font-sans: "JetBrains Mono", monospace;
   --font-mono: "JetBrains Mono", monospace;
+
+  /* Extended color palette */
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-link);
+  --color-text-body: var(--color-text-body);
+  --color-text-meta: var(--color-text-meta);
+  --color-text-muted: var(--color-text-muted);
+  --color-text-disabled: var(--color-text-disabled);
+
+  /* Spacing scale */
+  --space-micro: var(--micro-gap);
+  --space-content: var(--content-gap);
+  --space-element: var(--element-gap);
+  --space-widget: var(--widget-gap);
+
+  /* Font sizes */
+  --text-xxs: var(--font-size-xxs);
+  --text-xs: var(--font-size-xs);
+  --text-sm: var(--font-size-sm);
+  --text-base: var(--font-size-base);
+  --text-md: var(--font-size-md);
+  --text-lg: var(--font-size-lg);
+  --text-xl: var(--font-size-xl);
 }
 
 /* Base Styles */
@@ -79,8 +126,8 @@ html {
 body {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-base);
-  line-height: var(--line-height);
-  color: var(--color-text-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-body);
   background-color: var(--color-background);
   margin: 0;
   padding: 0;
@@ -91,53 +138,113 @@ body {
     color var(--transition-normal);
 }
 
-/* Typography */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: var(--color-text-highlight);
-  font-weight: 600;
-  margin: 0 0 1rem 0;
-  line-height: 1.2;
-  font-family: var(--font-family-mono);
+/* Typography - Refined hierarchy for information density */
+h1 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-link);
+  line-height: var(--line-height-tight);
+  margin: 0 0 var(--element-gap) 0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  transition: color var(--transition-fast);
 }
 
-h1 {
-  font-size: var(--font-size-h1);
+h1:hover {
+  color: var(--color-link-hover);
 }
+
 h2 {
-  font-size: var(--font-size-h2);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-link);
+  line-height: var(--line-height-tight);
+  margin: 0 0 var(--content-gap) 0;
+  transition: color var(--transition-fast);
 }
+
+h2:hover {
+  color: var(--color-link-hover);
+}
+
 h3 {
-  font-size: var(--font-size-h3);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-link);
+  line-height: var(--line-height-tight);
+  margin: 0 0 var(--content-gap) 0;
+  transition: color var(--transition-fast);
 }
+
+h3:hover {
+  color: var(--color-link-hover);
+}
+
 h4 {
-  font-size: var(--font-size-h4);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-tight);
+  margin: 0 0 var(--micro-gap) 0;
 }
-h5 {
-  font-size: var(--font-size-h5);
-}
+
+h5,
 h6 {
-  font-size: var(--font-size-h6);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-meta);
+  line-height: var(--line-height-tight);
+  margin: 0 0 var(--micro-gap) 0;
 }
 
 p {
-  margin: 0 0 1rem 0;
-  color: var(--color-text-paragraph);
+  margin: 0 0 var(--content-gap) 0;
+  color: var(--color-text-body);
   font-family: var(--font-family-paragraph);
+  line-height: var(--line-height-normal);
+}
+
+/* Text utility classes for different hierarchy levels */
+.text-primary {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+.text-body {
+  color: var(--color-text-body);
+  font-weight: var(--font-weight-normal);
+}
+
+.text-meta {
+  color: var(--color-text-meta);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
+}
+
+.text-disabled {
+  color: var(--color-text-disabled);
+  font-size: var(--font-size-xs);
 }
 
 a {
-  color: var(--color-primary);
+  color: var(--color-link);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 a:hover {
-  color: var(--color-text-highlight);
+  color: var(--color-link-hover);
 }
 
 code {
@@ -218,138 +325,338 @@ pre code {
   align-items: start;
 }
 
-/* Dashboard Grid - 3-Column Layout (Left Status | Main Feed | Right Insights) */
+/* Dashboard Flex - High Density 3-Column Layout */
 .dashboard-grid {
-  display: grid;
-  grid-template-columns: 280px 1fr 320px;
+  display: flex;
+  flex-wrap: wrap;
   gap: var(--widget-gap);
-  align-items: start;
+  align-items: flex-start;
   max-width: 1400px;
+  max-height: calc(100vh - 100px); /* Tighter top spacing */
   margin: 0 auto;
+  overflow: hidden;
 }
 
-/* Left Column - Status Overview */
+/* Left Column - Status Overview - Compact */
 .dashboard-left {
+  flex: 0.618 1 200px;
   display: flex;
   flex-direction: column;
   gap: var(--widget-gap);
+  max-height: calc(100vh - 100px);
+  overflow: hidden;
+  min-width: 180px;
 }
 
 /* Main Column - Core Feed & Output */
 .dashboard-main {
+  flex: 1 1 320px;
   display: flex;
   flex-direction: column;
   gap: var(--widget-gap);
+  max-height: calc(100vh - 100px);
+  overflow: hidden;
+  min-width: 280px;
 }
 
 /* Right Column - Insights & Philosophy */
 .dashboard-right {
+  flex: 0.618 1 200px;
   display: flex;
   flex-direction: column;
   gap: var(--widget-gap);
+  max-height: calc(100vh - 100px);
+  overflow: hidden;
+  min-width: 180px;
 }
 
-@media (max-width: 1200px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr 1fr;
-  }
+/* Widget Container Styling - Content-driven heights */
+.dashboard-left .widget-container,
+.dashboard-main .widget-container,
+.dashboard-right .widget-container {
+  overflow: hidden;
+  transform-origin: top left;
+  width: 100%;
+  position: relative;
+  height: auto;
+  min-height: fit-content;
+  display: flex;
+  flex-direction: column;
+}
 
+.dashboard-left .widget,
+.dashboard-main .widget,
+.dashboard-right .widget {
+  flex: 1;
+  min-height: 0; /* Allow shrinking */
+}
+
+/* Modular Height System - 200px base rhythm */
+.dashboard-left .widget-container:nth-child(1) {
+  /* GitHub Feed */
+  height: 160px; /* 0.8x base */
+}
+
+.dashboard-left .widget-container:nth-child(2) {
+  /* Commit Activity */
+  height: 180px; /* 0.9x base */
+}
+
+.dashboard-left .widget-container:nth-child(3) {
+  /* Tech Stack */
+  flex: 1; /* Fill remaining space */
+  min-height: 140px;
+}
+
+.dashboard-main .widget-container:first-child {
+  /* Current Focus */
+  flex: 1; /* Equal space */
+  min-height: 160px; /* Larger minimum height */
+}
+
+.dashboard-main .widget-container:nth-child(2) {
+  /* German Challenge */
+  flex: 1; /* Take equal space */
+  min-height: 160px; /* Minimum height */
+}
+
+.dashboard-main .widget-container:nth-child(3) {
+  /* Spotlight Projects */
+  flex: 2; /* More space for projects */
+  min-height: 180px; /* Flexible height */
+}
+
+.dashboard-right .widget-container:first-child {
+  /* Investment Portfolio */
+  flex: 1; /* Fill remaining space */
+  min-height: 240px; /* 1.2x base */
+}
+
+.dashboard-right .widget-container:last-child {
+  /* Fleeting Notes */
+  flex: 1;
+  min-height: 220px; /* 0.8x base */
+}
+
+/* Responsive Adjustments - Flexbox handles most automatically */
+
+/* When space is tight, adjust column basis and heights proportionally */
+@media (max-width: 1200px) {
   .dashboard-left {
-    grid-column: 1;
-    grid-row: 1;
+    flex-basis: 160px; /* 0.618 ratio maintained */
   }
 
   .dashboard-main {
-    grid-column: 2;
-    grid-row: 1;
+    flex-basis: 260px; /* 1 ratio maintained */
   }
 
   .dashboard-right {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--widget-gap);
+    flex-basis: 160px; /* 0.618 ratio maintained */
+  }
+
+  /* Scale down the modular heights for tighter spaces */
+  .dashboard-left .widget-container:nth-child(1) {
+    height: 140px;
+  }
+  .dashboard-left .widget-container:nth-child(2) {
+    height: 160px;
+  }
+  .dashboard-main .widget-container:first-child {
+    height: 250px;
+  }
+  .dashboard-right .widget-container:first-child {
+    height: 200px;
   }
 }
 
+/* Mobile: Force single column, remove height restrictions */
 @media (max-width: 768px) {
   .dashboard-grid {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    max-height: none;
+    gap: calc(var(--widget-gap) * 0.8);
   }
 
   .dashboard-left,
   .dashboard-main,
   .dashboard-right {
-    grid-column: 1;
-    display: flex;
-    flex-direction: column;
-    gap: var(--widget-gap);
+    flex: none;
+    max-height: none;
+    min-width: 100%;
+  }
+
+  /* Mobile heights - compact but readable */
+  .dashboard-left .widget-container:nth-child(1),
+  .dashboard-left .widget-container:nth-child(2),
+  .dashboard-left .widget-container:nth-child(3) {
+    height: 120px;
+    flex: none;
+  }
+
+  .dashboard-main .widget-container:first-child {
+    height: 200px;
+  }
+
+  .dashboard-main .widget-container:nth-child(2) {
+    height: 180px;
+    flex: none;
+  }
+
+  .dashboard-right .widget-container:first-child {
+    height: 160px;
+  }
+
+  .dashboard-right .widget-container:last-child {
+    height: 120px;
+    flex: none;
   }
 }
 
-/* Widget Size Classes */
-.widget-wide {
-  grid-column: span 2;
+/* Content Balance - High Information Density */
+
+/* Compact status widgets - maximum information density */
+.dashboard-left .widget {
+  font-size: var(--font-size-sm); /* Smaller text for more info */
+  padding: var(--widget-padding);
+  line-height: var(--line-height-tight);
 }
 
-.widget-full {
-  grid-column: span 3;
+/* External titles in left column should be even smaller */
+.dashboard-left .widget-external-title {
+  font-size: var(--font-size-xxs);
 }
 
-@media (max-width: 1199px) {
-  .widget-wide {
-    grid-column: span 2;
-  }
-  .widget-full {
-    grid-column: span 2;
-  }
+.dashboard-left .widget .widget-header {
+  margin-bottom: var(--content-gap); /* Very tight spacing */
+  padding-bottom: var(--micro-gap);
 }
 
-@media (max-width: 767px) {
-  .widget-wide,
-  .widget-full {
-    grid-column: span 1;
-  }
+.dashboard-left .widget .space-y-2 > * {
+  margin-top: var(--micro-gap); /* Very tight vertical spacing */
 }
 
-/* Widget System - Glance Style */
+.dashboard-left .widget .space-y-3 > * {
+  margin-top: var(--content-gap); /* Slightly more space */
+}
+
+.dashboard-left .widget .space-y-2 > *:first-child,
+.dashboard-left .widget .space-y-3 > *:first-child {
+  margin-top: 0;
+}
+
+/* Ultra-compact spacing for feeds */
+.dashboard-left .widget .space-y-1 > * {
+  margin-top: var(--micro-gap);
+}
+
+.dashboard-left .widget .space-y-1 > *:first-child {
+  margin-top: 0;
+}
+
+/* Compact styling for left column charts and stats */
+.dashboard-left .widget .text-base {
+  font-size: 0.9rem; /* Smaller stats numbers */
+}
+
+.dashboard-left .widget .text-xs {
+  font-size: 0.7rem; /* Even smaller labels */
+}
+
+.dashboard-left .widget .flex.justify-between.items-center {
+  margin-bottom: 0.75rem; /* Tighter spacing for stats rows */
+}
+
+.dashboard-left .widget canvas {
+  margin-top: 0.5rem; /* Reduce chart top margin */
+}
+
+.dashboard-main .widget {
+  /* Main content - enhanced readability with hierarchy */
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  padding: var(--widget-padding);
+}
+
+.dashboard-right .widget {
+  /* Insights - optimized for reading content */
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  padding: var(--widget-padding);
+}
+
+/* Dynamic content adaptation */
+.dashboard-main .widget:first-child {
+  /* Spotlight Projects - flat design */
+  background: var(--color-widget-background);
+  /* No borders for flat design */
+}
+
+.dashboard-right .widget:first-child {
+  /* Philosophy - optimized for reading */
+  line-height: var(--line-height-relaxed);
+}
+
+/* Widget System - Content-First with External Titles */
+.widget-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--micro-gap);
+}
+
+.widget-external-header {
+  /* External title styling - subtle and minimal */
+  margin: 0;
+  padding: 0;
+}
+
+.widget-external-title {
+  font-size: var(--font-size-xxs); /* Very small font */
+  font-weight: var(--font-weight-normal); /* Normal weight */
+  color: var(--color-text-disabled); /* Very dim color */
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em; /* Slightly spaced letters */
+  line-height: var(--line-height-tight);
+}
+
 .widget {
   background: var(--color-widget-background);
-  border: 1px solid var(--color-separator);
+  border: none; /* Remove borders for flat design */
   border-radius: var(--border-radius);
-  padding: var(--widget-gap);
-  /* Glance-style hard shadow - 3px bottom shadow with no blur */
-  box-shadow: 0 3px 0 0 hsl(240, 8%, 6%);
+  padding: var(--widget-padding);
+  /* NO shadows - completely flat */
   position: relative;
-  transition: none; /* No hover animations for stability */
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+  /* Subtle background distinction only */
+  flex: 1;
 }
 
 .widget:hover {
-  /* Minimal or no change on hover to maintain stability */
-  transform: none;
-  box-shadow: 0 3px 0 0 hsl(240, 8%, 6%);
+  transform: translateY(-3px); /* Subtle upward movement on hover */
+  box-shadow: 0 4px 20px -5px hsla(0, 0%, 0%, 0.2); /* Soft shadow on hover */
 }
 
-/* Light mode shadow adjustment */
-:root[data-theme="light"] .widget {
-  box-shadow: 0 3px 0 0 hsl(0, 0%, 85%);
+/* Widget separation through background contrast only */
+.widget-container + .widget-container {
+  margin-top: var(--widget-gap);
 }
 
-:root[data-theme="light"] .widget:hover {
-  box-shadow: 0 3px 0 0 hsl(0, 0%, 85%);
-}
-
+/* Legacy widget header styles - now unused but kept for compatibility */
 .widget-header {
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
+  margin-bottom: var(--element-gap);
+  padding-bottom: var(--content-gap);
   border-bottom: 1px solid var(--color-separator);
 }
 
 .widget-title {
-  font-size: var(--font-size-h5);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
   margin: 0;
-  color: var(--color-text-highlight);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 /* Navigation */
@@ -371,17 +678,18 @@ pre code {
   color: var(--color-primary);
 }
 
-/* Buttons */
+/* Buttons - Flat Design */
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--color-separator);
+  gap: var(--content-gap);
+  padding: var(--content-gap) var(--element-gap);
+  border: none; /* Flat design - no borders */
   border-radius: var(--border-radius);
   background: var(--color-widget-background);
-  color: var(--color-text-base);
-  font-size: var(--font-size-base);
+  color: var(--color-text-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   font-family: inherit;
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -390,63 +698,87 @@ pre code {
 
 .btn:hover {
   background: var(--color-popover-background);
-  color: var(--color-text-highlight);
-  border-color: var(--color-primary);
+  color: var(--color-text-primary);
 }
 
 .btn-primary {
   background: var(--color-primary);
   color: var(--color-background);
-  border-color: var(--color-primary);
 }
 
 .btn-primary:hover {
-  background: var(--color-text-highlight);
-  border-color: var(--color-text-highlight);
+  background: var(--color-text-primary);
 }
 
-/* Card Components - Glance Style */
+/* Card Components - Flat Design */
 .card {
   background: var(--color-widget-background);
-  border: 1px solid var(--color-separator);
+  border: none; /* Remove borders */
   border-radius: var(--border-radius);
-  padding: 1.5rem;
-  box-shadow: 0 2px 0 0 hsl(240, 8%, 7%);
-  transition: none;
+  padding: var(--element-gap);
+  /* No shadows */
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast);
 }
 
 .card:hover {
-  transform: none;
-  box-shadow: 0 2px 0 0 hsl(240, 8%, 7%);
+  transform: translateY(-3px); /* Subtle upward movement on hover */
+  box-shadow: 0 4px 20px -5px hsla(0, 0%, 0%, 0.2); /* Soft shadow on hover */
+  background: var(--color-popover-background);
 }
 
 .card:hover .card-title {
-  color: var(--color-text-highlight);
+  color: var(--color-link-hover);
 }
 
-/* Light mode card shadow */
-:root[data-theme="light"] .card {
-  box-shadow: 0 2px 0 0 hsl(0, 0%, 88%);
+/* Featured Articles - Color change only, no lift */
+.card-color-only {
+  background: var(--color-widget-background);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: var(--element-gap);
+  transition: none;
 }
 
-:root[data-theme="light"] .card:hover {
-  box-shadow: 0 2px 0 0 hsl(0, 0%, 88%);
+.card-color-only:hover .card-title {
+  color: var(--color-link-hover);
+}
+
+/* Spotlight Projects - Lift only, no color change */
+.card-lift-only {
+  background: var(--color-widget-background);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: var(--element-gap);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.card-lift-only:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 20px -5px hsla(0, 0%, 0%, 0.2);
 }
 
 .card-title {
-  font-size: var(--font-size-h4);
-  margin-bottom: 0.5rem;
-  color: var(--color-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--micro-gap);
+  color: var(--color-link);
   transition: color var(--transition-fast);
+  line-height: var(--line-height-tight);
 }
 
 .card-meta {
-  color: var(--color-text-subdue);
-  font-size: var(--font-size-small);
-  margin-bottom: 1rem;
+  color: var(--color-text-meta);
+  font-size: var(--font-size-xs);
+  margin-bottom: var(--content-gap);
+  line-height: var(--line-height-normal);
 }
 
-/* List Styles */
+/* List Styles - High Density */
 .list {
   list-style: none;
   padding: 0;
@@ -454,13 +786,21 @@ pre code {
 }
 
 .list-item {
-  padding: 1rem 0;
+  padding: var(--content-gap) 0;
   border-bottom: 1px solid var(--color-separator);
   transition: background-color var(--transition-fast);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-tight);
 }
 
 .list-item:last-child {
   border-bottom: none;
+}
+
+/* Dense list variant for maximum info density */
+.list-dense .list-item {
+  padding: var(--micro-gap) 0;
+  font-size: var(--font-size-xs);
 }
 
 /* Form Elements */
@@ -660,15 +1000,15 @@ pre code {
 }
 
 .prose a {
-  color: var(--color-primary);
+  color: var(--color-link);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: all var(--transition-fast);
 }
 
 .prose a:hover {
-  color: var(--color-text-highlight);
-  border-bottom-color: var(--color-primary);
+  color: var(--color-link-hover);
+  border-bottom-color: var(--color-link);
 }
 
 .prose strong {
@@ -772,4 +1112,244 @@ pre code {
   height: auto;
   border-radius: var(--border-radius);
   margin: 1.5rem 0;
+}
+
+/* Scrollbar utilities */
+.scrollbar-hide {
+  /* IE and Edge */
+  -ms-overflow-style: none;
+  /* Firefox */
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  /* Safari and Chrome */
+  display: none;
+}
+
+/* Infinite scroll animation */
+.infinite-scroll-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.infinite-scroll-container::before,
+.infinite-scroll-container::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity var(--transition-fast);
+}
+
+.infinite-scroll-container::before {
+  left: 8px;
+  border-right: 8px solid var(--color-link);
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+}
+
+.infinite-scroll-container::after {
+  right: 8px;
+  border-left: 8px solid var(--color-link);
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+}
+
+.infinite-scroll-container:hover::before,
+.infinite-scroll-container:hover::after {
+  opacity: 1;
+}
+
+.infinite-scroll-track {
+  display: flex;
+  gap: 1rem;
+  width: fit-content;
+  animation: infiniteScroll var(--scroll-duration, 30s) linear infinite;
+}
+
+.infinite-scroll-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes infiniteScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Tailwind line-clamp support */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Spacing utilities for high-density layouts */
+.space-y-micro > * + * {
+  margin-top: var(--micro-gap);
+}
+
+.space-y-content > * + * {
+  margin-top: var(--content-gap);
+}
+
+.space-y-element > * + * {
+  margin-top: var(--element-gap);
+}
+
+.gap-micro {
+  gap: var(--micro-gap);
+}
+
+.gap-content {
+  gap: var(--content-gap);
+}
+
+.gap-element {
+  gap: var(--element-gap);
+}
+
+/* Text size utilities */
+.text-xxs {
+  font-size: var(--font-size-xxs);
+}
+
+.text-xs {
+  font-size: var(--font-size-xs);
+}
+
+.text-sm {
+  font-size: var(--font-size-sm);
+}
+
+.text-md {
+  font-size: var(--font-size-md);
+}
+
+.text-lg {
+  font-size: var(--font-size-lg);
+}
+
+.text-xl {
+  font-size: var(--font-size-xl);
+}
+
+/* Font weight utilities */
+.font-normal {
+  font-weight: var(--font-weight-normal);
+}
+
+.font-medium {
+  font-weight: var(--font-weight-medium);
+}
+
+.font-semibold {
+  font-weight: var(--font-weight-semibold);
+}
+
+.font-bold {
+  font-weight: var(--font-weight-bold);
+}
+
+/* Line height utilities */
+.leading-tight {
+  line-height: var(--line-height-tight);
+}
+
+.leading-normal {
+  line-height: var(--line-height-normal);
+}
+
+.leading-relaxed {
+  line-height: var(--line-height-relaxed);
+}
+
+/* Dashboard scaling behavior */
+.dashboard-left .widget,
+.dashboard-main .widget,
+.dashboard-right .widget {
+  transform-origin: top left;
+  transition: transform 0.2s ease-out;
+}
+
+/* Simplified Content Scaling - Let Flexbox handle layout, scale content */
+
+/* Large screens - optimal size */
+@media (min-width: 1400px) {
+  .dashboard-left .widget,
+  .dashboard-main .widget,
+  .dashboard-right .widget {
+    transform: none;
+  }
+}
+
+/* Medium screens - slight scale down */
+@media (max-width: 1399px) and (min-width: 1025px) {
+  .dashboard-left .widget {
+    transform: scale(0.98); /* Less aggressive scaling for left column */
+  }
+
+  .dashboard-main .widget,
+  .dashboard-right .widget {
+    transform: scale(0.95);
+  }
+}
+
+/* Tablet landscape - more compact */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .dashboard-left .widget {
+    transform: scale(0.95); /* Preserve readability */
+  }
+
+  .dashboard-main .widget,
+  .dashboard-right .widget {
+    transform: scale(0.9);
+  }
+}
+
+/* Mobile and tablet portrait - compact display */
+@media (max-width: 768px) {
+  .dashboard-left .widget {
+    transform: scale(0.9); /* Better spacing for compact widgets */
+    padding: var(--widget-gap); /* Restore normal padding on mobile */
+  }
+
+  .dashboard-main .widget,
+  .dashboard-right .widget {
+    transform: scale(0.85);
+  }
+
+  .dashboard-grid {
+    padding: 0.5rem;
+  }
+}
+
+/* Very small screens - maximum compactness */
+@media (max-width: 480px) {
+  .dashboard-left .widget {
+    transform: scale(0.85);
+  }
+
+  .dashboard-main .widget,
+  .dashboard-right .widget {
+    transform: scale(0.8);
+  }
 }

@@ -26,9 +26,7 @@ export default function GitHubFeed() {
   if (error || !activity) {
     return (
       <Widget title="Live Github Feed">
-        <p className="text-sm text-color-text-subdue">
-          Failed to load activity.
-        </p>
+        <p className="text-meta text-muted">Failed to load activity.</p>
       </Widget>
     );
   }
@@ -36,37 +34,39 @@ export default function GitHubFeed() {
   return (
     <Widget title="Live GitHub Feed">
       {activity.length === 0 ? (
-        <p className="text-sm text-color-text-subdue">No recent activity</p>
+        <p className="text-meta text-muted">No recent activity</p>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-micro">
           {activity.slice(0, 3).map((item) => (
-            <div key={item.id} className="flex justify-between items-start">
-              <div className="flex-1 min-w-0">
+            <div key={item.id} className="space-y-micro">
+              <div className="flex items-center justify-between">
                 <button
                   type="button"
-                  className="card-title text-left cursor-pointer hover:text-color-text-highlight transition-colors truncate"
+                  className="text-sm font-medium text-secondary text-left cursor-pointer hover:text-primary transition-colors truncate flex-1 min-w-0 leading-tight"
                   onClick={() => router.push("/projects")}
                 >
                   {item.repo}
                 </button>
-                <p className="text-sm text-color-text-paragraph">
-                  "{item.message}"
-                </p>
+                <div className="flex items-center gap-micro flex-shrink-0 ml-1">
+                  <div
+                    className={`w-1 h-1 rounded-full ${
+                      item.type === "commit"
+                        ? "bg-green-500"
+                        : item.type === "create"
+                          ? "bg-blue-500"
+                          : "bg-gray-500"
+                    }`}
+                  ></div>
+                  <span className="text-xxs text-muted">
+                    {formatDistanceToNow(new Date(item.timestamp), {
+                      addSuffix: false,
+                    })}
+                  </span>
+                </div>
               </div>
-              <div className="flex items-center gap-2 flex-shrink-0 ml-4">
-                <div
-                  className={`w-2 h-2 rounded-full ${
-                    item.type === "commit"
-                      ? "bg-green-500"
-                      : item.type === "create"
-                        ? "bg-blue-500"
-                        : "bg-gray-500"
-                  }`}
-                ></div>
-                <span className="text-xs text-color-text-subdue">
-                  {formatDistanceToNow(new Date(item.timestamp))} ago
-                </span>
-              </div>
+              <p className="text-xxs text-body line-clamp-2 leading-tight">
+                {item.message}
+              </p>
             </div>
           ))}
         </div>
