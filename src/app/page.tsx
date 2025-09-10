@@ -2,6 +2,7 @@ import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
 import { Suspense } from "react";
 import CommitActivityChart from "@/components/CommitActivityChart";
+import CurrentFocus from "@/components/CurrentFocus";
 import GitHubFeed from "@/components/GitHubFeed";
 import InvestmentPortfolio from "@/components/InvestmentPortfolio";
 import {
@@ -19,8 +20,8 @@ export default async function Home() {
   const posts = getAllPosts();
   return (
     <div className="page-container animate-entrance">
-      {/* Navigation at top */}
-      <header className="mb-10">
+      {/* Navigation at top - tighter spacing */}
+      <header className="mb-6">
         <Navigation />
       </header>
 
@@ -43,34 +44,37 @@ export default async function Home() {
 
         {/* Main Column - Core Feed & Output */}
         <div className="dashboard-main">
-
-                    <Suspense fallback={<ProjectsSkeleton />}>
+          <CurrentFocus />
+          <Suspense fallback={<ProjectsSkeleton />}>
             <SpotlightProjects />
           </Suspense>
-          
+        </div>
+
+        {/* Right Column - Insights & Philosophy */}
+        <div className="dashboard-right">
+          <InvestmentPortfolio />
           <Widget title="Featured Articles">
             {posts.length === 0 ? (
-              <div className="text-center py-8">
-                <p className="text-sm text-color-text-subdue mb-2">
-                  No blog posts yet
-                </p>
-                <p className="text-xs text-color-text-subdue">
+              <div className="text-center py-4">
+                <p className="text-meta text-muted mb-1">No blog posts yet</p>
+                <p className="text-xxs text-disabled">
                   Add markdown files to <code>src/posts/</code> to get started
                 </p>
               </div>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-content">
                 {posts.slice(0, 3).map((post) => (
                   <Link key={post.id} href={`/blog/${post.id}`}>
-                    <div className="card cursor-pointer">
-                      <h4 className="card-title">{post.title}</h4>
-                      <div className="card-meta">
-                        Published {formatDistanceToNow(new Date(post.date))} ago
-                        •{post.readingTime} min read •
-                        {post.language?.toUpperCase()}
+                    <div className="card-color-only cursor-pointer">
+                      <h4 className="card-title text-secondary font-medium leading-tight">
+                        {post.title}
+                      </h4>
+                      <div className="card-meta text-xxs text-meta">
+                        {formatDistanceToNow(new Date(post.date))} ago •{" "}
+                        {post.readingTime}m
                       </div>
                       {post.excerpt && (
-                        <p className="text-sm text-color-text-paragraph">
+                        <p className="text-xs text-body leading-normal line-clamp-2">
                           {post.excerpt}
                         </p>
                       )}
@@ -80,13 +84,6 @@ export default async function Home() {
               </div>
             )}
           </Widget>
-
-
-        </div>
-
-        {/* Right Column - Insights & Philosophy */}
-        <div className="dashboard-right">
-          <InvestmentPortfolio />
         </div>
       </main>
     </div>
