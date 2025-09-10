@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import CommitActivityChart from "@/components/CommitActivityChart";
 import CurrentFocus from "@/components/CurrentFocus";
+import GermanChallenge from "@/components/GermanChallenge";
 import GitHubFeed from "@/components/GitHubFeed";
 import InvestmentPortfolio from "@/components/InvestmentPortfolio";
 import {
@@ -45,6 +46,7 @@ export default async function Home() {
         {/* Main Column - Core Feed & Output */}
         <div className="dashboard-main">
           <CurrentFocus />
+          <GermanChallenge />
           <Suspense fallback={<ProjectsSkeleton />}>
             <SpotlightProjects />
           </Suspense>
@@ -63,7 +65,7 @@ export default async function Home() {
               </div>
             ) : (
               <div className="space-y-content">
-                {posts.slice(0, 3).map((post) => (
+                {posts.slice(0, 2).map((post) => (
                   <Link key={post.id} href={`/blog/${post.id}`}>
                     <div className="card-color-only cursor-pointer">
                       <h4 className="card-title text-secondary font-medium leading-tight">

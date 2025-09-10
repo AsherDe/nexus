@@ -16,7 +16,7 @@ export async function GET() {
     return NextResponse.json(
       {
         holdings: [],
-        todaysChangePercent: 0,
+        totalReturnPercent: 0,
         lastUpdated: Date.now(),
       },
       { status: 200 },

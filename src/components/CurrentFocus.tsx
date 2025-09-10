@@ -41,28 +41,14 @@ export default function CurrentFocus() {
 
         {/* Status */}
         <div className="space-y-2">
-          <div className="flex justify-between items-center">
-            <span className="text-xs text-color-text-subdue">Status</span>
-            <span className="text-xs text-color-text-highlight">
-              {currentProject.status}
-            </span>
-          </div>
-        </div>
-
-        {/* Tech Stack */}
-        <div className="border-t border-color-border pt-3">
-          <div className="space-y-2">
-            <span className="text-xs text-color-text-subdue">Tech Stack</span>
-            <div className="flex flex-wrap gap-1">
-              {currentProject.techStack.map((tech) => (
-                <span
-                  key={tech}
-                  className="text-xs px-2 py-1 bg-color-text-subdue/10 text-color-text-highlight rounded border border-color-border"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
+          {" "}
+          <div className="border-t border-color-border pt-3">
+            <div className="flex justify-between items-center">
+              <span className="text-xs text-color-text-subdue">Status</span>
+              <span className="text-xs text-color-text-highlight">
+                {currentProject.status}
+              </span>
+            </div>{" "}
           </div>
         </div>
 

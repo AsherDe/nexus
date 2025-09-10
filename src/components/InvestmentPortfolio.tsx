@@ -9,13 +9,14 @@ interface PortfolioHolding {
   symbol: string;
   name: string;
   allocation: number;
+  purchasePrice: number;
   currentPrice?: number;
-  changePercent?: number;
+  totalReturnPercent?: number;
 }
 
 interface PortfolioData {
   holdings: PortfolioHolding[];
-  todaysChangePercent: number;
+  totalReturnPercent: number;
   lastUpdated: number;
 }
 
@@ -97,7 +98,7 @@ export default function InvestmentPortfolio() {
     );
   }
 
-  const todaysChangePercent = portfolioData.todaysChangePercent ?? 0;
+  const totalReturnPercent = portfolioData.totalReturnPercent ?? 0;
 
   return (
     <Widget title="Investment Portfolio">
@@ -107,10 +108,10 @@ export default function InvestmentPortfolio() {
           <div className="flex justify-between items-center">
             <span className="text-xs text-color-text-subdue">Total Return</span>
             <span
-              className={`text-lg font-medium ${todaysChangePercent >= 0 ? "text-green-500" : "text-red-500"}`}
+              className={`text-lg font-medium ${totalReturnPercent >= 0 ? "text-green-500" : "text-red-500"}`}
             >
-              {todaysChangePercent >= 0 ? "+" : ""}
-              {todaysChangePercent.toFixed(2)}%
+              {totalReturnPercent >= 0 ? "+" : ""}
+              {totalReturnPercent.toFixed(2)}%
             </span>
           </div>
         </div>
@@ -130,10 +131,10 @@ export default function InvestmentPortfolio() {
                   </div>
                   <div className="text-right">
                     <div
-                      className={`text-sm font-medium ${holding.changePercent && holding.changePercent >= 0 ? "text-green-500" : "text-red-500"}`}
+                      className={`text-sm font-medium ${holding.totalReturnPercent && holding.totalReturnPercent >= 0 ? "text-green-500" : "text-red-500"}`}
                     >
-                      {holding.changePercent
-                        ? `${holding.changePercent >= 0 ? "+" : ""}${holding.changePercent.toFixed(2)}%`
+                      {holding.totalReturnPercent
+                        ? `${holding.totalReturnPercent >= 0 ? "+" : ""}${holding.totalReturnPercent.toFixed(2)}%`
                         : "0.00%"}
                     </div>
                   </div>

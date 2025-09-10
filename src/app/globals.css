@@ -409,25 +409,33 @@ pre code {
 }
 
 .dashboard-main .widget-container:first-child {
-  /* Spotlight Projects */
-  height: 280px; /* 1.4x base - prominent content */
+  /* Current Focus */
+  flex: 1; /* Equal space */
+  min-height: 160px; /* Larger minimum height */
 }
 
 .dashboard-main .widget-container:nth-child(2) {
-  /* Featured Articles */
-  flex: 1; /* Fill remaining space */
-  min-height: 200px; /* 1x base */
+  /* German Challenge */
+  flex: 1; /* Take equal space */
+  min-height: 160px; /* Minimum height */
+}
+
+.dashboard-main .widget-container:nth-child(3) {
+  /* Spotlight Projects */
+  flex: 2; /* More space for projects */
+  min-height: 180px; /* Flexible height */
 }
 
 .dashboard-right .widget-container:first-child {
   /* Investment Portfolio */
-  height: 240px; /* 1.2x base */
+  flex: 1; /* Fill remaining space */
+  min-height: 240px; /* 1.2x base */
 }
 
 .dashboard-right .widget-container:last-child {
   /* Fleeting Notes */
-  flex: 1; /* Fill remaining space */
-  min-height: 160px; /* 0.8x base */
+  flex: 1;
+  min-height: 220px; /* 0.8x base */
 }
 
 /* Responsive Adjustments - Flexbox handles most automatically */
@@ -618,7 +626,9 @@ pre code {
   padding: var(--widget-padding);
   /* NO shadows - completely flat */
   position: relative;
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
   /* Subtle background distinction only */
   flex: 1;
 }
@@ -707,7 +717,10 @@ pre code {
   border-radius: var(--border-radius);
   padding: var(--element-gap);
   /* No shadows */
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast);
 }
 
 .card:hover {
@@ -739,7 +752,9 @@ pre code {
   border: none;
   border-radius: var(--border-radius);
   padding: var(--element-gap);
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .card-lift-only:hover {
@@ -1121,7 +1136,7 @@ pre code {
 
 .infinite-scroll-container::before,
 .infinite-scroll-container::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   transform: translateY(-50%);

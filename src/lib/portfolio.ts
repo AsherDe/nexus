@@ -1,29 +1,22 @@
 // src/lib/portfolio.ts
 
-interface AlphaVantageGlobalQuote {
-  "01. symbol": string;
-  "05. price": string;
-  "09. change": string;
-  "10. change percent": string;
-}
-
 interface StockQuote {
   symbol: string;
   price: number;
-  changesPercentage: number;
 }
 
 interface PortfolioHolding {
   symbol: string;
   name: string;
   allocation: number;
+  purchasePrice: number; // Your original purchase price
   currentPrice?: number;
-  changePercent?: number;
+  totalReturnPercent?: number; // Total return since purchase
 }
 
 interface PortfolioData {
   holdings: PortfolioHolding[];
-  todaysChangePercent: number;
+  totalReturnPercent: number; // Changed from todaysChangePercent
   lastUpdated: number;
 }
 
@@ -36,7 +29,7 @@ async function fetchStockQuotes(symbols: string[]): Promise<StockQuote[]> {
       // Use GLOBAL_QUOTE endpoint for each symbol
       const response = await fetch(
         `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${apiKey}`,
-        { next: { revalidate: 3600 } } // Cache for 1 hour
+        { next: { revalidate: 3600 } }, // Cache for 1 hour
       );
 
       if (!response.ok) {
@@ -50,7 +43,6 @@ async function fetchStockQuotes(symbols: string[]): Promise<StockQuote[]> {
         quotes.push({
           symbol: globalQuote["01. symbol"],
           price: parseFloat(globalQuote["05. price"]),
-          changesPercentage: parseFloat(globalQuote["10. change percent"].replace("%", "")),
         });
       } else if (data["Note"]) {
         console.warn(`API rate limit likely exceeded for ${symbol}.`);
@@ -66,21 +58,27 @@ async function fetchStockQuotes(symbols: string[]): Promise<StockQuote[]> {
 }
 
 export async function getPortfolioData(): Promise<PortfolioData> {
-  const baseHoldings: Omit<PortfolioHolding, "currentPrice" | "changePercent">[] = [
+  const baseHoldings: Omit<
+    PortfolioHolding,
+    "currentPrice" | "totalReturnPercent"
+  >[] = [
     {
       symbol: "VTI",
       name: "Vanguard Total Stock Market",
       allocation: 40,
+      purchasePrice: 312, // Add your actual purchase price here
     },
     {
       symbol: "VXUS",
       name: "Vanguard Total International Stock",
       allocation: 36,
+      purchasePrice: 71.26, // Add your actual purchase price here
     },
     {
       symbol: "BND",
       name: "Vanguard Total Bond Market",
       allocation: 24,
+      purchasePrice: 73.67, // Add your actual purchase price here
     },
   ];
 
@@ -90,29 +88,36 @@ export async function getPortfolioData(): Promise<PortfolioData> {
   const holdings: PortfolioHolding[] = baseHoldings.map((holding) => {
     const quote = quotes.find((q) => q.symbol === holding.symbol);
 
+    // Calculate total return since purchase
+    const totalReturnPercent = quote?.price
+      ? ((quote.price - holding.purchasePrice) / holding.purchasePrice) * 100
+      : 0;
+
     return {
       ...holding,
       currentPrice: quote?.price,
-      changePercent: quote?.changesPercentage,
+      totalReturnPercent, // Total return since purchase
     };
   });
 
-  // 服务器端计算加权平均涨跌幅
-  const todaysChangePercent = holdings.reduce((sum, holding) => {
-    const holdingChangePercent = holding.changePercent || 0;
+  // Calculate weighted average total return
+  const totalReturnPercent = holdings.reduce((sum, holding) => {
+    const holdingTotalReturn = holding.totalReturnPercent || 0;
     const weight = holding.allocation / 100;
-    const contribution = holdingChangePercent * weight;
-    
-    console.log(`${holding.symbol}: ${holdingChangePercent}% × ${holding.allocation}% = ${contribution.toFixed(4)}%`);
-    
+    const contribution = holdingTotalReturn * weight;
+
+    console.log(
+      `${holding.symbol}: ${holdingTotalReturn.toFixed(4)}% × ${holding.allocation}% = ${contribution.toFixed(4)}%`,
+    );
+
     return sum + contribution;
   }, 0);
-  
-  console.log(`Total calculated change: ${todaysChangePercent.toFixed(4)}%`);
+
+  console.log(`Total portfolio return: ${totalReturnPercent.toFixed(4)}%`);
 
   return {
     holdings,
-    todaysChangePercent,
+    totalReturnPercent,
     lastUpdated: Date.now(),
   };
 }
@@ -128,7 +133,7 @@ export async function fetchPortfolioDataClient(): Promise<PortfolioData> {
     console.error("Client-side portfolio fetch failed:", error);
     return {
       holdings: [],
-      todaysChangePercent: 0,
+      totalReturnPercent: 0,
       lastUpdated: Date.now(),
     };
   }

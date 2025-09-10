@@ -12,15 +12,17 @@ export default function Widget({
   hover = true,
 }: WidgetProps) {
   return (
-    <div
-      className={`widget animate-widget-entrance ${hover ? "" : "hover:transform-none hover:shadow-none"} ${className}`}
-    >
+    <div className={`widget-container ${className}`}>
       {title && (
-        <div className="widget-header">
-          <h3 className="widget-title">{title}</h3>
+        <div className="widget-external-header">
+          <h3 className="widget-external-title">{title}</h3>
         </div>
       )}
-      {children}
+      <div
+        className={`widget animate-widget-entrance ${hover ? "" : "hover:transform-none hover:shadow-none"}`}
+      >
+        {children}
+      </div>
     </div>
   );
 }
