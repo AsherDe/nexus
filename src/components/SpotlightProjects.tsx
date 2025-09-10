@@ -2,36 +2,35 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import type { Project } from "@/lib/github";
+import { useCachedData } from "@/hooks/useCachedData";
 import { ProjectsSkeleton } from "./loading/WidgetSkeleton";
 import TechIcon from "./TechIcon";
 import Widget from "./Widget";
 
 export default function SpotlightProjects() {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function loadProjects() {
-      try {
-        const response = await fetch("/api/github/repos");
-        if (response.ok) {
-          const data = await response.json();
-          setProjects(data);
-        }
-      } catch (error) {
-        console.error("Error loading projects:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadProjects();
-  }, []);
+  const {
+    data: projects,
+    loading,
+    error,
+  } = useCachedData<Project[]>({
+    cacheKey: "spotlight-projects",
+    url: "/api/github/repos",
+    cacheDurationMinutes: 10,
+  });
 
   if (loading) {
     return <ProjectsSkeleton />;
+  }
+
+  if (error || !projects) {
+    return (
+      <Widget title="Spotlight Projects">
+        <p className="text-sm text-color-text-subdue text-center py-8">
+          Failed to load projects.
+        </p>
+      </Widget>
+    );
   }
 
   const featuredProjects = projects.filter((p) => p.featured);

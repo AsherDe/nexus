@@ -11,7 +11,7 @@ export default function ThemeToggle() {
 
   const applyTheme = (mode: ThemeMode) => {
     let actualTheme: ResolvedTheme;
-    
+
     if (mode === "auto") {
       actualTheme = window.matchMedia("(prefers-color-scheme: light)").matches
         ? "light"
@@ -19,7 +19,7 @@ export default function ThemeToggle() {
     } else {
       actualTheme = mode;
     }
-    
+
     setResolvedTheme(actualTheme);
     document.documentElement.setAttribute("data-theme", actualTheme);
   };
@@ -27,7 +27,7 @@ export default function ThemeToggle() {
   useEffect(() => {
     const savedMode = localStorage.getItem("theme-mode") as ThemeMode;
     const initialMode = savedMode || "auto";
-    
+
     setThemeMode(initialMode);
     applyTheme(initialMode);
 
@@ -40,7 +40,8 @@ export default function ThemeToggle() {
     };
 
     mediaQuery.addEventListener("change", handleSystemThemeChange);
-    return () => mediaQuery.removeEventListener("change", handleSystemThemeChange);
+    return () =>
+      mediaQuery.removeEventListener("change", handleSystemThemeChange);
   }, []);
 
   // 单独的effect监听themeMode变化
@@ -52,7 +53,8 @@ export default function ThemeToggle() {
       };
 
       mediaQuery.addEventListener("change", handleSystemThemeChange);
-      return () => mediaQuery.removeEventListener("change", handleSystemThemeChange);
+      return () =>
+        mediaQuery.removeEventListener("change", handleSystemThemeChange);
     }
   }, [themeMode]);
 
@@ -61,7 +63,7 @@ export default function ThemeToggle() {
     const currentIndex = modes.indexOf(themeMode);
     const nextIndex = (currentIndex + 1) % modes.length;
     const newMode = modes[nextIndex];
-    
+
     setThemeMode(newMode);
     localStorage.setItem("theme-mode", newMode);
     applyTheme(newMode);

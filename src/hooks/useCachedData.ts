@@ -22,7 +22,6 @@ export function useCachedData<T>({
 
   const loadData = useCallback(async () => {
     try {
-      setLoading(true);
       setError(null);
 
       const cachedItem = localStorage.getItem(cacheKey);
@@ -30,15 +29,21 @@ export function useCachedData<T>({
       const cacheExpiryMs = cacheDurationMinutes * 60 * 1000;
 
       if (cachedItem) {
-        const cached: CachedData<T> = JSON.parse(cachedItem);
-        const isExpired = now - cached.timestamp > cacheExpiryMs;
+        try {
+          const cached: CachedData<T> = JSON.parse(cachedItem);
+          const isExpired = now - cached.timestamp > cacheExpiryMs;
 
-        if (!isExpired) {
-          setData(cached.data);
-          setLoading(false);
-          return;
+          if (!isExpired) {
+            setData(cached.data);
+            setLoading(false);
+            return;
+          }
+        } catch {
+          localStorage.removeItem(cacheKey);
         }
       }
+
+      setLoading(true);
 
       const response = await fetch(url);
       if (!response.ok) {

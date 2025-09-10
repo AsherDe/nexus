@@ -1,37 +1,36 @@
 "use client";
 
 import { formatDistanceToNow } from "date-fns";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { RecentActivity } from "@/lib/github";
+import { useCachedData } from "../hooks/useCachedData";
 import { FeedSkeleton } from "./loading/WidgetSkeleton";
 import Widget from "./Widget";
 
 export default function GitHubFeed() {
-  const [activity, setActivity] = useState<RecentActivity[]>([]);
-  const [loading, setLoading] = useState(true);
   const router = useRouter();
-
-  useEffect(() => {
-    async function loadGitHubActivity() {
-      try {
-        const response = await fetch("/api/github/activity");
-        if (response.ok) {
-          const data = await response.json();
-          setActivity(data);
-        }
-      } catch (error) {
-        console.error("Error loading GitHub activity:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadGitHubActivity();
-  }, []);
+  const {
+    data: activity,
+    loading,
+    error,
+  } = useCachedData<RecentActivity[]>({
+    cacheKey: "github-activity",
+    url: "/api/github/activity",
+    cacheDurationMinutes: 5,
+  });
 
   if (loading) {
     return <FeedSkeleton />;
+  }
+
+  if (error || !activity) {
+    return (
+      <Widget title="Live Github Feed">
+        <p className="text-sm text-color-text-subdue">
+          Failed to load activity.
+        </p>
+      </Widget>
+    );
   }
 
   return (
@@ -46,7 +45,7 @@ export default function GitHubFeed() {
                 <button
                   type="button"
                   className="card-title text-left cursor-pointer hover:text-color-text-highlight transition-colors truncate"
-                  onClick={() => router.push('/projects')}
+                  onClick={() => router.push("/projects")}
                 >
                   {item.repo}
                 </button>

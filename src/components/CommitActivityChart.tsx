@@ -1,35 +1,34 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import type { CommitData } from "@/lib/github";
+import { useCachedData } from "@/hooks/useCachedData";
 import CommitChart from "./CommitChart";
 import { ChartSkeleton } from "./loading/WidgetSkeleton";
 import Widget from "./Widget";
 
 export default function CommitActivityChart() {
-  const [commitData, setCommitData] = useState<CommitData[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function loadCommitData() {
-      try {
-        const response = await fetch("/api/github/commits");
-        if (response.ok) {
-          const data = await response.json();
-          setCommitData(data);
-        }
-      } catch (error) {
-        console.error("Error loading commit data:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadCommitData();
-  }, []);
+  const {
+    data: commitData,
+    loading,
+    error,
+  } = useCachedData<CommitData[]>({
+    cacheKey: "commit-activity",
+    url: "/api/github/commits",
+    cacheDurationMinutes: 30,
+  });
 
   if (loading) {
     return <ChartSkeleton title="Commit Activity" />;
+  }
+
+  if (error || !commitData) {
+    return (
+      <Widget title="Commit Activity">
+        <p className="text-sm text-color-text-subdue">
+          Failed to load commit data.
+        </p>
+      </Widget>
+    );
   }
 
   return (

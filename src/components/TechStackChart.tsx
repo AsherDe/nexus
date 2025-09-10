@@ -1,35 +1,34 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import type { LanguageStats } from "@/lib/github";
+import { useCachedData } from "@/hooks/useCachedData";
 import LanguageChart from "./LanguageChart";
 import { ChartSkeleton } from "./loading/WidgetSkeleton";
 import Widget from "./Widget";
 
 export default function TechStackChart() {
-  const [languageStats, setLanguageStats] = useState<LanguageStats>({});
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function loadLanguageStats() {
-      try {
-        const response = await fetch("/api/github/languages");
-        if (response.ok) {
-          const data = await response.json();
-          setLanguageStats(data);
-        }
-      } catch (error) {
-        console.error("Error loading language stats:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadLanguageStats();
-  }, []);
+  const {
+    data: languageStats,
+    loading,
+    error,
+  } = useCachedData<LanguageStats>({
+    cacheKey: "tech-stack",
+    url: "/api/github/languages",
+    cacheDurationMinutes: 60,
+  });
 
   if (loading) {
     return <ChartSkeleton title="Tech Stack" />;
+  }
+
+  if (error || !languageStats) {
+    return (
+      <Widget title="Tech Stack">
+        <p className="text-sm text-color-text-subdue">
+          Failed to load language stats.
+        </p>
+      </Widget>
+    );
   }
 
   return (
