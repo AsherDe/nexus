@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 type ThemeMode = "auto" | "light" | "dark";
 type ResolvedTheme = "light" | "dark";
@@ -9,7 +9,7 @@ export default function ThemeToggle() {
   const [themeMode, setThemeMode] = useState<ThemeMode>("auto");
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("dark");
 
-  const applyTheme = (mode: ThemeMode) => {
+  const applyTheme = useCallback((mode: ThemeMode) => {
     let actualTheme: ResolvedTheme;
 
     if (mode === "auto") {
@@ -22,7 +22,7 @@ export default function ThemeToggle() {
 
     setResolvedTheme(actualTheme);
     document.documentElement.setAttribute("data-theme", actualTheme);
-  };
+  }, []);
 
   useEffect(() => {
     const savedMode = localStorage.getItem("theme-mode") as ThemeMode;
@@ -42,7 +42,7 @@ export default function ThemeToggle() {
     mediaQuery.addEventListener("change", handleSystemThemeChange);
     return () =>
       mediaQuery.removeEventListener("change", handleSystemThemeChange);
-  }, []);
+  }, [applyTheme]);
 
   // 单独的effect监听themeMode变化
   useEffect(() => {
@@ -56,7 +56,7 @@ export default function ThemeToggle() {
       return () =>
         mediaQuery.removeEventListener("change", handleSystemThemeChange);
     }
-  }, [themeMode]);
+  }, [themeMode, applyTheme]);
 
   const cycleTheme = () => {
     const modes: ThemeMode[] = ["auto", "light", "dark"];
