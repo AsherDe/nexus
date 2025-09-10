@@ -14,8 +14,12 @@ export async function GET() {
     console.error('Portfolio API error:', error);
     
     return NextResponse.json(
-      { error: 'Failed to fetch portfolio data' },
-      { status: 500 }
+      { 
+        holdings: [], 
+        todaysChangePercent: 0, 
+        lastUpdated: Date.now() 
+      },
+      { status: 200 }
     );
   }
 }

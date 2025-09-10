@@ -8,18 +8,14 @@ import { fetchPortfolioDataClient } from '@/lib/portfolio';
 interface PortfolioHolding {
   symbol: string;
   name: string;
-  buyPrice: number;
   allocation: number;
   currentPrice?: number;
-  change?: number;
   changePercent?: number;
 }
 
 interface PortfolioData {
   holdings: PortfolioHolding[];
-  totalValue: number;
-  totalReturn: number;
-  totalReturnPercent: number;
+  todaysChangePercent: number;
   lastUpdated: number;
 }
 
@@ -100,7 +96,7 @@ export default function InvestmentPortfolio() {
     );
   }
 
-  const totalReturnPercent = portfolioData.totalReturnPercent;
+  const todaysChangePercent = portfolioData.todaysChangePercent ?? 0;
 
   return (
     <Widget title="Investment Portfolio">
@@ -109,8 +105,8 @@ export default function InvestmentPortfolio() {
         <div className="space-y-2">
           <div className="flex justify-between items-center">
             <span className="text-xs text-color-text-subdue">Total Return</span>
-            <span className={`text-lg font-medium ${totalReturnPercent >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-              {totalReturnPercent >= 0 ? '+' : ''}{totalReturnPercent.toFixed(2)}%
+            <span className={`text-lg font-medium ${todaysChangePercent >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+              {todaysChangePercent >= 0 ? '+' : ''}{todaysChangePercent.toFixed(2)}%
             </span>
           </div>
         </div>
