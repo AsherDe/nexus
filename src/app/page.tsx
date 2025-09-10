@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import CommitActivityChart from "@/components/CommitActivityChart";
 import GitHubFeed from "@/components/GitHubFeed";
-import InvestmentPhilosophy from "@/components/InvestmentPhilosophy";
+import InvestmentPortfolio from "@/components/InvestmentPortfolio";
 import {
   ChartSkeleton,
   FeedSkeleton,
@@ -86,7 +86,7 @@ export default async function Home() {
 
         {/* Right Column - Insights & Philosophy */}
         <div className="dashboard-right">
-          <InvestmentPhilosophy />
+          <InvestmentPortfolio />
         </div>
       </main>
     </div>
