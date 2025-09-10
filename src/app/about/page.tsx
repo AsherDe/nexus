@@ -276,35 +276,44 @@ export default function About() {
           <Widget title={
             <div className="flex items-center gap-2">
               <Target className="w-5 h-5" />
-              <span>Principles</span>
+              <span>Core Values</span>
             </div>
           }>
             <div className="space-y-4">
               <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm">🧠</span>
-                  <h4 className="text-sm font-medium text-color-text-highlight">Deep Work</h4>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-lg">🏗️</span>
+                  <h4 className="text-sm font-medium text-color-text-highlight">Knowledge Architect</h4>
                 </div>
-                <p className="text-xs text-color-text-paragraph">
-                  Belief in focused, uninterrupted work to solve complex problems.
+                <p className="text-xs text-color-text-paragraph ml-7">
+                  Creating order and clarity from complexity, building pathways to understanding.
                 </p>
               </div>
               <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm">🌱</span>
-                  <h4 className="text-sm font-medium text-color-text-highlight">Continuous Learning</h4>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-lg">🌉</span>
+                  <h4 className="text-sm font-medium text-color-text-highlight">Cross-Domain Connections</h4>
                 </div>
-                <p className="text-xs text-color-text-paragraph">
-                  A commitment to daily learning and skill compounding.
+                <p className="text-xs text-color-text-paragraph ml-7">
+                  Bridging disparate fields to discover innovation at their intersections.
                 </p>
               </div>
               <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm">🤝</span>
-                  <h4 className="text-sm font-medium text-color-text-highlight">Open Collaboration</h4>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-lg">❤️</span>
+                  <h4 className="text-sm font-medium text-color-text-highlight">Human-Centric Tech</h4>
                 </div>
-                <p className="text-xs text-color-text-paragraph">
-                  Valuing transparent and constructive teamwork.
+                <p className="text-xs text-color-text-paragraph ml-7">
+                  Ensuring technology serves fundamental human needs and dignity.
+                </p>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-lg">🎯</span>
+                  <h4 className="text-sm font-medium text-color-text-highlight">Independent Thinking</h4>
+                </div>
+                <p className="text-xs text-color-text-paragraph ml-7">
+                  Questioning standard answers and constructing unique conceptual frameworks.
                 </p>
               </div>
             </div>
