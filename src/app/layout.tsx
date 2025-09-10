@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import ThemeToggle from "@/components/ThemeToggle";
+import { Analytics } from "@vercel/analytics/next";
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body className={jetbrainsMono.variable}>
         <ThemeToggle />
         {children}
+        <Analytics />
       </body>
     </html>
   );
