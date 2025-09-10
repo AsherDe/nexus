@@ -218,12 +218,12 @@ pre code {
   align-items: start;
 }
 
-/* Dashboard Grid - 3-Column Layout (Left Status | Main Feed | Right Insights) */
+/* Dashboard Flex - Dynamic 3-Column Layout (Left Status | Main Feed | Right Insights) */
 .dashboard-grid {
-  display: grid;
-  grid-template-columns: minmax(240px, 1fr) minmax(400px, 2fr) minmax(280px, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: var(--widget-gap);
-  align-items: start;
+  align-items: flex-start;
   max-width: 1400px;
   max-height: calc(100vh - 120px);
   margin: 0 auto;
@@ -232,110 +232,217 @@ pre code {
 
 /* Left Column - Status Overview */
 .dashboard-left {
+  flex: 1 1 280px; /* grow shrink basis */
   display: flex;
   flex-direction: column;
   gap: var(--widget-gap);
   max-height: calc(100vh - 120px);
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.dashboard-left .widget {
-  flex-shrink: 0;
+  overflow: hidden;
+  min-width: 240px;
 }
 
 /* Main Column - Core Feed & Output */
 .dashboard-main {
+  flex: 2 1 400px; /* grow shrink basis - gets 2x space */
   display: flex;
   flex-direction: column;
   gap: var(--widget-gap);
   max-height: calc(100vh - 120px);
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.dashboard-main .widget {
-  flex-shrink: 0;
+  overflow: hidden;
+  min-width: 350px;
 }
 
 /* Right Column - Insights & Philosophy */
 .dashboard-right {
+  flex: 1 1 300px; /* grow shrink basis */
   display: flex;
   flex-direction: column;
   gap: var(--widget-gap);
   max-height: calc(100vh - 120px);
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
+  min-width: 260px;
 }
 
+/* Widget Base Styling - Content-driven heights */
+.dashboard-left .widget,
+.dashboard-main .widget,
 .dashboard-right .widget {
-  flex-shrink: 0;
+  overflow: hidden;
+  transform-origin: top left;
+  width: 100%;
+  position: relative;
+  height: auto;
+  min-height: fit-content;
 }
 
+/* Modular Height System - 200px base rhythm */
+.dashboard-left .widget:nth-child(1) { /* GitHub Feed */
+  height: 160px; /* 0.8x base */
+}
+
+.dashboard-left .widget:nth-child(2) { /* Commit Activity */
+  height: 180px; /* 0.9x base */
+}
+
+.dashboard-left .widget:nth-child(3) { /* Tech Stack */
+  flex: 1; /* Fill remaining space */
+  min-height: 140px;
+}
+
+.dashboard-main .widget:first-child { /* Spotlight Projects */
+  height: 280px; /* 1.4x base - prominent content */
+}
+
+.dashboard-main .widget:nth-child(2) { /* Featured Articles */
+  flex: 1; /* Fill remaining space */
+  min-height: 200px; /* 1x base */
+}
+
+.dashboard-right .widget:first-child { /* Investment Philosophy */
+  height: 240px; /* 1.2x base */
+}
+
+.dashboard-right .widget:last-child { /* Fleeting Notes */
+  flex: 1; /* Fill remaining space */
+  min-height: 160px; /* 0.8x base */
+}
+
+/* Responsive Adjustments - Flexbox handles most automatically */
+
+/* When space is tight, adjust column basis and heights proportionally */
 @media (max-width: 1200px) {
-  .dashboard-grid {
-    grid-template-columns: minmax(200px, 1fr) minmax(300px, 2fr);
-    max-width: 1000px;
-  }
-
   .dashboard-left {
-    grid-column: 1;
-    grid-row: 1;
+    flex-basis: 260px;
   }
-
+  
   .dashboard-main {
-    grid-column: 2;
-    grid-row: 1;
+    flex-basis: 360px;
   }
-
+  
   .dashboard-right {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--widget-gap);
+    flex-basis: 280px;
   }
+  
+  /* Scale down the modular heights for tighter spaces */
+  .dashboard-left .widget:nth-child(1) { height: 140px; }
+  .dashboard-left .widget:nth-child(2) { height: 160px; }
+  .dashboard-main .widget:first-child { height: 250px; }
+  .dashboard-right .widget:first-child { height: 200px; }
 }
 
+/* Mobile: Force single column, remove height restrictions */
 @media (max-width: 768px) {
   .dashboard-grid {
-    grid-template-columns: 1fr;
-    max-width: 100%;
+    flex-direction: column;
+    max-height: none;
+    gap: calc(var(--widget-gap) * 0.8);
   }
 
   .dashboard-left,
   .dashboard-main,
   .dashboard-right {
-    grid-column: 1;
-    display: flex;
-    flex-direction: column;
-    gap: var(--widget-gap);
+    flex: none;
+    max-height: none;
+    min-width: 100%;
+  }
+
+  /* Mobile heights - compact but readable */
+  .dashboard-left .widget:nth-child(1),
+  .dashboard-left .widget:nth-child(2),
+  .dashboard-left .widget:nth-child(3) {
+    height: 120px;
+    flex: none;
+  }
+
+  .dashboard-main .widget:first-child {
+    height: 200px;
+  }
+  
+  .dashboard-main .widget:nth-child(2) {
+    height: 180px;
+    flex: none;
+  }
+
+  .dashboard-right .widget:first-child {
+    height: 160px;
+  }
+  
+  .dashboard-right .widget:last-child {
+    height: 120px;
+    flex: none;
   }
 }
 
-/* Widget Size Classes */
-.widget-wide {
-  grid-column: span 2;
+/* Content Balance - Glance design principles */
+
+/* Ensure visual harmony between columns */
+.dashboard-left .widget {
+  /* Status widgets - compact info display */
+  font-size: 0.9rem;
+  padding: calc(var(--widget-gap) * 0.8); /* Reduced padding for tighter layout */
 }
 
-.widget-full {
-  grid-column: span 3;
+.dashboard-left .widget .widget-header {
+  margin-bottom: 0.8rem; /* Tighter header spacing */
 }
 
-@media (max-width: 1199px) {
-  .widget-wide {
-    grid-column: span 2;
-  }
-  .widget-full {
-    grid-column: span 2;
-  }
+.dashboard-left .widget .space-y-2 > *,
+.dashboard-left .widget .space-y-3 > * {
+  margin-top: 0.7rem; /* Slightly more breathing room */
 }
 
-@media (max-width: 767px) {
-  .widget-wide,
-  .widget-full {
-    grid-column: span 1;
-  }
+.dashboard-left .widget .space-y-2 > *:first-child,
+.dashboard-left .widget .space-y-3 > *:first-child {
+  margin-top: 0;
+}
+
+/* Specific adjustments for GitHub Feed items */
+.dashboard-left .widget .space-y-1 > * {
+  margin-top: 0.3rem;
+}
+
+.dashboard-left .widget .space-y-1 > *:first-child {
+  margin-top: 0;
+}
+
+/* Compact styling for left column charts and stats */
+.dashboard-left .widget .text-base {
+  font-size: 0.9rem; /* Smaller stats numbers */
+}
+
+.dashboard-left .widget .text-xs {
+  font-size: 0.7rem; /* Even smaller labels */
+}
+
+.dashboard-left .widget .flex.justify-between.items-center {
+  margin-bottom: 0.75rem; /* Tighter spacing for stats rows */
+}
+
+.dashboard-left .widget canvas {
+  margin-top: 0.5rem; /* Reduce chart top margin */
+}
+
+.dashboard-main .widget {
+  /* Main content - standard readability */
+  font-size: 1rem;
+}
+
+.dashboard-right .widget {
+  /* Insights - comfortable reading */
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Dynamic content adaptation */
+.dashboard-main .widget:first-child {
+  /* Spotlight Projects - consistent styling */
+  background: var(--color-widget-background);
+  border: 1px solid var(--color-separator);
+}
+
+.dashboard-right .widget:first-child {
+  /* Philosophy - text-heavy content */
+  line-height: 1.6;
 }
 
 /* Widget System - Glance Style */
@@ -818,4 +925,76 @@ pre code {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Dashboard scaling behavior */
+.dashboard-left .widget,
+.dashboard-main .widget,
+.dashboard-right .widget {
+  transform-origin: top left;
+  transition: transform 0.2s ease-out;
+}
+
+/* Simplified Content Scaling - Let Flexbox handle layout, scale content */
+
+/* Large screens - optimal size */
+@media (min-width: 1400px) {
+  .dashboard-left .widget,
+  .dashboard-main .widget,
+  .dashboard-right .widget {
+    transform: none;
+  }
+}
+
+/* Medium screens - slight scale down */
+@media (max-width: 1399px) and (min-width: 1025px) {
+  .dashboard-left .widget {
+    transform: scale(0.98); /* Less aggressive scaling for left column */
+  }
+  
+  .dashboard-main .widget,
+  .dashboard-right .widget {
+    transform: scale(0.95);
+  }
+}
+
+/* Tablet landscape - more compact */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .dashboard-left .widget {
+    transform: scale(0.95); /* Preserve readability */
+  }
+  
+  .dashboard-main .widget,
+  .dashboard-right .widget {
+    transform: scale(0.9);
+  }
+}
+
+/* Mobile and tablet portrait - compact display */
+@media (max-width: 768px) {
+  .dashboard-left .widget {
+    transform: scale(0.9); /* Better spacing for compact widgets */
+    padding: var(--widget-gap); /* Restore normal padding on mobile */
+  }
+  
+  .dashboard-main .widget,
+  .dashboard-right .widget {
+    transform: scale(0.85);
+  }
+
+  .dashboard-grid {
+    padding: 0.5rem;
+  }
+}
+
+/* Very small screens - maximum compactness */
+@media (max-width: 480px) {
+  .dashboard-left .widget {
+    transform: scale(0.85);
+  }
+  
+  .dashboard-main .widget,
+  .dashboard-right .widget {
+    transform: scale(0.8);
+  }
 }
