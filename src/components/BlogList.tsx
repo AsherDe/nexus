@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { format } from "date-fns";
 import Link from "next/link";
-import { useTranslations, useLocale } from "next-intl";
+import { useScopedI18n, useCurrentLocale } from "@/locales/client";
 import type { BlogPostMeta } from "@/lib/blog";
 
 interface BlogListProps {
@@ -11,8 +11,8 @@ interface BlogListProps {
 }
 
 export default function BlogList({ posts }: BlogListProps) {
-  const t = useTranslations("blog");
-  const locale = useLocale();
+  const t = useScopedI18n("blog");
+  const locale = useCurrentLocale();
   const [showAllLanguages, setShowAllLanguages] = useState(false);
 
   const filteredPosts = showAllLanguages

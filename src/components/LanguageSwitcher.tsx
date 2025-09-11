@@ -1,19 +1,12 @@
 "use client";
 
-import { useLocale } from "next-intl";
-import { useRouter, usePathname } from "next/navigation";
-import { locales } from "@/i18n/request";
+import { useCurrentLocale, useChangeLocale } from "@/locales/client";
+
+const locales = ["en", "de"] as const;
 
 export default function LanguageSwitcher() {
-  const locale = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
-
-  const switchLocale = (newLocale: string) => {
-    const currentPathWithoutLocale = pathname.replace(`/${locale}`, "");
-    const newPath = `/${newLocale}${currentPathWithoutLocale}`;
-    router.push(newPath);
-  };
+  const locale = useCurrentLocale();
+  const changeLocale = useChangeLocale();
 
   return (
     <div className="language-switcher">
@@ -21,7 +14,7 @@ export default function LanguageSwitcher() {
         <button
           key={loc}
           type="button"
-          onClick={() => switchLocale(loc)}
+          onClick={() => changeLocale(loc)}
           className={`text-xs px-2 py-1 rounded transition-colors ${
             locale === loc
               ? "bg-gray-700 text-white"

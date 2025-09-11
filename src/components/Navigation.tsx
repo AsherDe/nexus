@@ -3,11 +3,11 @@
 import { clsx } from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useScopedI18n } from "@/locales/client";
 
 export default function Navigation() {
   const pathname = usePathname();
-  const t = useTranslations("navigation");
+  const t = useScopedI18n("navigation");
 
   return (
     <nav className="nav animate-entrance">
