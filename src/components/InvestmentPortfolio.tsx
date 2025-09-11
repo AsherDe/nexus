@@ -99,21 +99,29 @@ export default function InvestmentPortfolio() {
   }
 
   const totalReturnPercent = portfolioData.totalReturnPercent ?? 0;
+  
+  // Calculate holding period from start date
+  const startDate = new Date('2025-08-21');
+  const today = new Date();
+  const holdingDays = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
 
   return (
     <Widget title="Investment Portfolio">
       <div className="space-y-4">
         {/* Portfolio Summary */}
-        <div className="space-y-2">
-          <div className="flex justify-between items-center">
-            <span className="text-xs text-color-text-subdue">Total Return</span>
-            <span
-              className={`text-lg font-medium ${totalReturnPercent >= 0 ? "text-green-500" : "text-red-500"}`}
-            >
-              {totalReturnPercent >= 0 ? "+" : ""}
-              {totalReturnPercent.toFixed(2)}%
-            </span>
+        <div className="flex justify-between items-center">
+          <div>
+            <div className="text-xs text-color-text-subdue">Total Return</div>
+            <div className="text-xs text-color-text-muted">
+              {holdingDays} days (since Aug 21)
+            </div>
           </div>
+          <span
+            className={`text-lg font-medium ${totalReturnPercent >= 0 ? "text-green-500" : "text-red-500"}`}
+          >
+            {totalReturnPercent >= 0 ? "+" : ""}
+            {totalReturnPercent.toFixed(2)}%
+          </span>
         </div>
 
         <div className="border-t border-color-border pt-3">
