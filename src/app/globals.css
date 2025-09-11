@@ -1380,10 +1380,12 @@ pre code {
   .dashboard-left,
   .dashboard-main,
   .dashboard-right {
-    flex: none;
+    flex: 1; /* Equal width columns on mobile */
     max-height: none; /* Remove height restrictions */
     overflow: visible;
-    min-width: 100%;
+    width: 100%; /* Full width */
+    min-width: 0; /* Allow shrinking */
+    max-width: none; /* Remove width restrictions */
     margin-bottom: var(--widget-gap);
   }
 
