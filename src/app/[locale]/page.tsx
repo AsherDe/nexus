@@ -16,10 +16,10 @@ import SpotlightProjects from "@/components/SpotlightProjects";
 import TechStackChart from "@/components/TechStackChart";
 import Widget from "@/components/Widget";
 import { getAllPosts } from "@/lib/blog";
-import { getTranslations } from "next-intl/server";
+import { getScopedI18n } from "@/locales/server";
 
 export default async function Home() {
-  const t = await getTranslations("widgets.articles");
+  const t = await getScopedI18n("widgets.articles");
   const posts = getAllPosts();
   return (
     <div className="page-container animate-entrance">
