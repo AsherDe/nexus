@@ -56,7 +56,7 @@ const germanLevels: GermanLevel[] = [
 ];
 
 export default function GermanChallenge() {
-  const currentVocab = 96;
+  const currentVocab = 107;
   const currentLevel = "A1";
   const targetLevel = "C1";
   const targetVocab = 5000;
