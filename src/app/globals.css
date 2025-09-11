@@ -440,77 +440,32 @@ pre code {
 
 /* Responsive Adjustments - Flexbox handles most automatically */
 
-/* When space is tight, adjust column basis and heights proportionally */
-@media (max-width: 1200px) {
+/* Large desktop screens - natural layout optimization */
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .dashboard-grid {
+    max-width: 1300px;
+  }
+  
   .dashboard-left {
-    flex-basis: 160px; /* 0.618 ratio maintained */
+    flex-basis: 180px;
   }
 
   .dashboard-main {
-    flex-basis: 260px; /* 1 ratio maintained */
+    flex-basis: 300px;
   }
 
   .dashboard-right {
-    flex-basis: 160px; /* 0.618 ratio maintained */
+    flex-basis: 180px;
   }
 
-  /* Scale down the modular heights for tighter spaces */
-  .dashboard-left .widget-container:nth-child(1) {
-    height: 140px;
-  }
-  .dashboard-left .widget-container:nth-child(2) {
-    height: 160px;
-  }
-  .dashboard-main .widget-container:first-child {
-    height: 250px;
-  }
-  .dashboard-right .widget-container:first-child {
-    height: 200px;
+  /* Natural content spacing - no fixed heights */
+  .dashboard-left .widget,
+  .dashboard-main .widget,
+  .dashboard-right .widget {
+    padding: var(--widget-padding);
   }
 }
 
-/* Mobile: Force single column, remove height restrictions */
-@media (max-width: 768px) {
-  .dashboard-grid {
-    flex-direction: column;
-    max-height: none;
-    gap: calc(var(--widget-gap) * 0.8);
-  }
-
-  .dashboard-left,
-  .dashboard-main,
-  .dashboard-right {
-    flex: none;
-    max-height: none;
-    min-width: 100%;
-  }
-
-  /* Mobile heights - compact but readable */
-  .dashboard-left .widget-container:nth-child(1),
-  .dashboard-left .widget-container:nth-child(2),
-  .dashboard-left .widget-container:nth-child(3) {
-    height: 120px;
-    flex: none;
-  }
-
-  .dashboard-main .widget-container:first-child {
-    height: 200px;
-  }
-
-  .dashboard-main .widget-container:nth-child(2) {
-    height: 180px;
-    flex: none;
-  }
-
-  .dashboard-right .widget-container:first-child {
-    height: 160px;
-  }
-
-  .dashboard-right .widget-container:last-child {
-    height: 120px;
-    flex: none;
-  }
-}
 
 /* Content Balance - High Information Density */
 
@@ -902,7 +857,16 @@ pre code {
   color: var(--color-primary);
 }
 
-/* Responsive Design */
+/* Additional Responsive Design Improvements */
+
+/* Ultra-wide screens - prevent content from becoming too wide */
+@media (min-width: 1600px) {
+  .dashboard-grid {
+    max-width: 1500px;
+  }
+}
+
+/* General responsive improvements */
 @media (max-width: 768px) {
   .page-container {
     padding: 1rem;
@@ -918,6 +882,17 @@ pre code {
     right: 1rem;
     width: 40px;
     height: 40px;
+  }
+
+  /* Ensure all widget content flows naturally */
+  .widget {
+    min-height: auto;
+    height: auto;
+  }
+  
+  .widget-container {
+    height: auto !important;
+    min-height: auto !important;
   }
 }
 
@@ -1282,74 +1257,133 @@ pre code {
   line-height: var(--line-height-relaxed);
 }
 
-/* Dashboard scaling behavior */
+/* Modern Responsive Design - Natural Content Reflow */
 .dashboard-left .widget,
 .dashboard-main .widget,
 .dashboard-right .widget {
-  transform-origin: top left;
-  transition: transform 0.2s ease-out;
+  /* Remove all scaling - let content flow naturally */
+  transform: none;
+  transition: none;
 }
 
-/* Simplified Content Scaling - Let Flexbox handle layout, scale content */
-
-/* Large screens - optimal size */
-@media (min-width: 1400px) {
+/* iPad Pro (landscape) - 1024px and up */
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .dashboard-grid {
+    max-width: 1200px;
+    gap: calc(var(--widget-gap) * 0.9);
+  }
+  
+  /* Slightly reduce padding for better space utilization */
   .dashboard-left .widget,
   .dashboard-main .widget,
   .dashboard-right .widget {
-    transform: none;
+    padding: calc(var(--widget-padding) * 0.9);
+  }
+  
+  /* Adjust font sizes naturally */
+  :root {
+    --font-size-base: 0.95rem;
+    --widget-padding: 16px;
   }
 }
 
-/* Medium screens - slight scale down */
-@media (max-width: 1399px) and (min-width: 1025px) {
-  .dashboard-left .widget {
-    transform: scale(0.98); /* Less aggressive scaling for left column */
+/* iPad (portrait) and similar tablets - 768px to 1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .dashboard-grid {
+    flex-direction: column;
+    max-height: none;
+    gap: var(--widget-gap);
+    padding: var(--widget-gap);
   }
 
+  .dashboard-left,
+  .dashboard-main,
+  .dashboard-right {
+    flex: none;
+    max-height: none;
+    min-width: 100%;
+    margin-bottom: calc(var(--widget-gap) * 1.5);
+  }
+
+  .dashboard-right {
+    margin-bottom: 0;
+  }
+
+  /* Natural spacing and typography for tablets */
+  :root {
+    --widget-padding: 20px;
+    --font-size-base: 1rem;
+    --element-gap: 14px;
+  }
+
+  .dashboard-left .widget,
   .dashboard-main .widget,
   .dashboard-right .widget {
-    transform: scale(0.95);
+    padding: var(--widget-padding);
   }
 }
 
-/* Tablet landscape - more compact */
-@media (max-width: 1024px) and (min-width: 769px) {
-  .dashboard-left .widget {
-    transform: scale(0.95); /* Preserve readability */
-  }
-
+/* Mobile phones - 767px and below */
+@media (max-width: 767px) {
+  .dashboard-left .widget,
   .dashboard-main .widget,
   .dashboard-right .widget {
-    transform: scale(0.9);
-  }
-}
-
-/* Mobile and tablet portrait - compact display */
-@media (max-width: 768px) {
-  .dashboard-left .widget {
-    transform: scale(0.9); /* Better spacing for compact widgets */
-    padding: var(--widget-gap); /* Restore normal padding on mobile */
-  }
-
-  .dashboard-main .widget,
-  .dashboard-right .widget {
-    transform: scale(0.85);
+    transform: none; /* No scaling - natural content flow */
+    padding: var(--widget-padding);
   }
 
   .dashboard-grid {
-    padding: 0.5rem;
+    padding: var(--widget-gap);
+  }
+
+  /* Mobile-optimized typography and spacing */
+  :root {
+    --widget-padding: 16px;
+    --font-size-base: 0.95rem;
+    --element-gap: 12px;
+    --content-gap: 8px;
+  }
+
+  /* Natural heading hierarchy for mobile */
+  h1 {
+    font-size: var(--font-size-lg);
+  }
+  h2 {
+    font-size: var(--font-size-md);
+  }
+  h3 {
+    font-size: var(--font-size-base);
+  }
+
+  .widget {
+    padding: var(--widget-padding);
   }
 }
 
-/* Very small screens - maximum compactness */
+/* Small mobile screens - 480px and below */
 @media (max-width: 480px) {
-  .dashboard-left .widget {
-    transform: scale(0.85);
+  .dashboard-grid {
+    padding: calc(var(--widget-gap) * 0.75);
   }
 
+  /* Compact but readable design for small screens */
+  :root {
+    --widget-padding: 12px;
+    --font-size-base: 0.9rem;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.85rem;
+    --element-gap: 10px;
+    --content-gap: 6px;
+  }
+
+  .dashboard-left .widget,
   .dashboard-main .widget,
   .dashboard-right .widget {
-    transform: scale(0.8);
+    padding: var(--widget-padding);
   }
+
+  /* Optimize typography for small screens */
+  h1 { font-size: var(--font-size-md); }
+  h2 { font-size: var(--font-size-base); }
+  h3 { font-size: var(--font-size-sm); }
 }
