@@ -1,0 +1,47 @@
+{
+  "navigation": {
+    "home": "Home",
+    "blog": "Blog",
+    "projects": "Projects",
+    "about": "About"
+  },
+  "widgets": {
+    "github": {
+      "title": "GitHub Activity",
+      "repositories": "Repositories",
+      "commits": "commits",
+      "stars": "stars",
+      "forks": "forks"
+    },
+    "investment": {
+      "title": "Investment Portfolio",
+      "totalReturn": "Total Return",
+      "holdingPeriod": "Holding Period",
+      "days": "days"
+    },
+    "articles": {
+      "title": "Featured Articles"
+    },
+    "weather": {
+      "title": "Weather"
+    },
+    "challenges": {
+      "title": "German Challenge"
+    },
+    "rss": {
+      "title": "RSS News"
+    },
+    "events": {
+      "title": "Recent Events"
+    }
+  },
+  "blog": {
+    "readingTime": "min read",
+    "backToBlog": "← Back to Blog",
+    "allPosts": "All Posts"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error loading data"
+  }
+}
