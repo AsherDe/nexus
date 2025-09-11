@@ -184,8 +184,14 @@ export default function GermanChallenge() {
           </div>
         </div>
 
-        {/* Daily Target - Simplified */}
-        <div className="flex justify-between items-center bg-color-popover-background rounded border border-color-separator p-2">
+        {/* Daily Target - Background depth instead of border */}
+        <div 
+          className="flex justify-between items-center rounded p-2" 
+          style={{
+            backgroundColor: 'var(--color-separator)',
+            filter: 'brightness(1.1)'
+          }}
+        >
           <div>
             <div className="text-xs font-medium text-secondary">
               Daily Target: {dailyTarget} words
@@ -202,15 +208,15 @@ export default function GermanChallenge() {
                 <div
                   key={level.level}
                   className={`
-                    w-4 h-4 rounded-sm text-xxs flex items-center justify-center border transition-all
+                    w-4 h-4 rounded-sm text-xxs flex items-center justify-center transition-all
                     ${
                       isCompleted
-                        ? "bg-green-500/20 border-green-500/40 text-green-400"
+                        ? "bg-green-500/30 text-green-400"
                         : isCurrent
-                          ? "bg-color-link/20 border-color-link/40 text-color-link"
+                          ? "bg-color-link/30 text-color-link"
                           : isTarget
-                            ? "bg-purple-500/20 border-purple-500/40 text-purple-400"
-                            : "bg-color-separator border-color-separator text-muted"
+                            ? "bg-purple-500/30 text-purple-400"
+                            : "bg-color-separator text-muted"
                     }
                   `}
                   title={level.name}

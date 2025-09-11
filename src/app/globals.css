@@ -22,26 +22,26 @@
   --color-negative: hsl(0, 68%, 72%);
   --color-separator: hsl(240, 8%, 12%); /* Subtle separators for flat design */
 
-  /* Light mode overrides - Flat design hierarchy */
+  /* Light mode overrides - Paper-like comfort theme */
   &[data-theme="light"] {
     --color-primary: hsl(220, 85%, 50%);
     --color-link: hsl(43, 80%, 45%); /* Golden color for links in light mode */
     --color-link-hover: hsl(220, 90%, 60%); /* Brighter blue on hover in light mode */
-    --color-background: hsl(220, 23%, 97%); /* Softer background */
-    --color-widget-background: hsl(220, 23%, 98%); /* Minimal contrast */
-    --color-popover-background: hsl(0, 0%, 100%);
+    --color-background: hsl(42, 35%, 94%); /* More pronounced kraft paper background */
+    --color-widget-background: hsl(44, 40%, 97%); /* Warmer widget background with more contrast */
+    --color-popover-background: hsl(46, 45%, 98%); /* Warm cream white */
 
-    /* Light mode typography hierarchy */
-    --color-text-primary: hsl(0, 0%, 8%); /* Darkest for main headings */
-    --color-text-secondary: hsl(0, 0%, 15%); /* Dark for subheadings */
-    --color-text-body: hsl(0, 0%, 25%); /* Body text */
-    --color-text-meta: hsl(0, 0%, 45%); /* Metadata */
-    --color-text-muted: hsl(0, 0%, 60%); /* Supporting text */
-    --color-text-disabled: hsl(0, 0%, 75%); /* Disabled state */
+    /* Light mode typography hierarchy - optimized for paper reading */
+    --color-text-primary: hsl(30, 15%, 12%); /* Warm dark for main headings */
+    --color-text-secondary: hsl(30, 12%, 18%); /* Warm dark for subheadings */
+    --color-text-body: hsl(30, 10%, 28%); /* Warm dark body text - easier on eyes */
+    --color-text-meta: hsl(30, 8%, 48%); /* Warm muted metadata */
+    --color-text-muted: hsl(30, 6%, 62%); /* Warm supporting text */
+    --color-text-disabled: hsl(30, 5%, 75%); /* Warm disabled state */
 
     --color-positive: hsl(109, 60%, 42%);
     --color-negative: hsl(347, 85%, 46%);
-    --color-separator: hsl(220, 23%, 88%); /* Subtle separators */
+    --color-separator: hsl(45, 15%, 90%); /* Warm subtle separators */
   }
 
   /* Typography - JetBrains Mono with refined hierarchy */
