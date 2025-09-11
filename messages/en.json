@@ -38,7 +38,9 @@
   "blog": {
     "readingTime": "min read",
     "backToBlog": "← Back to Blog",
-    "allPosts": "All Posts"
+    "allPosts": "All Posts",
+    "showAllLanguages": "Show all languages",
+    "currentLanguageOnly": "Current language only"
   },
   "common": {
     "loading": "Loading...",

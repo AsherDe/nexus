@@ -1,6 +1,5 @@
-import { format } from "date-fns";
-import Link from "next/link";
 import Navigation from "@/components/Navigation";
+import BlogList from "@/components/BlogList";
 import { getAllPosts } from "@/lib/blog";
 
 export default function BlogPage() {
@@ -10,48 +9,7 @@ export default function BlogPage() {
     <div className="page-container animate-entrance">
       <Navigation />
       <main>
-        {posts.length === 0 ? (
-          <div className="widget text-center py-12">
-            <p className="text-lg mb-4">No blog posts yet</p>
-            <p className="text-sm text-color-text-subdue">
-              Create your first post by adding a markdown file to the{" "}
-              <code>src/posts</code> directory.
-            </p>
-          </div>
-        ) : (
-          <div className="space-y-6">
-            {posts.map((post) => (
-              <Link key={post.id} href={`/blog/${post.id}`}>
-                <article className="card-color-only cursor-pointer">
-                  <h2 className="card-title">{post.title}</h2>
-
-                  <div className="card-meta">
-                    {format(new Date(post.date), "MMMM d, yyyy")} •
-                    {post.readingTime} min read •{post.language?.toUpperCase()}
-                    {post.tags && post.tags.length > 0 && (
-                      <div className="flex gap-2 mt-2">
-                        {post.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-2 py-1 text-xs bg-color-separator rounded text-color-text-base"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  {post.excerpt && (
-                    <p className="text-sm text-color-text-paragraph leading-relaxed">
-                      {post.excerpt}
-                    </p>
-                  )}
-                </article>
-              </Link>
-            ))}
-          </div>
-        )}
+        <BlogList posts={posts} />
       </main>
     </div>
   );

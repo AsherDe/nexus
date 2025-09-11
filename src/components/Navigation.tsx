@@ -3,32 +3,34 @@
 import { clsx } from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function Navigation() {
   const pathname = usePathname();
+  const t = useTranslations("navigation");
 
   return (
     <nav className="nav animate-entrance">
       <Link href="/" className={clsx("nav-link", { active: pathname === "/" })}>
-        Dashboard
+        {t("home")}
       </Link>
       <Link
         href="/blog"
         className={clsx("nav-link", { active: pathname.startsWith("/blog") })}
       >
-        Blog
+        {t("blog")}
       </Link>
       <Link
         href="/projects"
         className={clsx("nav-link", { active: pathname === "/projects" })}
       >
-        Projects
+        {t("projects")}
       </Link>
       <Link
         href="/about"
         className={clsx("nav-link", { active: pathname === "/about" })}
       >
-        About
+        {t("about")}
       </Link>
     </nav>
   );

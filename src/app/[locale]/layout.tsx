@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import "../globals.css";
 import ThemeToggle from "@/components/ThemeToggle";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Analytics } from "@vercel/analytics/next";
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
@@ -18,18 +19,22 @@ export const metadata: Metadata = {
 
 export default async function LocaleLayout({
   children,
-  params: { locale }
+  params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = await params;
   const messages = await getMessages();
 
   return (
     <html lang={locale}>
       <body className={jetbrainsMono.variable}>
         <NextIntlClientProvider messages={messages}>
-          <ThemeToggle />
+          <div className="fixed top-4 right-4 z-50 flex gap-2">
+            <LanguageSwitcher />
+            <ThemeToggle />
+          </div>
           {children}
         </NextIntlClientProvider>
         <Analytics />
