@@ -335,43 +335,43 @@ pre code {
   flex-wrap: wrap;
   gap: var(--widget-gap);
   align-items: flex-start;
-  max-width: 1400px;
-  max-height: calc(100vh - 100px); /* Tighter top spacing */
+  max-width: 1200px; /* Reduce max-width to prevent over-stretching */
   margin: 0 auto;
-  overflow: hidden;
+  /* Remove height restrictions and overflow hidden */
+  justify-content: center; /* Center columns to prevent over-stretching */
 }
 
 /* Left Column - Status Overview - Compact */
 .dashboard-left {
-  flex: 0.618 1 200px;
+  flex: 0 0 280px; /* Fixed width to prevent over-stretching */
   display: flex;
   flex-direction: column;
   gap: var(--widget-gap);
-  max-height: calc(100vh - 100px);
-  overflow: hidden;
-  min-width: 180px;
+  min-width: 280px;
+  max-width: 320px;
+  /* Remove height and overflow restrictions */
 }
 
 /* Main Column - Core Feed & Output */
 .dashboard-main {
-  flex: 1 1 320px;
+  flex: 0 0 400px; /* Fixed width with more space for main content */
   display: flex;
   flex-direction: column;
   gap: var(--widget-gap);
-  max-height: calc(100vh - 100px);
-  overflow: hidden;
-  min-width: 280px;
+  min-width: 400px;
+  max-width: 500px;
+  /* Remove height and overflow restrictions */
 }
 
 /* Right Column - Insights & Philosophy */
 .dashboard-right {
-  flex: 0.618 1 200px;
+  flex: 0 0 280px; /* Fixed width to prevent over-stretching */
   display: flex;
   flex-direction: column;
   gap: var(--widget-gap);
-  max-height: calc(100vh - 100px);
-  overflow: hidden;
-  min-width: 180px;
+  min-width: 280px;
+  max-width: 320px;
+  /* Remove height and overflow restrictions */
 }
 
 /* Widget Container Styling - Content-driven heights */
@@ -444,31 +444,6 @@ pre code {
 
 /* Responsive Adjustments - Flexbox handles most automatically */
 
-/* Large desktop screens - natural layout optimization */
-@media (min-width: 1200px) and (max-width: 1399px) {
-  .dashboard-grid {
-    max-width: 1300px;
-  }
-  
-  .dashboard-left {
-    flex-basis: 180px;
-  }
-
-  .dashboard-main {
-    flex-basis: 300px;
-  }
-
-  .dashboard-right {
-    flex-basis: 180px;
-  }
-
-  /* Natural content spacing - no fixed heights */
-  .dashboard-left .widget,
-  .dashboard-main .widget,
-  .dashboard-right .widget {
-    padding: var(--widget-padding);
-  }
-}
 
 
 /* Content Balance - High Information Density */
@@ -866,7 +841,7 @@ pre code {
 /* Ultra-wide screens - prevent content from becoming too wide */
 @media (min-width: 1600px) {
   .dashboard-grid {
-    max-width: 1500px;
+    max-width: 1400px;
   }
 }
 
@@ -895,8 +870,8 @@ pre code {
   }
   
   .widget-container {
-    height: auto !important;
-    min-height: auto !important;
+    height: auto;
+    min-height: auto;
   }
 }
 
@@ -1170,6 +1145,7 @@ pre code {
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1177,6 +1153,7 @@ pre code {
 .line-clamp-3 {
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1270,42 +1247,76 @@ pre code {
   transition: none;
 }
 
-/* iPad Pro (landscape) and larger - 1024px and up - Fit to screen */
+/* Desktop screens - 1024px and up */
 @media (min-width: 1024px) {
   .dashboard-grid {
-    max-width: 1400px;
-    max-height: calc(100vh - 100px); /* Maintain screen-fit for larger screens */
-    overflow: hidden; /* Prevent scrolling on large screens */
-    gap: var(--widget-gap);
+    max-width: 1200px;
+    /* Allow natural height - no max-height restrictions */
   }
 
-  .dashboard-left,
-  .dashboard-main,
+  /* Use flexible layout for desktop */
+  .dashboard-left {
+    flex: 0 0 280px;
+  }
+
+  .dashboard-main {
+    flex: 0 0 400px;
+  }
+
   .dashboard-right {
-    max-height: calc(100vh - 120px); /* Fit within viewport */
-    overflow: hidden;
+    flex: 0 0 280px;
   }
-
-  /* Responsive adjustments for different large screen sizes */
 }
 
+/* Medium-wide screens with right column optimization - 1024px to 1366px */
 @media (min-width: 1024px) and (max-width: 1366px) {
   .dashboard-grid {
-    max-width: 1200px;
-    gap: calc(var(--widget-gap) * 0.9);
+    max-width: 1300px; /* Increase overall container width */
   }
   
-  /* Slightly reduce padding for better space utilization */
-  .dashboard-left .widget,
-  .dashboard-main .widget,
-  .dashboard-right .widget {
-    padding: calc(var(--widget-padding) * 0.9);
+  .dashboard-right {
+    flex: 0 0 680px; /* Much wider to match left+main columns width */
+    flex-direction: row; /* Change to horizontal layout */
+    gap: var(--widget-gap); /* Use standard gap */
+    align-items: stretch; /* Make both widgets same height */
   }
   
-  /* Adjust font sizes naturally */
-  :root {
-    --font-size-base: 0.95rem;
-    --widget-padding: 16px;
+  /* Override all conflicting widget container rules for right column */
+  .dashboard-right .widget-container:first-child,
+  .dashboard-right .widget-container:last-child {
+    flex: 1 1 50%; /* Equal width, explicit 50% basis */
+    min-width: 0; /* Allow flex shrinking */
+    min-height: auto; /* Remove fixed heights */
+    height: auto; /* Remove fixed heights */
+    margin-top: 0; /* Remove vertical margins */
+    margin-bottom: 0; /* Remove vertical margins */
+    display: flex; /* Ensure proper flex behavior */
+    flex-direction: column; /* Keep internal column layout */
+  }
+  
+  /* Completely remove margin between widgets in horizontal layout */
+  .dashboard-right .widget-container + .widget-container {
+    margin-top: 0;
+    margin-left: 0;
+  }
+}
+
+/* Large desktop screens - 1367px and up */
+@media (min-width: 1367px) {
+  .dashboard-grid {
+    max-width: 1300px;
+  }
+  
+  .dashboard-left {
+    flex: 0 0 300px;
+  }
+
+  .dashboard-main {
+    flex: 0 0 450px;
+  }
+
+  .dashboard-right {
+    flex: 0 0 300px;
   }
 }
 
