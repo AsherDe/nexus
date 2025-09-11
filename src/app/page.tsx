@@ -41,6 +41,11 @@ export default async function Home() {
           <Suspense fallback={<ChartSkeleton title="Tech Stack" />}>
             <TechStackChart />
           </Suspense>
+
+          {/* Investment Portfolio moves here on narrow screens */}
+          <div className="widget-narrow-reflow investment-widget">
+            <InvestmentPortfolio />
+          </div>
         </div>
 
         {/* Main Column - Core Feed & Output */}
@@ -50,42 +55,81 @@ export default async function Home() {
           <Suspense fallback={<ProjectsSkeleton />}>
             <SpotlightProjects />
           </Suspense>
+
+          {/* Featured Articles moves here on narrow screens */}
+          <div className="widget-narrow-reflow articles-widget">
+            <Widget title="Featured Articles">
+              {posts.length === 0 ? (
+                <div className="text-center py-4">
+                  <p className="text-meta text-muted mb-1">No blog posts yet</p>
+                  <p className="text-xxs text-disabled">
+                    Add markdown files to <code>src/posts/</code> to get started
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-content">
+                  {posts.slice(0, 2).map((post) => (
+                    <Link key={post.id} href={`/blog/${post.id}`}>
+                      <div className="card-color-only cursor-pointer">
+                        <h4 className="card-title text-secondary font-medium leading-tight">
+                          {post.title}
+                        </h4>
+                        <div className="card-meta text-xxs text-meta">
+                          {formatDistanceToNow(new Date(post.date))} ago •{" "}
+                          {post.readingTime}m
+                        </div>
+                        {post.excerpt && (
+                          <p className="text-xs text-body leading-normal line-clamp-2">
+                            {post.excerpt}
+                          </p>
+                        )}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </Widget>
+          </div>
         </div>
 
         {/* Right Column - Insights & Philosophy */}
         <div className="dashboard-right">
-          <InvestmentPortfolio />
-          <Widget title="Featured Articles">
-            {posts.length === 0 ? (
-              <div className="text-center py-4">
-                <p className="text-meta text-muted mb-1">No blog posts yet</p>
-                <p className="text-xxs text-disabled">
-                  Add markdown files to <code>src/posts/</code> to get started
-                </p>
-              </div>
-            ) : (
-              <div className="space-y-content">
-                {posts.slice(0, 2).map((post) => (
-                  <Link key={post.id} href={`/blog/${post.id}`}>
-                    <div className="card-color-only cursor-pointer">
-                      <h4 className="card-title text-secondary font-medium leading-tight">
-                        {post.title}
-                      </h4>
-                      <div className="card-meta text-xxs text-meta">
-                        {formatDistanceToNow(new Date(post.date))} ago •{" "}
-                        {post.readingTime}m
+          <div className="widget-wide-only investment-widget">
+            <InvestmentPortfolio />
+          </div>
+          <div className="widget-wide-only articles-widget">
+            <Widget title="Featured Articles">
+              {posts.length === 0 ? (
+                <div className="text-center py-4">
+                  <p className="text-meta text-muted mb-1">No blog posts yet</p>
+                  <p className="text-xxs text-disabled">
+                    Add markdown files to <code>src/posts/</code> to get started
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-content">
+                  {posts.slice(0, 2).map((post) => (
+                    <Link key={post.id} href={`/blog/${post.id}`}>
+                      <div className="card-color-only cursor-pointer">
+                        <h4 className="card-title text-secondary font-medium leading-tight">
+                          {post.title}
+                        </h4>
+                        <div className="card-meta text-xxs text-meta">
+                          {formatDistanceToNow(new Date(post.date))} ago •{" "}
+                          {post.readingTime}m
+                        </div>
+                        {post.excerpt && (
+                          <p className="text-xs text-body leading-normal line-clamp-2">
+                            {post.excerpt}
+                          </p>
+                        )}
                       </div>
-                      {post.excerpt && (
-                        <p className="text-xs text-body leading-normal line-clamp-2">
-                          {post.excerpt}
-                        </p>
-                      )}
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </Widget>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </Widget>
+          </div>
         </div>
       </main>
     </div>
