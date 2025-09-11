@@ -1271,33 +1271,43 @@ pre code {
 /* Medium-wide screens with right column optimization - 1024px to 1366px */
 @media (min-width: 1024px) and (max-width: 1366px) {
   .dashboard-grid {
-    max-width: 1300px; /* Increase overall container width */
+    max-width: 1400px; /* Further increase overall container width */
+  }
+  
+  .dashboard-left {
+    flex: 0 0 240px; /* Slightly reduce left column */
+  }
+  
+  .dashboard-main {
+    flex: 0 0 360px; /* Slightly reduce main column */
   }
   
   .dashboard-right {
-    flex: 0 0 680px; /* Much wider to match left+main columns width */
-    flex-direction: row; /* Change to horizontal layout */
-    gap: var(--widget-gap); /* Use standard gap */
-    align-items: stretch; /* Make both widgets same height */
+    flex: 0 0 800px; /* Much wider right column for comfortable grid layout */
+    display: grid; /* Use grid instead of flexbox */
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: var(--widget-gap); /* Standard gap between grid items */
+    align-items: start; /* Align items to start */
   }
   
-  /* Override all conflicting widget container rules for right column */
-  .dashboard-right .widget-container:first-child,
-  .dashboard-right .widget-container:last-child {
-    flex: 1 1 50%; /* Equal width, explicit 50% basis */
-    min-width: 0; /* Allow flex shrinking */
-    min-height: auto; /* Remove fixed heights */
-    height: auto; /* Remove fixed heights */
-    margin-top: 0; /* Remove vertical margins */
-    margin-bottom: 0; /* Remove vertical margins */
-    display: flex; /* Ensure proper flex behavior */
-    flex-direction: column; /* Keep internal column layout */
+  /* Reset all widget container styles for grid layout */
+  .dashboard-right .widget-container {
+    /* Remove all flex properties and margins */
+    flex: none;
+    margin-top: 0;
+    margin-bottom: 0;
+    min-height: auto;
+    height: auto;
+    width: auto; /* Override the width: 100% rule */
+    /* Keep the internal flex layout for widget content */
+    display: flex;
+    flex-direction: column;
+    gap: var(--micro-gap);
   }
   
-  /* Completely remove margin between widgets in horizontal layout */
+  /* Remove margin between widget containers in grid */
   .dashboard-right .widget-container + .widget-container {
     margin-top: 0;
-    margin-left: 0;
   }
 }
 
