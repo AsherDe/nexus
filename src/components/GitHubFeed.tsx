@@ -37,7 +37,7 @@ export default function GitHubFeed() {
         <p className="text-meta text-muted">No recent activity</p>
       ) : (
         <div className="space-y-micro">
-          {activity.slice(0, 3).map((item) => (
+          {activity.slice(0, 2).map((item) => (
             <div key={item.id} className="space-y-micro">
               <div className="flex items-center justify-between">
                 <button

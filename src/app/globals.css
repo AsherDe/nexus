@@ -280,8 +280,8 @@ pre code {
 .page-container {
   min-height: 100vh;
   padding: var(--widget-gap);
-  width: 90%; /* Use 90% of available width on desktop */
-  margin: 0 auto;
+  width: 100%; /* Use full width */
+  margin: 0;
 }
 
 .page-columns {
@@ -326,42 +326,38 @@ pre code {
   flex-wrap: wrap;
   gap: var(--widget-gap);
   align-items: flex-start;
-  max-width: 1200px; /* Reduce max-width to prevent over-stretching */
-  margin: 0 auto;
-  /* Remove height restrictions and overflow hidden */
-  justify-content: center; /* Center columns to prevent over-stretching */
+  width: 100%; /* Use full width */
+  margin: 0;
+  justify-content: flex-start; /* Start from left */
 }
 
 /* Left Column - Status Overview - Compact */
 .dashboard-left {
-  flex: 0 0 280px; /* Fixed width to prevent over-stretching */
+  flex: 1; /* Grow to fill space */
   display: flex;
   flex-direction: column;
   gap: var(--widget-gap);
   min-width: 280px;
-  max-width: 320px;
   /* Remove height and overflow restrictions */
 }
 
 /* Main Column - Core Feed & Output */
 .dashboard-main {
-  flex: 0 0 400px; /* Fixed width with more space for main content */
+  flex: 2; /* Take more space for main content */
   display: flex;
   flex-direction: column;
   gap: var(--widget-gap);
   min-width: 400px;
-  max-width: 500px;
   /* Remove height and overflow restrictions */
 }
 
 /* Right Column - Insights & Philosophy */
 .dashboard-right {
-  flex: 0 0 280px; /* Fixed width to prevent over-stretching */
+  flex: 1; /* Grow to fill space */
   display: flex;
   flex-direction: column;
   gap: var(--widget-gap);
   min-width: 280px;
-  max-width: 320px;
   /* Remove height and overflow restrictions */
 }
 
@@ -1175,14 +1171,8 @@ pre code {
   display: block; /* Visible by default */
 }
 
-/* Medium screens (tablet/small desktop) - 769px to 1200px */
-@media (min-width: 769px) and (max-width: 1200px) {
-  .dashboard-grid {
-    max-width: 100%;
-    margin: 0 auto;
-    justify-content: center;
-  }
-  
+/* Medium screens (tablet/small desktop) - 769px to 1199px */
+@media (min-width: 769px) and (max-width: 1199px) {
   /* Hide right column widgets on medium screens, show them in left/main columns */
   .widget-wide-only {
     display: none;
@@ -1193,14 +1183,8 @@ pre code {
   }
 }
 
-/* Wide screens (large desktop) - 1201px and up */
-@media (min-width: 1201px) {
-  .dashboard-grid {
-    max-width: 1300px;
-    margin: 0 auto;
-    justify-content: center;
-  }
-  
+/* Wide screens (large desktop) - 1200px and up */
+@media (min-width: 1200px) {
   /* Restore right column widgets on wide screens */
   .widget-wide-only {
     display: block;
@@ -1216,6 +1200,16 @@ pre code {
 @media (max-width: 768px) {
   .dashboard-grid {
     flex-direction: column;
+  }
+  
+  /* Ensure all columns have consistent width in narrow layout */
+  .dashboard-left,
+  .dashboard-main,
+  .dashboard-right {
+    flex: none; /* Don't stretch */
+    width: 100%; /* Use available width */
+    min-width: auto; /* Reset min-width */
+    max-width: none; /* No max width restriction */
   }
   
   .widget-narrow-reflow {
