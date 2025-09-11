@@ -1,9 +1,11 @@
-import createMiddleware from "next-intl/middleware";
+import { createI18nMiddleware } from "next-international/middleware";
 
-export default createMiddleware({
+const I18nMiddleware = createI18nMiddleware({
   locales: ["en", "de"],
   defaultLocale: "en",
 });
+
+export default I18nMiddleware;
 
 export const config = {
   matcher: [
