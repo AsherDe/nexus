@@ -4,8 +4,7 @@ import "../globals.css";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Analytics } from "@vercel/analytics/next";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import I18nProvider from "@/components/I18nProvider";
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
@@ -25,18 +24,17 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const messages = await getMessages();
 
   return (
     <html lang={locale}>
       <body className={jetbrainsMono.variable}>
-        <NextIntlClientProvider messages={messages}>
+        <I18nProvider locale={locale}>
           <div className="fixed top-4 right-4 z-50 flex gap-2">
             <LanguageSwitcher />
             <ThemeToggle />
           </div>
           {children}
-        </NextIntlClientProvider>
+        </I18nProvider>
         <Analytics />
       </body>
     </html>
