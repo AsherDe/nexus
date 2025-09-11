@@ -96,7 +96,7 @@
   --color-text-meta: var(--color-text-meta);
   --color-text-muted: var(--color-text-muted);
   --color-text-disabled: var(--color-text-disabled);
-  
+
   /* Link colors */
   --color-link: var(--color-link);
   --color-link-hover: var(--color-link-hover);
@@ -312,7 +312,6 @@ pre code {
   align-items: start;
 }
 
-
 .dynamic-columns {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -392,8 +391,6 @@ pre code {
 }
 
 /* Responsive Adjustments - Flexbox handles most automatically */
-
-
 
 /* Content Balance - High Information Density */
 
@@ -787,8 +784,6 @@ pre code {
 
 /* Additional Responsive Design Improvements */
 
-
-
 /* Skeleton Loading States */
 .skeleton {
   background: linear-gradient(
@@ -1161,7 +1156,6 @@ pre code {
   transition: none;
 }
 
-
 /* Responsive widget display classes */
 .widget-narrow-reflow {
   display: none; /* Hidden by default */
@@ -1177,7 +1171,7 @@ pre code {
   .widget-wide-only {
     display: none;
   }
-  
+
   .widget-narrow-reflow {
     display: block;
   }
@@ -1189,19 +1183,18 @@ pre code {
   .widget-wide-only {
     display: block;
   }
-  
+
   .widget-narrow-reflow {
     display: none;
   }
 }
-
 
 /* Narrow screens (mobile) - 768px and below */
 @media (max-width: 768px) {
   .dashboard-grid {
     flex-direction: column;
   }
-  
+
   /* Ensure all columns have consistent width in narrow layout */
   .dashboard-left,
   .dashboard-main,
@@ -1211,13 +1204,12 @@ pre code {
     min-width: auto; /* Reset min-width */
     max-width: none; /* No max width restriction */
   }
-  
+
   .widget-narrow-reflow {
     display: block;
   }
-  
+
   .widget-wide-only {
     display: none;
   }
 }
-

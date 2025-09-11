@@ -16,8 +16,10 @@ import SpotlightProjects from "@/components/SpotlightProjects";
 import TechStackChart from "@/components/TechStackChart";
 import Widget from "@/components/Widget";
 import { getAllPosts } from "@/lib/blog";
+import { getScopedI18n } from "@/locales/server";
 
 export default async function Home() {
+  const t = await getScopedI18n("widgets.articles");
   const posts = getAllPosts();
   return (
     <div className="page-container animate-entrance">
@@ -58,7 +60,7 @@ export default async function Home() {
 
           {/* Featured Articles moves here on narrow screens */}
           <div className="widget-narrow-reflow articles-widget">
-            <Widget title="Featured Articles">
+            <Widget title={t("title")}>
               {posts.length === 0 ? (
                 <div className="text-center py-4">
                   <p className="text-meta text-muted mb-1">No blog posts yet</p>
@@ -98,7 +100,7 @@ export default async function Home() {
             <InvestmentPortfolio />
           </div>
           <div className="widget-wide-only articles-widget">
-            <Widget title="Featured Articles">
+            <Widget title={t("title")}>
               {posts.length === 0 ? (
                 <div className="text-center py-4">
                   <p className="text-meta text-muted mb-1">No blog posts yet</p>

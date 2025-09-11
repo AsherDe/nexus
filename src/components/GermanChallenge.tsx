@@ -185,11 +185,11 @@ export default function GermanChallenge() {
         </div>
 
         {/* Daily Target - Background depth instead of border */}
-        <div 
-          className="flex justify-between items-center rounded p-2" 
+        <div
+          className="flex justify-between items-center rounded p-2"
           style={{
-            backgroundColor: 'var(--color-separator)',
-            filter: 'brightness(1.1)'
+            backgroundColor: "var(--color-separator)",
+            filter: "brightness(1.1)",
           }}
         >
           <div>

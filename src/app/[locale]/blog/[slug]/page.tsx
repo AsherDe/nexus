@@ -16,9 +16,14 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function BlogPost({ params }: { params: Params }) {
+export default async function BlogPost({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
   try {
-    const post = getPostData(params.slug);
+    const { slug } = await params;
+    const post = getPostData(slug);
 
     return (
       <div className="page-container animate-entrance">

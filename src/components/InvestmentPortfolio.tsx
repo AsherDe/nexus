@@ -99,11 +99,13 @@ export default function InvestmentPortfolio() {
   }
 
   const totalReturnPercent = portfolioData.totalReturnPercent ?? 0;
-  
+
   // Calculate holding period from start date
-  const startDate = new Date('2025-08-21');
+  const startDate = new Date("2025-08-21");
   const today = new Date();
-  const holdingDays = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+  const holdingDays = Math.floor(
+    (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24),
+  );
 
   return (
     <Widget title="Investment Portfolio">

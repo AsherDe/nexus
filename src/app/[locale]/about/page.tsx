@@ -9,7 +9,6 @@ import {
   Settings,
   Sparkles,
   User,
-  Wrench,
   Target,
   Code,
   BarChart3,
@@ -18,7 +17,6 @@ import {
 } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import ProfileImage from "@/components/ProfileImage";
-import TechIcon from "@/components/TechIcon";
 import Widget from "@/components/Widget";
 
 export default function About() {
