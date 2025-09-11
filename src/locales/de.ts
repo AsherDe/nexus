@@ -1,0 +1,49 @@
+export default {
+  navigation: {
+    home: "Startseite",
+    blog: "Blog",
+    projects: "Projekte",
+    about: "Über",
+  },
+  widgets: {
+    github: {
+      title: "GitHub-Aktivität",
+      repositories: "Repositories",
+      commits: "Commits",
+      stars: "Sterne",
+      forks: "Forks",
+    },
+    investment: {
+      title: "Investment Portfolio",
+      totalReturn: "Gesamtrendite",
+      holdingPeriod: "Haltedauer",
+      days: "Tage",
+    },
+    articles: {
+      title: "Empfohlene Artikel",
+    },
+    weather: {
+      title: "Wetter",
+    },
+    challenges: {
+      title: "Deutsche Herausforderung",
+    },
+    rss: {
+      title: "RSS-Nachrichten",
+    },
+    events: {
+      title: "Aktuelle Ereignisse",
+    },
+  },
+  blog: {
+    readingTime: "Min. Lesezeit",
+    backToBlog: "← Zurück zum Blog",
+    allPosts: "Alle Beiträge",
+    showAllLanguages: "Alle Sprachen anzeigen",
+    currentLanguageOnly: "Nur aktuelle Sprache",
+  },
+  common: {
+    loading: "Laden...",
+    error: "Fehler beim Laden der Daten",
+  },
+} as const;
