@@ -26,7 +26,7 @@ export default async function BlogPost({ params }: { params: Params }) {
           <Navigation />
         </header>
 
-        <main className="max-w-4xl">
+        <main>
           <Link
             href="/blog"
             className="inline-flex items-center gap-2 mb-8 text-sm text-color-text-subdue hover:text-color-primary transition-colors"

@@ -5,7 +5,7 @@
   /* Colors - High-density Flat Design */
   --color-primary: hsl(43, 55%, 75%); /* Slightly more vibrant accent */
   --color-link: hsl(43, 80%, 65%); /* Golden color for links */
-  --color-link-hover: hsl(0, 0%, 95%); /* White on hover */
+  --color-link-hover: hsl(43, 80%, 85%); /* Brighter golden color on hover */
   --color-background: hsl(240, 8%, 8%); /* Deeper background for better contrast */
   --color-widget-background: hsl(240, 8%, 9%); /* Minimal contrast - flat design */
   --color-popover-background: hsl(240, 8%, 11%);
@@ -26,7 +26,7 @@
   &[data-theme="light"] {
     --color-primary: hsl(220, 85%, 50%);
     --color-link: hsl(43, 80%, 45%); /* Golden color for links in light mode */
-    --color-link-hover: hsl(0, 0%, 15%); /* Dark on hover in light mode */
+    --color-link-hover: hsl(220, 90%, 60%); /* Brighter blue on hover in light mode */
     --color-background: hsl(220, 23%, 97%); /* Softer background */
     --color-widget-background: hsl(220, 23%, 98%); /* Minimal contrast */
     --color-popover-background: hsl(0, 0%, 100%);
@@ -96,6 +96,10 @@
   --color-text-meta: var(--color-text-meta);
   --color-text-muted: var(--color-text-muted);
   --color-text-disabled: var(--color-text-disabled);
+  
+  /* Link colors */
+  --color-link: var(--color-link);
+  --color-link-hover: var(--color-link-hover);
 
   /* Spacing scale */
   --space-micro: var(--micro-gap);
@@ -276,7 +280,7 @@ pre code {
 .page-container {
   min-height: 100vh;
   padding: var(--widget-gap);
-  max-width: 1400px;
+  width: 80%; /* Use 80% of available width */
   margin: 0 auto;
 }
 
@@ -1266,7 +1270,25 @@ pre code {
   transition: none;
 }
 
-/* iPad Pro (landscape) - 1024px and up */
+/* iPad Pro (landscape) and larger - 1024px and up - Fit to screen */
+@media (min-width: 1024px) {
+  .dashboard-grid {
+    max-width: 1400px;
+    max-height: calc(100vh - 100px); /* Maintain screen-fit for larger screens */
+    overflow: hidden; /* Prevent scrolling on large screens */
+    gap: var(--widget-gap);
+  }
+
+  .dashboard-left,
+  .dashboard-main,
+  .dashboard-right {
+    max-height: calc(100vh - 120px); /* Fit within viewport */
+    overflow: hidden;
+  }
+
+  /* Responsive adjustments for different large screen sizes */
+}
+
 @media (min-width: 1024px) and (max-width: 1366px) {
   .dashboard-grid {
     max-width: 1200px;
@@ -1287,11 +1309,12 @@ pre code {
   }
 }
 
-/* iPad (portrait) and similar tablets - 768px to 1023px */
+/* iPad (portrait) and similar tablets - 768px to 1023px - Allow scrolling */
 @media (min-width: 768px) and (max-width: 1023px) {
   .dashboard-grid {
     flex-direction: column;
-    max-height: none;
+    max-height: none; /* Remove height restriction for tablets */
+    overflow: visible; /* Allow scrolling */
     gap: var(--widget-gap);
     padding: var(--widget-gap);
   }
@@ -1300,7 +1323,8 @@ pre code {
   .dashboard-main,
   .dashboard-right {
     flex: none;
-    max-height: none;
+    max-height: none; /* Remove height restrictions */
+    overflow: visible;
     min-width: 100%;
     margin-bottom: calc(var(--widget-gap) * 1.5);
   }
@@ -1323,17 +1347,34 @@ pre code {
   }
 }
 
-/* Mobile phones - 767px and below */
+/* Mobile phones - 767px and below - Allow scrolling */
 @media (max-width: 767px) {
+  .dashboard-grid {
+    flex-direction: column;
+    max-height: none; /* Remove height restriction for mobile */
+    overflow: visible; /* Allow scrolling */
+    padding: var(--widget-gap);
+  }
+
+  .dashboard-left,
+  .dashboard-main,
+  .dashboard-right {
+    flex: none;
+    max-height: none; /* Remove height restrictions */
+    overflow: visible;
+    min-width: 100%;
+    margin-bottom: var(--widget-gap);
+  }
+
+  .dashboard-right {
+    margin-bottom: 0;
+  }
+
   .dashboard-left .widget,
   .dashboard-main .widget,
   .dashboard-right .widget {
-    transform: none; /* No scaling - natural content flow */
+    transform: none;
     padding: var(--widget-padding);
-  }
-
-  .dashboard-grid {
-    padding: var(--widget-gap);
   }
 
   /* Mobile-optimized typography and spacing */

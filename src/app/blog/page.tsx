@@ -9,7 +9,7 @@ export default function BlogPage() {
   return (
     <div className="page-container animate-entrance">
       <Navigation />
-      <main className="max-w-4xl">
+      <main>
         {posts.length === 0 ? (
           <div className="widget text-center py-12">
             <p className="text-lg mb-4">No blog posts yet</p>
@@ -22,7 +22,7 @@ export default function BlogPage() {
           <div className="space-y-6">
             {posts.map((post) => (
               <Link key={post.id} href={`/blog/${post.id}`}>
-                <article className="card cursor-pointer">
+                <article className="card-color-only cursor-pointer">
                   <h2 className="card-title">{post.title}</h2>
 
                   <div className="card-meta">
