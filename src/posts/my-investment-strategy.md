@@ -2,7 +2,7 @@
 title: "Investment Strategy: Learning from the Norwegian Model"
 date: "2025-09-09"
 excerpt: "How Norway's sovereign wealth fund principles guide my long-term investment approach - building wealth through global diversification, patience, and consistent execution."
-language: "English"
+language: "en"
 tags: ["finance", "investing", "strategy", "long-term"]
 ---
 
