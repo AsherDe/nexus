@@ -3,24 +3,24 @@
 /* CSS Variables - Core Design System - Glance Inspired */
 :root {
   /* Colors - High-density Flat Design */
-  --color-primary: hsl(43, 55%, 75%); /* Slightly more vibrant accent */
-  --color-link: hsl(43, 80%, 65%); /* Golden color for links */
-  --color-link-hover: hsl(43, 80%, 85%); /* Brighter golden color on hover */
-  --color-background: hsl(240, 8%, 8%); /* Deeper background for better contrast */
-  --color-widget-background: hsl(240, 8%, 9%); /* Minimal contrast - flat design */
+  --color-primary: hsl(43, 60%, 70%); /* Unified primary color with reduced saturation */
+  --color-link: hsl(43, 60%, 70%); /* Link color matching primary */
+  --color-link-hover: hsl(43, 70%, 80%); /* Slightly brighter on hover */
+  --color-background: hsl(240, 9%, 7%); /* Deeper background for better contrast */
+  --color-widget-background: hsl(240, 8%, 10%); /* Slightly brighter with minimal contrast */
   --color-popover-background: hsl(240, 8%, 11%);
 
-  /* Refined Typography Hierarchy - More levels for better information density */
-  --color-text-primary: hsl(0, 0%, 90%); /* Main headings - brightest */
-  --color-text-secondary: hsl(0, 0%, 80%); /* Subheadings - bright white */
-  --color-text-body: hsl(0, 0%, 70%); /* Body text - good readability */
-  --color-text-meta: hsl(0, 0%, 55%); /* Metadata - dimmed but readable */
-  --color-text-muted: hsl(0, 0%, 40%); /* Supporting text - subtle */
-  --color-text-disabled: hsl(0, 0%, 30%); /* Disabled state - very dim */
+  /* Refined Typography Hierarchy - Lower contrast for softer appearance */
+  --color-text-primary: hsl(0, 0%, 85%); /* Main headings like card titles */
+  --color-text-secondary: hsl(0, 0%, 75%); /* Secondary text */
+  --color-text-body: hsl(0, 0%, 65%); /* Body/description text */
+  --color-text-meta: hsl(0, 0%, 50%); /* Metadata like dates and tags */
+  --color-text-muted: hsl(0, 0%, 38%); /* Supporting text */
+  --color-text-disabled: hsl(0, 0%, 28%); /* Widget external titles - darker */
 
-  --color-positive: var(--color-primary);
-  --color-negative: hsl(0, 68%, 72%);
-  --color-separator: hsl(240, 8%, 12%); /* Subtle separators for flat design */
+  --color-positive: hsl(90, 45%, 55%); /* Softer green for positive values */
+  --color-negative: hsl(0, 55%, 65%); /* Less harsh red for negative values */
+  --color-separator: hsl(240, 8%, 11%); /* Darker separators for flatter design */
 
   /* Light mode overrides - Paper-like comfort theme */
   &[data-theme="light"] {
@@ -64,12 +64,12 @@
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  /* Layout & Spacing - Tight grid system */
-  --widget-gap: 16px; /* Tighter gaps for information density */
-  --widget-padding: 18px; /* Reduced internal padding */
-  --element-gap: 12px; /* Between elements within widgets */
-  --content-gap: 8px; /* Between related content items */
-  --micro-gap: 4px; /* Between tightly related elements */
+  /* Layout & Spacing - Tighter grid system for higher density */
+  --widget-gap: 18px; /* Slightly larger widget gaps */
+  --widget-padding: 16px; /* Reduced internal padding for more content */
+  --element-gap: 10px; /* Smaller element gaps */
+  --content-gap: 6px; /* Tighter content gaps */
+  --micro-gap: 4px; /* Unchanged micro gaps */
 
   --border-radius: 3px; /* Minimal rounding - flatter design */
   --line-height-tight: 1.3; /* For headings */
