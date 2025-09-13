@@ -279,9 +279,10 @@ export default function About() {
             }
           >
             <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2 p-2.5 bg-color-widget-background border border-color-separator rounded-lg">
-                <div className="flex items-center gap-2">
-                  <Brain className="w-4 h-4 text-color-primary flex-shrink-0" />
+              <div className="group space-y-2 p-2.5 bg-color-widget-background border border-color-separator rounded-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/10 hover:border-blue-400/30 cursor-pointer relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="flex items-center gap-2 relative z-10">
+                  <Brain className="w-4 h-4 text-color-primary flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
                   <h4
                     className="text-xs font-bold leading-tight"
                     style={{ color: "var(--color-text-primary)" }}
@@ -289,14 +290,15 @@ export default function About() {
                     Machine Learning
                   </h4>
                 </div>
-                <p className="text-xs text-color-text-paragraph leading-tight">
+                <p className="text-xs text-color-text-paragraph leading-tight relative z-10">
                   ViT and CNN expertise with medical imaging applications
                 </p>
               </div>
 
-              <div className="space-y-2 p-2.5 bg-color-widget-background border border-color-separator rounded-lg">
-                <div className="flex items-center gap-2">
-                  <Code className="w-4 h-4 text-color-primary flex-shrink-0" />
+              <div className="group space-y-2 p-2.5 bg-color-widget-background border border-color-separator rounded-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-green-500/10 hover:border-green-400/30 cursor-pointer relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="flex items-center gap-2 relative z-10">
+                  <Code className="w-4 h-4 text-color-primary flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
                   <h4
                     className="text-xs font-bold leading-tight"
                     style={{ color: "var(--color-text-primary)" }}
@@ -304,14 +306,15 @@ export default function About() {
                     Full-Stack Development
                   </h4>
                 </div>
-                <p className="text-xs text-color-text-paragraph leading-tight">
+                <p className="text-xs text-color-text-paragraph leading-tight relative z-10">
                   Next.js, TypeScript, and Python solutions
                 </p>
               </div>
 
-              <div className="space-y-2 p-2.5 bg-color-widget-background border border-color-separator rounded-lg">
-                <div className="flex items-center gap-2">
-                  <BarChart3 className="w-4 h-4 text-color-primary flex-shrink-0" />
+              <div className="group space-y-2 p-2.5 bg-color-widget-background border border-color-separator rounded-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-orange-500/10 hover:border-orange-400/30 cursor-pointer relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-yellow-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="flex items-center gap-2 relative z-10">
+                  <BarChart3 className="w-4 h-4 text-color-primary flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
                   <h4
                     className="text-xs font-bold leading-tight"
                     style={{ color: "var(--color-text-primary)" }}
@@ -319,14 +322,15 @@ export default function About() {
                     Information Design
                   </h4>
                 </div>
-                <p className="text-xs text-color-text-paragraph leading-tight">
+                <p className="text-xs text-color-text-paragraph leading-tight relative z-10">
                   Swiss design and data visualization passion
                 </p>
               </div>
 
-              <div className="space-y-2 p-2.5 bg-color-widget-background border border-color-separator rounded-lg">
-                <div className="flex items-center gap-2">
-                  <Search className="w-4 h-4 text-color-primary flex-shrink-0" />
+              <div className="group space-y-2 p-2.5 bg-color-widget-background border border-color-separator rounded-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-purple-500/10 hover:border-purple-400/30 cursor-pointer relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="flex items-center gap-2 relative z-10">
+                  <Search className="w-4 h-4 text-color-primary flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
                   <h4
                     className="text-xs font-bold leading-tight"
                     style={{ color: "var(--color-text-primary)" }}
@@ -334,7 +338,7 @@ export default function About() {
                     Independent Research
                   </h4>
                 </div>
-                <p className="text-xs text-color-text-paragraph leading-tight">
+                <p className="text-xs text-color-text-paragraph leading-tight relative z-10">
                   Synapse: 0-to-1 browser interaction modeling
                 </p>
               </div>
