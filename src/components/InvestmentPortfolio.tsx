@@ -115,7 +115,9 @@ export default function InvestmentPortfolio() {
         {/* Portfolio Summary */}
         <div className="flex justify-between items-center">
           <div>
-            <div className="text-xs text-color-text-subdue">{t("widgets.investment.totalReturn")}</div>
+            <div className="text-xs text-color-text-subdue">
+              {t("widgets.investment.totalReturn")}
+            </div>
             <div className="text-xs text-color-text-muted">
               {holdingDays} {t("widgets.investment.days")} (since Aug 21)
             </div>
@@ -171,7 +173,10 @@ export default function InvestmentPortfolio() {
                 {/* Allocation Bar */}
                 <div className="space-y-1">
                   <div className="flex justify-between text-xs text-color-text-subdue">
-                    <span>{t("widgets.investment.allocation")}: {holding.allocation.toFixed(2)}%</span>
+                    <span>
+                      {t("widgets.investment.allocation")}:{" "}
+                      {holding.allocation.toFixed(2)}%
+                    </span>
                   </div>
                   <div className="w-full bg-color-border rounded-full h-1">
                     <div

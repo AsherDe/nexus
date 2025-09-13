@@ -28,7 +28,9 @@ export default function GitHubFeed() {
   if (error || !activity) {
     return (
       <Widget title={t("widgets.github.liveTitle")}>
-        <p className="text-meta text-muted">{t("widgets.github.failedToLoad")}</p>
+        <p className="text-meta text-muted">
+          {t("widgets.github.failedToLoad")}
+        </p>
       </Widget>
     );
   }
@@ -36,7 +38,9 @@ export default function GitHubFeed() {
   return (
     <Widget title={t("widgets.github.liveTitle")}>
       {activity.length === 0 ? (
-        <p className="text-meta text-muted">{t("widgets.github.noRecentActivity")}</p>
+        <p className="text-meta text-muted">
+          {t("widgets.github.noRecentActivity")}
+        </p>
       ) : (
         <div className="space-y-micro">
           {activity.slice(0, 2).map((item) => (

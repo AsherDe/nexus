@@ -66,10 +66,12 @@ export default function About() {
             }
           >
             <div className="prose">
-              <p dangerouslySetInnerHTML={{ __html: t("about.portrait.content") }} />
-              <blockquote>
-                {t("about.portrait.quote")}
-              </blockquote>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: t("about.portrait.content"),
+                }}
+              />
+              <blockquote>{t("about.portrait.quote")}</blockquote>
             </div>
           </Widget>
 
@@ -84,7 +86,9 @@ export default function About() {
             }
           >
             <div className="prose">
-              <p dangerouslySetInnerHTML={{ __html: t("about.whoIAm.content") }} />
+              <p
+                dangerouslySetInnerHTML={{ __html: t("about.whoIAm.content") }}
+              />
             </div>
           </Widget>
 
@@ -99,20 +103,29 @@ export default function About() {
             }
           >
             <div className="prose">
-              <p>
-                {t("about.myWork.intro")}
-              </p>
+              <p>{t("about.myWork.intro")}</p>
               <ul className="space-y-2 mt-4">
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 rounded-full bg-color-primary flex-shrink-0 mt-2"></div>
-                  <span dangerouslySetInnerHTML={{ __html: t("about.myWork.achievements.vit") }} />
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: t("about.myWork.achievements.vit"),
+                    }}
+                  />
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 rounded-full bg-color-primary flex-shrink-0 mt-2"></div>
-                  <span dangerouslySetInnerHTML={{ __html: t("about.myWork.achievements.cnn") }} />
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: t("about.myWork.achievements.cnn"),
+                    }}
+                  />
                 </li>
               </ul>
-              <p className="mt-4" dangerouslySetInnerHTML={{ __html: t("about.myWork.current") }} />
+              <p
+                className="mt-4"
+                dangerouslySetInnerHTML={{ __html: t("about.myWork.current") }}
+              />
             </div>
           </Widget>
 
@@ -127,15 +140,19 @@ export default function About() {
             }
           >
             <div className="prose">
-              <p>
-                {t("about.philosophy.intro")}
-              </p>
-              <blockquote dangerouslySetInnerHTML={{ __html: t("about.philosophy.echoChambersQuote") }} />
+              <p>{t("about.philosophy.intro")}</p>
+              <blockquote
+                dangerouslySetInnerHTML={{
+                  __html: t("about.philosophy.echoChambersQuote"),
+                }}
+              />
               <p>{t("about.philosophy.mission")}</p>
-              <blockquote dangerouslySetInnerHTML={{ __html: t("about.philosophy.knowledgeArchitectQuote") }} />
-              <p>
-                {t("about.philosophy.education")}
-              </p>
+              <blockquote
+                dangerouslySetInnerHTML={{
+                  __html: t("about.philosophy.knowledgeArchitectQuote"),
+                }}
+              />
+              <p>{t("about.philosophy.education")}</p>
             </div>
           </Widget>
 
@@ -150,9 +167,7 @@ export default function About() {
             }
           >
             <div className="prose">
-              <p>
-                {t("about.beyondCode.content")}
-              </p>
+              <p>{t("about.beyondCode.content")}</p>
               <p className="mt-6 p-4 bg-color-widget-background border border-color-separator rounded-lg">
                 {t("about.beyondCode.callToAction")}
               </p>

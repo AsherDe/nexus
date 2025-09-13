@@ -94,26 +94,28 @@ export default function GermanChallenge() {
               </span>
               <span className="text-xs text-meta">
                 {(() => {
-                  const currentLevelData = germanLevels.find((l) => l.level === currentLevel);
+                  const currentLevelData = germanLevels.find(
+                    (l) => l.level === currentLevel,
+                  );
                   if (currentLevelData?.name) {
                     switch (currentLevelData.name) {
-                      case 'breakthrough':
-                        return t('widgets.challenges.levels.breakthrough.name');
-                      case 'waystage':
-                        return t('widgets.challenges.levels.waystage.name');
-                      case 'threshold':
-                        return t('widgets.challenges.levels.threshold.name');
-                      case 'vantage':
-                        return t('widgets.challenges.levels.vantage.name');
-                      case 'proficiency':
-                        return t('widgets.challenges.levels.proficiency.name');
-                      case 'mastery':
-                        return t('widgets.challenges.levels.mastery.name');
+                      case "breakthrough":
+                        return t("widgets.challenges.levels.breakthrough.name");
+                      case "waystage":
+                        return t("widgets.challenges.levels.waystage.name");
+                      case "threshold":
+                        return t("widgets.challenges.levels.threshold.name");
+                      case "vantage":
+                        return t("widgets.challenges.levels.vantage.name");
+                      case "proficiency":
+                        return t("widgets.challenges.levels.proficiency.name");
+                      case "mastery":
+                        return t("widgets.challenges.levels.mastery.name");
                       default:
                         return currentLevelData.name;
                     }
                   }
-                  return '';
+                  return "";
                 })()}
               </span>
             </div>
@@ -260,18 +262,18 @@ export default function GermanChallenge() {
                   }}
                   title={(() => {
                     switch (level.name) {
-                      case 'breakthrough':
-                        return t('widgets.challenges.levels.breakthrough.name');
-                      case 'waystage':
-                        return t('widgets.challenges.levels.waystage.name');
-                      case 'threshold':
-                        return t('widgets.challenges.levels.threshold.name');
-                      case 'vantage':
-                        return t('widgets.challenges.levels.vantage.name');
-                      case 'proficiency':
-                        return t('widgets.challenges.levels.proficiency.name');
-                      case 'mastery':
-                        return t('widgets.challenges.levels.mastery.name');
+                      case "breakthrough":
+                        return t("widgets.challenges.levels.breakthrough.name");
+                      case "waystage":
+                        return t("widgets.challenges.levels.waystage.name");
+                      case "threshold":
+                        return t("widgets.challenges.levels.threshold.name");
+                      case "vantage":
+                        return t("widgets.challenges.levels.vantage.name");
+                      case "proficiency":
+                        return t("widgets.challenges.levels.proficiency.name");
+                      case "mastery":
+                        return t("widgets.challenges.levels.mastery.name");
                       default:
                         return level.name;
                     }
