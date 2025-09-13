@@ -42,7 +42,7 @@ export default function GitHubFeed() {
               <div className="flex items-center justify-between">
                 <button
                   type="button"
-                  className="text-sm font-medium text-secondary text-left cursor-pointer hover:text-primary transition-colors truncate flex-1 min-w-0 leading-tight"
+                  className="card-title font-medium text-secondary text-left cursor-pointer hover:text-primary transition-colors truncate flex-1 min-w-0 leading-tight"
                   onClick={() => router.push("/projects")}
                 >
                   {item.repo}
