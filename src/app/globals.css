@@ -3,9 +3,9 @@
 /* CSS Variables - Core Design System - Glance Inspired */
 :root {
   /* Colors - High-density Flat Design */
-  --color-primary: hsl(43, 60%, 70%); /* Unified primary color with reduced saturation */
-  --color-link: hsl(43, 60%, 70%); /* Link color matching primary */
-  --color-link-hover: hsl(43, 70%, 80%); /* Slightly brighter on hover */
+  --color-primary: hsl(43, 74%, 66%); /* Warmer, more vibrant primary color */
+  --color-link: hsl(43, 74%, 66%); /* Link color matching primary */
+  --color-link-hover: hsl(43, 84%, 76%); /* Brighter and more vibrant on hover */
   --color-background: hsl(240, 9%, 7%); /* Deeper background for better contrast */
   --color-widget-background: hsl(240, 8%, 10%); /* Slightly brighter with minimal contrast */
   --color-popover-background: hsl(240, 8%, 11%);
@@ -20,6 +20,16 @@
 
   --color-positive: hsl(90, 45%, 55%); /* Softer green for positive values */
   --color-negative: hsl(0, 55%, 65%); /* Less harsh red for negative values */
+
+  /* German Learning Level Colors - Harmonious palette */
+  --color-level-a1: hsl(205, 78%, 60%); /* Soft blue for A1 */
+  --color-level-a2: hsl(145, 63%, 50%); /* Soft green for A2 */
+  --color-level-b1: hsl(48, 89%, 60%); /* Soft yellow for B1 */
+  --color-level-b2: hsl(28, 80%, 65%); /* Soft orange for B2 */
+  --color-level-c1: hsl(260, 60%, 70%); /* Soft purple for C1 */
+
+  /* Fund name highlight - distinct but not gold */
+  --color-fund-highlight: hsl(195, 70%, 70%); /* Bright blue for fund names */
   --color-separator: hsl(240, 8%, 11%); /* Darker separators for flatter design */
 
   /* Light mode overrides - Paper-like comfort theme */
@@ -549,13 +559,16 @@ pre code {
 
 .nav-link {
   font-weight: 500;
-  color: var(--color-text-base);
+  color: var(--color-text-meta); /* Use softer meta color instead of bright text */
   transition: color var(--transition-fast);
 }
 
-.nav-link:hover,
+.nav-link:hover {
+  color: var(--color-text-primary); /* Brighter on hover */
+}
+
 .nav-link.active {
-  color: var(--color-primary);
+  color: var(--color-link); /* Use theme color for active state */
 }
 
 /* Buttons - Flat Design */

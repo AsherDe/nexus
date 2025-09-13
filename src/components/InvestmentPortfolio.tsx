@@ -135,7 +135,10 @@ export default function InvestmentPortfolio() {
               <div key={holding.symbol} className="space-y-1">
                 <div className="flex justify-between items-start">
                   <div>
-                    <div className="text-sm font-medium text-color-text-highlight">
+                    <div 
+                      className="text-sm font-medium" 
+                      style={{ color: "var(--color-fund-highlight)" }}
+                    >
                       {holding.symbol}
                     </div>
                     <div className="text-xs text-color-text-subdue">
