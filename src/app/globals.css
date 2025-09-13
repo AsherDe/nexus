@@ -32,27 +32,34 @@
   /* Light mode overrides - Paper-like comfort theme */
   &[data-theme="light"] {
     /* 1. 全新的纸张背景色 */
-    --color-background: hsl(48, 25%, 96%);         /* 柔和的亚麻白/纸张色 */
-    --color-widget-background: hsl(48, 30%, 98%);  /* 组件背景用更亮的奶油白，营造层次感 */
+    --color-background: hsl(48, 25%, 96%); /* 柔和的亚麻白/纸张色 */
+    --color-widget-background: hsl(48, 30%, 98%); /* 组件背景用更亮的奶油白，营造层次感 */
     --color-popover-background: hsl(48, 35%, 99%); /* 弹出层背景 */
 
     /* 2. 交互颜色保持不变 (水绿色) */
-    --color-primary: hsl(170, 45%, 45%);
-    --color-link: hsl(170, 45%, 45%);
+    --color-primary: hsl(170, 50%, 40%); /* 图表线条 - 稍微加深提高对比度 */
+    --color-link: hsl(170, 45%, 45%); /* 链接颜色保持原样 */
     --color-link-hover: hsl(170, 45%, 55%);
 
     /* 3. 调整文字颜色以适应更亮的背景 */
-    --color-text-primary: hsl(220, 30%, 30%);      /* 主要标题 - 深蓝灰色，与背景形成强对比 */
-    --color-text-secondary: hsl(30, 8%, 25%);     /* 次级标题 */
-    --color-text-body: hsl(30, 7%, 35%);           /* 正文 - 保持不变 */
-    --color-text-meta: hsl(30, 5%, 50%);           /* 元数据 - 保持不变 */
-    --color-text-muted: hsl(30, 5%, 60%);          /* 辅助性文字 */
-    --color-text-disabled: hsl(30, 5%, 75%);       /* 最弱的文字 */
+    --color-text-primary: hsl(220, 30%, 30%); /* 主要标题 - 深蓝灰色，与背景形成强对比 */
+    --color-text-secondary: hsl(30, 8%, 25%); /* 次级标题 */
+    --color-text-body: hsl(30, 7%, 35%); /* 正文 - 保持不变 */
+    --color-text-meta: hsl(30, 5%, 50%); /* 元数据 - 保持不变 */
+    --color-text-muted: hsl(30, 5%, 60%); /* 辅助性文字 */
+    --color-text-disabled: hsl(30, 5%, 75%); /* 最弱的文字 */
 
     /* 4. 状态和分隔线颜色 */
-    --color-positive: hsl(140, 50%, 45%);
+    --color-positive: hsl(140, 60%, 35%);
     --color-negative: hsl(0, 60%, 50%);
-    --color-separator: hsl(45, 20%, 92%);          /* 分隔线颜色微调 */
+    --color-separator: hsl(45, 20%, 92%); /* 分隔线颜色微调 */
+
+    /* 5. German等级颜色 - 浅色模式下加深以提高对比度 */
+    --color-level-a1: hsl(205, 70%, 45%); /* A1: 深蓝色 */
+    --color-level-a2: hsl(145, 70%, 35%); /* A2: 深绿色 */
+    --color-level-b1: hsl(48, 80%, 45%); /* B1: 深黄色 */
+    --color-level-b2: hsl(28, 85%, 50%); /* B2: 深橙色 */
+    --color-level-c1: hsl(260, 65%, 55%); /* C1: 深紫色 */
   }
 
   /* Typography - JetBrains Mono with refined hierarchy */
@@ -530,6 +537,12 @@ pre code {
     box-shadow var(--transition-fast);
   /* Subtle background distinction only */
   flex: 1;
+}
+
+/* Light mode specific enhancements */
+[data-theme="light"] .widget {
+  border: 1px solid hsl(45, 15%, 90%); /* 很细的边框增强区分 */
+  box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.05); /* 极轻微的阴影 */
 }
 
 .widget:hover {
