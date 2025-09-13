@@ -135,31 +135,31 @@ export default function GermanChallenge() {
                         ((blockIndex + 1) / blocksPerLevel) * levelRange;
                       const isActive = currentVocab >= blockMin;
 
-                      // Level-specific colors
+                      // Level-specific colors using CSS variables
                       const getBlockColor = () => {
                         switch (level.level) {
                           case "A1":
-                            return "bg-blue-400";
+                            return "var(--color-level-a1)";
                           case "A2":
-                            return "bg-green-400";
+                            return "var(--color-level-a2)";
                           case "B1":
-                            return "bg-yellow-400";
+                            return "var(--color-level-b1)";
                           case "B2":
-                            return "bg-orange-400";
+                            return "var(--color-level-b2)";
                           case "C1":
-                            return "bg-purple-400";
+                            return "var(--color-level-c1)";
                           default:
-                            return "bg-gray-400";
+                            return "var(--color-separator)";
                         }
                       };
 
                       return (
                         <div
                           key={`${level.level}-${blockIndex}`}
-                          className={`
-                          flex-1 h-full rounded-sm transition-all duration-300
-                          ${isActive ? getBlockColor() : "bg-color-separator"}
-                        `}
+                          className="flex-1 h-full rounded-sm transition-all duration-300"
+                          style={{
+                            backgroundColor: isActive ? getBlockColor() : "var(--color-separator)"
+                          }}
                           title={`${level.level}: ${Math.round(blockMin)}-${Math.round(blockMax)} words`}
                         />
                       );
@@ -207,18 +207,23 @@ export default function GermanChallenge() {
               return (
                 <div
                   key={level.level}
-                  className={`
-                    w-4 h-4 rounded-sm text-xxs flex items-center justify-center transition-all
-                    ${
-                      isCompleted
-                        ? "bg-green-500/30 text-green-400"
-                        : isCurrent
-                          ? "bg-color-link/30 text-color-link"
-                          : isTarget
-                            ? "bg-purple-500/30 text-purple-400"
-                            : "bg-color-separator text-muted"
-                    }
-                  `}
+                  className="w-4 h-4 rounded-sm text-xxs flex items-center justify-center transition-all"
+                  style={{
+                    backgroundColor: isCompleted
+                      ? "color-mix(in srgb, var(--color-positive) 30%, transparent)"
+                      : isCurrent
+                        ? "color-mix(in srgb, var(--color-link) 30%, transparent)"
+                        : isTarget
+                          ? "color-mix(in srgb, var(--color-level-c1) 30%, transparent)"
+                          : "var(--color-separator)",
+                    color: isCompleted
+                      ? "var(--color-positive)"
+                      : isCurrent
+                        ? "var(--color-link)"
+                        : isTarget
+                          ? "var(--color-level-c1)"
+                          : "var(--color-text-muted)"
+                  }}
                   title={level.name}
                 >
                   {level.level.slice(0, 1)}

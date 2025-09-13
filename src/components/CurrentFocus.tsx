@@ -31,7 +31,10 @@ export default function CurrentFocus() {
       <div className="space-y-4">
         {/* Project Name */}
         <div>
-          <h4 className="text-sm font-medium text-color-text-highlight mb-1">
+          <h4 
+            className="text-sm font-medium mb-1" 
+            style={{ color: "var(--color-fund-highlight)" }}
+          >
             {currentProject.name}
           </h4>
           <p className="text-xs text-color-text-paragraph">

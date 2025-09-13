@@ -49,13 +49,14 @@ export default function GitHubFeed() {
                 </button>
                 <div className="flex items-center gap-micro flex-shrink-0 ml-1">
                   <div
-                    className={`w-1 h-1 rounded-full ${
-                      item.type === "commit"
-                        ? "bg-green-500"
+                    className="w-1 h-1 rounded-full"
+                    style={{
+                      backgroundColor: item.type === "commit"
+                        ? "var(--color-positive)"
                         : item.type === "create"
-                          ? "bg-blue-500"
-                          : "bg-gray-500"
-                    }`}
+                          ? "var(--color-primary)"
+                          : "var(--color-text-muted)"
+                    }}
                   ></div>
                   <span className="text-xxs text-muted">
                     {formatDistanceToNow(new Date(item.timestamp), {

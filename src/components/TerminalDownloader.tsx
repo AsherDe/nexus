@@ -76,13 +76,13 @@ export default function TerminalDownloader() {
   };
 
   return (
-    <div className="bg-black text-green-400 font-mono text-sm p-4 rounded border-2 border-gray-700 max-w-2xl mx-auto">
-      <div className="mb-2 text-gray-300">
+    <div className="font-mono text-sm p-4 rounded max-w-2xl mx-auto" style={{ backgroundColor: 'var(--color-widget-background)', color: 'var(--color-positive)' }}>
+      <div className="mb-2" style={{ color: 'var(--color-text-meta)' }}>
         <div className="flex items-center gap-2 mb-2">
-          <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-          <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-          <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-          <span className="text-xs text-gray-400 ml-2">Terminal</span>
+          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'var(--color-negative)' }}></div>
+          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'var(--color-primary)' }}></div>
+          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'var(--color-positive)' }}></div>
+          <span className="text-xs ml-2" style={{ color: 'var(--color-text-muted)' }}>Terminal</span>
         </div>
       </div>
 
@@ -95,22 +95,23 @@ export default function TerminalDownloader() {
       </div>
 
       <div className="flex items-center">
-        <span className="text-blue-400">user@nexus</span>
-        <span className="text-white">:</span>
-        <span className="text-blue-400">~</span>
-        <span className="text-white">$ </span>
+        <span style={{ color: 'var(--color-primary)' }}>user@nexus</span>
+        <span style={{ color: 'var(--color-text-primary)' }}>:</span>
+        <span style={{ color: 'var(--color-primary)' }}>~</span>
+        <span style={{ color: 'var(--color-text-primary)' }}>$ </span>
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyPress={handleKeyPress}
-          className="bg-transparent border-none outline-none flex-1 text-green-400 ml-1"
+          className="bg-transparent border-none outline-none flex-1 ml-1"
+          style={{ color: 'var(--color-positive)' }}
           placeholder="输入命令..."
           autoFocus
         />
       </div>
 
-      <div className="mt-2 text-xs text-gray-500">
+      <div className="mt-2 text-xs" style={{ color: 'var(--color-text-muted)' }}>
         提示：试试 help、ls、cat readme 或 download report
       </div>
     </div>

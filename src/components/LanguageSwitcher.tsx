@@ -17,9 +17,12 @@ export default function LanguageSwitcher() {
           onClick={() => changeLocale(loc)}
           className={`text-xs px-2 py-1 rounded transition-colors ${
             locale === loc
-              ? "bg-gray-700 text-white"
-              : "text-gray-500 hover:text-gray-300"
+              ? "text-primary"
+              : "text-meta hover:text-primary"
           }`}
+          style={{
+            backgroundColor: locale === loc ? "var(--color-separator)" : "transparent"
+          }}
         >
           {loc.toUpperCase()}
         </button>

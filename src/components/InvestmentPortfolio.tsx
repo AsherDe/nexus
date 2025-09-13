@@ -119,7 +119,10 @@ export default function InvestmentPortfolio() {
             </div>
           </div>
           <span
-            className={`text-lg font-medium ${totalReturnPercent >= 0 ? "text-green-500" : "text-red-500"}`}
+            className="text-lg font-medium"
+            style={{
+              color: totalReturnPercent >= 0 ? "var(--color-positive)" : "var(--color-negative)"
+            }}
           >
             {totalReturnPercent >= 0 ? "+" : ""}
             {totalReturnPercent.toFixed(2)}%
@@ -132,7 +135,10 @@ export default function InvestmentPortfolio() {
               <div key={holding.symbol} className="space-y-1">
                 <div className="flex justify-between items-start">
                   <div>
-                    <div className="text-sm font-medium text-color-text-highlight">
+                    <div 
+                      className="text-sm font-medium" 
+                      style={{ color: "var(--color-fund-highlight)" }}
+                    >
                       {holding.symbol}
                     </div>
                     <div className="text-xs text-color-text-subdue">
@@ -141,7 +147,10 @@ export default function InvestmentPortfolio() {
                   </div>
                   <div className="text-right">
                     <div
-                      className={`text-sm font-medium ${holding.totalReturnPercent && holding.totalReturnPercent >= 0 ? "text-green-500" : "text-red-500"}`}
+                      className="text-sm font-medium"
+                      style={{
+                        color: holding.totalReturnPercent && holding.totalReturnPercent >= 0 ? "var(--color-positive)" : "var(--color-negative)"
+                      }}
                     >
                       {holding.totalReturnPercent
                         ? `${holding.totalReturnPercent >= 0 ? "+" : ""}${holding.totalReturnPercent.toFixed(2)}%`

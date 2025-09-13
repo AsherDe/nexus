@@ -83,18 +83,18 @@ export default function LanguageChart({ languageStats }: LanguageChartProps) {
     });
   }
 
-  // Color palette inspired by GitHub language colors
+  // Harmonious color palette that matches the theme
   const colors = [
-    "#3178c6", // TypeScript blue
-    "#3776ab", // Python blue
-    "#00d4aa", // Dart green
-    "#f1e05a", // JavaScript yellow
-    "#e34c26", // HTML orange-red
-    "#563d7c", // CSS purple
-    "#89e051", // Shell green
-    "#701516", // Ruby red
-    "#6f42c1", // Go purple
-    "#cccccc", // Other gray
+    "hsl(43, 74%, 66%)",  // Primary theme color - gold/yellow for main language
+    "hsl(195, 53%, 60%)", // Soft blue for secondary languages
+    "hsl(160, 50%, 55%)", // Soft green
+    "hsl(260, 50%, 70%)", // Soft purple
+    "hsl(25, 65%, 65%)",  // Soft orange
+    "hsl(145, 45%, 60%)", // Another soft green variant
+    "hsl(205, 60%, 65%)", // Light blue variant
+    "hsl(280, 45%, 65%)", // Light purple variant
+    "hsl(15, 60%, 65%)",  // Soft red-orange
+    "hsl(0, 0%, 50%)",    // Gray for "Other"
   ];
 
   const chartData = {
