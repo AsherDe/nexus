@@ -11,7 +11,7 @@
   --color-popover-background: hsl(240, 8%, 11%);
 
   /* Refined Typography Hierarchy - Lower contrast for softer appearance */
-  --color-text-primary: hsl(0, 0%, 85%); /* Main headings like card titles */
+  --color-text-primary: hsl(210, 25%, 75%); /* Muted gray-blue for non-interactive titles in dark mode */
   --color-text-secondary: hsl(0, 0%, 75%); /* Secondary text */
   --color-text-body: hsl(0, 0%, 65%); /* Body/description text */
   --color-text-meta: hsl(0, 0%, 50%); /* Metadata like dates and tags */
@@ -21,37 +21,38 @@
   --color-positive: hsl(90, 45%, 55%); /* Softer green for positive values */
   --color-negative: hsl(0, 55%, 65%); /* Less harsh red for negative values */
 
-  /* German Learning Level Colors - Harmonious palette */
+  /* German Learning Level Colors - Distinct colors for each level */
   --color-level-a1: hsl(205, 78%, 60%); /* Soft blue for A1 */
   --color-level-a2: hsl(145, 63%, 50%); /* Soft green for A2 */
   --color-level-b1: hsl(48, 89%, 60%); /* Soft yellow for B1 */
   --color-level-b2: hsl(28, 80%, 65%); /* Soft orange for B2 */
   --color-level-c1: hsl(260, 60%, 70%); /* Soft purple for C1 */
-
-  /* Fund name highlight - distinct but not gold */
-  --color-fund-highlight: hsl(195, 70%, 70%); /* Bright blue for fund names */
   --color-separator: hsl(240, 8%, 11%); /* Darker separators for flatter design */
 
   /* Light mode overrides - Paper-like comfort theme */
   &[data-theme="light"] {
-    --color-primary: hsl(220, 85%, 50%);
-    --color-link: hsl(43, 80%, 45%); /* Golden color for links in light mode */
-    --color-link-hover: hsl(220, 90%, 60%); /* Brighter blue on hover in light mode */
-    --color-background: hsl(42, 35%, 94%); /* More pronounced kraft paper background */
-    --color-widget-background: hsl(44, 40%, 97%); /* Warmer widget background with more contrast */
-    --color-popover-background: hsl(46, 45%, 98%); /* Warm cream white */
+    /* 1. 全新的纸张背景色 */
+    --color-background: hsl(48, 25%, 96%);         /* 柔和的亚麻白/纸张色 */
+    --color-widget-background: hsl(48, 30%, 98%);  /* 组件背景用更亮的奶油白，营造层次感 */
+    --color-popover-background: hsl(48, 35%, 99%); /* 弹出层背景 */
 
-    /* Light mode typography hierarchy - optimized for paper reading */
-    --color-text-primary: hsl(30, 15%, 12%); /* Warm dark for main headings */
-    --color-text-secondary: hsl(30, 12%, 18%); /* Warm dark for subheadings */
-    --color-text-body: hsl(30, 10%, 28%); /* Warm dark body text - easier on eyes */
-    --color-text-meta: hsl(30, 8%, 48%); /* Warm muted metadata */
-    --color-text-muted: hsl(30, 6%, 62%); /* Warm supporting text */
-    --color-text-disabled: hsl(30, 5%, 75%); /* Warm disabled state */
+    /* 2. 交互颜色保持不变 (水绿色) */
+    --color-primary: hsl(170, 45%, 45%);
+    --color-link: hsl(170, 45%, 45%);
+    --color-link-hover: hsl(170, 45%, 55%);
 
-    --color-positive: hsl(109, 60%, 42%);
-    --color-negative: hsl(347, 85%, 46%);
-    --color-separator: hsl(45, 15%, 90%); /* Warm subtle separators */
+    /* 3. 调整文字颜色以适应更亮的背景 */
+    --color-text-primary: hsl(220, 30%, 30%);      /* 主要标题 - 深蓝灰色，与背景形成强对比 */
+    --color-text-secondary: hsl(30, 8%, 25%);     /* 次级标题 */
+    --color-text-body: hsl(30, 7%, 35%);           /* 正文 - 保持不变 */
+    --color-text-meta: hsl(30, 5%, 50%);           /* 元数据 - 保持不变 */
+    --color-text-muted: hsl(30, 5%, 60%);          /* 辅助性文字 */
+    --color-text-disabled: hsl(30, 5%, 75%);       /* 最弱的文字 */
+
+    /* 4. 状态和分隔线颜色 */
+    --color-positive: hsl(140, 50%, 45%);
+    --color-negative: hsl(0, 60%, 50%);
+    --color-separator: hsl(45, 20%, 92%);          /* 分隔线颜色微调 */
   }
 
   /* Typography - JetBrains Mono with refined hierarchy */
@@ -99,13 +100,21 @@
   --font-sans: "JetBrains Mono", monospace;
   --font-mono: "JetBrains Mono", monospace;
 
-  /* Extended color palette */
+  /* Extended color palette - Unified naming */
   --color-text-primary: var(--color-text-primary);
-  --color-text-secondary: var(--color-link);
+  --color-text-secondary: var(--color-text-secondary);
   --color-text-body: var(--color-text-body);
   --color-text-meta: var(--color-text-meta);
   --color-text-muted: var(--color-text-muted);
   --color-text-disabled: var(--color-text-disabled);
+
+  /* Aliases for consistency - map undefined names to existing colors */
+  --color-text-base: var(--color-text-body);
+  --color-text-paragraph: var(--color-text-body);
+  --color-text-highlight: var(--color-text-primary);
+  --color-text-subdue: var(--color-text-muted);
+  --color-border: var(--color-separator);
+  --color-widget-border: var(--color-separator);
 
   /* Link colors */
   --color-link: var(--color-link);
@@ -703,7 +712,7 @@ pre code {
   background: transparent;
   border: none;
   border-bottom: 2px solid var(--color-separator);
-  color: var(--color-text-base);
+  color: var(--color-text-body);
   font-family: inherit;
   font-size: inherit;
   transition: border-color var(--transition-fast);
@@ -780,7 +789,7 @@ pre code {
   border-radius: 50%;
   border: 1px solid var(--color-separator);
   background: var(--color-widget-background);
-  color: var(--color-text-base);
+  color: var(--color-text-body);
   cursor: pointer;
   display: flex;
   align-items: center;

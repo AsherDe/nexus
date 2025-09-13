@@ -31,9 +31,9 @@ export default function CurrentFocus() {
       <div className="space-y-4">
         {/* Project Name */}
         <div>
-          <h4 
-            className="text-sm font-medium mb-1" 
-            style={{ color: "var(--color-fund-highlight)" }}
+          <h4
+            className="text-sm font-medium mb-1"
+            style={{ color: "var(--color-text-primary)" }}
           >
             {currentProject.name}
           </h4>
@@ -48,8 +48,7 @@ export default function CurrentFocus() {
           <div className="border-t border-color-border pt-3">
             <div className="flex justify-between items-center">
               <span className="text-xs text-color-text-subdue">Status</span>
-              <span 
-                className="text-xs text-color-text-highlight">
+              <span className="text-xs text-color-text-highlight">
                 {currentProject.status}
               </span>
             </div>{" "}

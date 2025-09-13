@@ -76,13 +76,33 @@ export default function TerminalDownloader() {
   };
 
   return (
-    <div className="font-mono text-sm p-4 rounded max-w-2xl mx-auto" style={{ backgroundColor: 'var(--color-widget-background)', color: 'var(--color-positive)' }}>
-      <div className="mb-2" style={{ color: 'var(--color-text-meta)' }}>
+    <div
+      className="font-mono text-sm p-4 rounded max-w-2xl mx-auto"
+      style={{
+        backgroundColor: "var(--color-widget-background)",
+        color: "var(--color-positive)",
+      }}
+    >
+      <div className="mb-2" style={{ color: "var(--color-text-meta)" }}>
         <div className="flex items-center gap-2 mb-2">
-          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'var(--color-negative)' }}></div>
-          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'var(--color-primary)' }}></div>
-          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'var(--color-positive)' }}></div>
-          <span className="text-xs ml-2" style={{ color: 'var(--color-text-muted)' }}>Terminal</span>
+          <div
+            className="w-3 h-3 rounded-full"
+            style={{ backgroundColor: "var(--color-negative)" }}
+          ></div>
+          <div
+            className="w-3 h-3 rounded-full"
+            style={{ backgroundColor: "var(--color-primary)" }}
+          ></div>
+          <div
+            className="w-3 h-3 rounded-full"
+            style={{ backgroundColor: "var(--color-positive)" }}
+          ></div>
+          <span
+            className="text-xs ml-2"
+            style={{ color: "var(--color-text-muted)" }}
+          >
+            Terminal
+          </span>
         </div>
       </div>
 
@@ -95,23 +115,26 @@ export default function TerminalDownloader() {
       </div>
 
       <div className="flex items-center">
-        <span style={{ color: 'var(--color-primary)' }}>user@nexus</span>
-        <span style={{ color: 'var(--color-text-primary)' }}>:</span>
-        <span style={{ color: 'var(--color-primary)' }}>~</span>
-        <span style={{ color: 'var(--color-text-primary)' }}>$ </span>
+        <span style={{ color: "var(--color-primary)" }}>user@nexus</span>
+        <span style={{ color: "var(--color-text-primary)" }}>:</span>
+        <span style={{ color: "var(--color-primary)" }}>~</span>
+        <span style={{ color: "var(--color-text-primary)" }}>$ </span>
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyPress={handleKeyPress}
           className="bg-transparent border-none outline-none flex-1 ml-1"
-          style={{ color: 'var(--color-positive)' }}
+          style={{ color: "var(--color-positive)" }}
           placeholder="输入命令..."
           autoFocus
         />
       </div>
 
-      <div className="mt-2 text-xs" style={{ color: 'var(--color-text-muted)' }}>
+      <div
+        className="mt-2 text-xs"
+        style={{ color: "var(--color-text-muted)" }}
+      >
         提示：试试 help、ls、cat readme 或 download report
       </div>
     </div>

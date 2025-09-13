@@ -1,5 +1,5 @@
-import Navigation from "@/components/Navigation";
 import BlogList from "@/components/BlogList";
+import Navigation from "@/components/Navigation";
 import { getAllPosts } from "@/lib/blog";
 
 export default function BlogPage() {

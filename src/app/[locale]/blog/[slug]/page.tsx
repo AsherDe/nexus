@@ -2,10 +2,10 @@ import { format } from "date-fns";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import Navigation from "@/components/Navigation";
-import TerminalDownloader from "@/components/TerminalDownloader";
-import TableOfContents from "@/components/TableOfContents";
 import { H1, H2, H3, H4, H5, H6 } from "@/components/BlogHeadings";
+import Navigation from "@/components/Navigation";
+import TableOfContents from "@/components/TableOfContents";
+import TerminalDownloader from "@/components/TerminalDownloader";
 import { getAllPostIds, getPostData } from "@/lib/blog";
 
 interface Params {

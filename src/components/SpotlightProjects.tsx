@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import type { Project } from "@/lib/github";
 import { useCachedData } from "@/hooks/useCachedData";
+import type { Project } from "@/lib/github";
 import { ProjectsSkeleton } from "./loading/WidgetSkeleton";
 import TechIcon from "./TechIcon";
 import Widget from "./Widget";

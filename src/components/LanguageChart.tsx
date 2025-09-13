@@ -85,16 +85,16 @@ export default function LanguageChart({ languageStats }: LanguageChartProps) {
 
   // Harmonious color palette that matches the theme
   const colors = [
-    "hsl(43, 74%, 66%)",  // Primary theme color - gold/yellow for main language
+    "hsl(43, 74%, 66%)", // Primary theme color - gold/yellow for main language
     "hsl(195, 53%, 60%)", // Soft blue for secondary languages
     "hsl(160, 50%, 55%)", // Soft green
     "hsl(260, 50%, 70%)", // Soft purple
-    "hsl(25, 65%, 65%)",  // Soft orange
+    "hsl(25, 65%, 65%)", // Soft orange
     "hsl(145, 45%, 60%)", // Another soft green variant
     "hsl(205, 60%, 65%)", // Light blue variant
     "hsl(280, 45%, 65%)", // Light purple variant
-    "hsl(15, 60%, 65%)",  // Soft red-orange
-    "hsl(0, 0%, 50%)",    // Gray for "Other"
+    "hsl(15, 60%, 65%)", // Soft red-orange
+    "hsl(0, 0%, 50%)", // Gray for "Other"
   ];
 
   const chartData = {

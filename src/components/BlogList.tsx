@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { format } from "date-fns";
 import Link from "next/link";
-import { useScopedI18n, useCurrentLocale } from "@/locales/client";
+import { useState } from "react";
 import type { BlogPostMeta } from "@/lib/blog";
+import { useCurrentLocale, useScopedI18n } from "@/locales/client";
 
 interface BlogListProps {
   posts: BlogPostMeta[];

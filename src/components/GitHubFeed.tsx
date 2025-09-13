@@ -51,11 +51,12 @@ export default function GitHubFeed() {
                   <div
                     className="w-1 h-1 rounded-full"
                     style={{
-                      backgroundColor: item.type === "commit"
-                        ? "var(--color-positive)"
-                        : item.type === "create"
-                          ? "var(--color-primary)"
-                          : "var(--color-text-muted)"
+                      backgroundColor:
+                        item.type === "commit"
+                          ? "var(--color-positive)"
+                          : item.type === "create"
+                            ? "var(--color-primary)"
+                            : "var(--color-text-muted)",
                     }}
                   ></div>
                   <span className="text-xxs text-muted">

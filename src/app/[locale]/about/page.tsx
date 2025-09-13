@@ -1,19 +1,19 @@
 "use client";
 
 import {
+  BarChart3,
   Brain,
-  Github,
-  Mail,
+  Code,
   ExternalLink,
+  Github,
+  Layers,
+  Mail,
   Palette,
+  Search,
   Settings,
   Sparkles,
-  User,
   Target,
-  Code,
-  BarChart3,
-  Search,
-  Layers,
+  User,
 } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import ProfileImage from "@/components/ProfileImage";
@@ -263,7 +263,10 @@ export default function About() {
               <div className="space-y-2 p-2.5 bg-color-widget-background border border-color-separator rounded-lg">
                 <div className="flex items-center gap-2">
                   <Brain className="w-4 h-4 text-color-primary flex-shrink-0" />
-                  <h4 className="text-xs font-bold text-primary leading-tight">
+                  <h4
+                    className="text-xs font-bold leading-tight"
+                    style={{ color: "var(--color-text-primary)" }}
+                  >
                     Machine Learning
                   </h4>
                 </div>
@@ -275,7 +278,10 @@ export default function About() {
               <div className="space-y-2 p-2.5 bg-color-widget-background border border-color-separator rounded-lg">
                 <div className="flex items-center gap-2">
                   <Code className="w-4 h-4 text-color-primary flex-shrink-0" />
-                  <h4 className="text-xs font-bold text-primary leading-tight">
+                  <h4
+                    className="text-xs font-bold leading-tight"
+                    style={{ color: "var(--color-text-primary)" }}
+                  >
                     Full-Stack Development
                   </h4>
                 </div>
@@ -287,7 +293,10 @@ export default function About() {
               <div className="space-y-2 p-2.5 bg-color-widget-background border border-color-separator rounded-lg">
                 <div className="flex items-center gap-2">
                   <BarChart3 className="w-4 h-4 text-color-primary flex-shrink-0" />
-                  <h4 className="text-xs font-bold text-primary leading-tight">
+                  <h4
+                    className="text-xs font-bold leading-tight"
+                    style={{ color: "var(--color-text-primary)" }}
+                  >
                     Information Design
                   </h4>
                 </div>
@@ -299,7 +308,10 @@ export default function About() {
               <div className="space-y-2 p-2.5 bg-color-widget-background border border-color-separator rounded-lg">
                 <div className="flex items-center gap-2">
                   <Search className="w-4 h-4 text-color-primary flex-shrink-0" />
-                  <h4 className="text-xs font-bold text-primary leading-tight">
+                  <h4
+                    className="text-xs font-bold leading-tight"
+                    style={{ color: "var(--color-text-primary)" }}
+                  >
                     Independent Research
                   </h4>
                 </div>

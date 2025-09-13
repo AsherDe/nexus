@@ -1,7 +1,7 @@
 "use client";
 
-import type { LanguageStats } from "@/lib/github";
 import { useCachedData } from "@/hooks/useCachedData";
+import type { LanguageStats } from "@/lib/github";
 import LanguageChart from "./LanguageChart";
 import { ChartSkeleton } from "./loading/WidgetSkeleton";
 import Widget from "./Widget";

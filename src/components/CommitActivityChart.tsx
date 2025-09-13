@@ -1,7 +1,7 @@
 "use client";
 
-import type { CommitData } from "@/lib/github";
 import { useCachedData } from "@/hooks/useCachedData";
+import type { CommitData } from "@/lib/github";
 import CommitChart from "./CommitChart";
 import { ChartSkeleton } from "./loading/WidgetSkeleton";
 import Widget from "./Widget";

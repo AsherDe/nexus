@@ -121,7 +121,10 @@ export default function InvestmentPortfolio() {
           <span
             className="text-lg font-medium"
             style={{
-              color: totalReturnPercent >= 0 ? "var(--color-positive)" : "var(--color-negative)"
+              color:
+                totalReturnPercent >= 0
+                  ? "var(--color-positive)"
+                  : "var(--color-negative)",
             }}
           >
             {totalReturnPercent >= 0 ? "+" : ""}
@@ -135,9 +138,9 @@ export default function InvestmentPortfolio() {
               <div key={holding.symbol} className="space-y-1">
                 <div className="flex justify-between items-start">
                   <div>
-                    <div 
-                      className="text-sm font-medium" 
-                      style={{ color: "var(--color-fund-highlight)" }}
+                    <div
+                      className="text-sm font-medium"
+                      style={{ color: "var(--color-text-primary)" }}
                     >
                       {holding.symbol}
                     </div>
@@ -149,7 +152,11 @@ export default function InvestmentPortfolio() {
                     <div
                       className="text-sm font-medium"
                       style={{
-                        color: holding.totalReturnPercent && holding.totalReturnPercent >= 0 ? "var(--color-positive)" : "var(--color-negative)"
+                        color:
+                          holding.totalReturnPercent &&
+                          holding.totalReturnPercent >= 0
+                            ? "var(--color-positive)"
+                            : "var(--color-negative)",
                       }}
                     >
                       {holding.totalReturnPercent

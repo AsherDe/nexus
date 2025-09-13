@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import "../globals.css";
-import ThemeToggle from "@/components/ThemeToggle";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Analytics } from "@vercel/analytics/next";
 import I18nProvider from "@/components/I18nProvider";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",

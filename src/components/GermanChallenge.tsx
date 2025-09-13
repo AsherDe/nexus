@@ -84,7 +84,10 @@ export default function GermanChallenge() {
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-base font-semibold text-primary">
+              <span
+                className="text-base font-semibold"
+                style={{ color: "var(--color-text-primary)" }}
+              >
                 {currentLevel}
               </span>
               <span className="text-xs text-meta">
@@ -96,7 +99,10 @@ export default function GermanChallenge() {
             </div>
           </div>
           <div className="text-right">
-            <div className="text-lg font-bold text-secondary">
+            <div
+              className="text-lg font-bold"
+              style={{ color: "var(--color-text-primary)" }}
+            >
               {progressToC1.toFixed(1)}%
             </div>
             <div className="text-xs text-muted">to C1</div>
@@ -158,7 +164,9 @@ export default function GermanChallenge() {
                           key={`${level.level}-${blockIndex}`}
                           className="flex-1 h-full rounded-sm transition-all duration-300"
                           style={{
-                            backgroundColor: isActive ? getBlockColor() : "var(--color-separator)"
+                            backgroundColor: isActive
+                              ? getBlockColor()
+                              : "var(--color-separator)",
                           }}
                           title={`${level.level}: ${Math.round(blockMin)}-${Math.round(blockMax)} words`}
                         />
@@ -193,7 +201,10 @@ export default function GermanChallenge() {
           }}
         >
           <div>
-            <div className="text-xs font-medium text-secondary">
+            <div
+              className="text-xs font-medium"
+              style={{ color: "var(--color-text-primary)" }}
+            >
               Daily Target: {dailyTarget} words
             </div>
             <div className="text-xxs text-muted">{daysLeft} days left</div>
@@ -222,7 +233,7 @@ export default function GermanChallenge() {
                         ? "var(--color-link)"
                         : isTarget
                           ? "var(--color-level-c1)"
-                          : "var(--color-text-muted)"
+                          : "var(--color-text-muted)",
                   }}
                   title={level.name}
                 >
