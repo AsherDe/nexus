@@ -2,6 +2,7 @@
 
 import { formatDistanceToNow } from "date-fns";
 import { useRouter } from "next/navigation";
+import { useI18n } from "@/locales/client";
 import type { RecentActivity } from "@/lib/github";
 import { useCachedData } from "../hooks/useCachedData";
 import { FeedSkeleton } from "./loading/WidgetSkeleton";
@@ -9,6 +10,7 @@ import Widget from "./Widget";
 
 export default function GitHubFeed() {
   const router = useRouter();
+  const t = useI18n();
   const {
     data: activity,
     loading,
@@ -25,16 +27,16 @@ export default function GitHubFeed() {
 
   if (error || !activity) {
     return (
-      <Widget title="Live Github Feed">
-        <p className="text-meta text-muted">Failed to load activity.</p>
+      <Widget title={t("widgets.github.liveTitle")}>
+        <p className="text-meta text-muted">{t("widgets.github.failedToLoad")}</p>
       </Widget>
     );
   }
 
   return (
-    <Widget title="Live GitHub Feed">
+    <Widget title={t("widgets.github.liveTitle")}>
       {activity.length === 0 ? (
-        <p className="text-meta text-muted">No recent activity</p>
+        <p className="text-meta text-muted">{t("widgets.github.noRecentActivity")}</p>
       ) : (
         <div className="space-y-micro">
           {activity.slice(0, 2).map((item) => (

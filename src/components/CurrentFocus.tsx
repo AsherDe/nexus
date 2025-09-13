@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useI18n } from "@/locales/client";
 import Widget from "@/components/Widget";
 
 interface FocusProject {
@@ -26,8 +27,9 @@ const currentProject: FocusProject = {
 };
 
 export default function CurrentFocus() {
+  const t = useI18n();
   return (
-    <Widget title="Current Focus">
+    <Widget title={t("widgets.currentFocus.title")}>
       <div className="space-y-4">
         {/* Project Name */}
         <div>
@@ -47,7 +49,7 @@ export default function CurrentFocus() {
           {" "}
           <div className="border-t border-color-border pt-3">
             <div className="flex justify-between items-center">
-              <span className="text-xs text-color-text-subdue">Status</span>
+              <span className="text-xs text-color-text-subdue">{t("widgets.currentFocus.status")}</span>
               <span className="text-xs text-color-text-highlight">
                 {currentProject.status}
               </span>
@@ -65,7 +67,7 @@ export default function CurrentFocus() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                View Repository →
+                {t("widgets.currentFocus.viewRepository")}
               </Link>
             </div>
           )}

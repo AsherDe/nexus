@@ -1,5 +1,6 @@
 "use client";
 
+import { useI18n } from "@/locales/client";
 import Widget from "./Widget";
 
 interface GermanLevel {
@@ -13,42 +14,42 @@ interface GermanLevel {
 const germanLevels: GermanLevel[] = [
   {
     level: "A1",
-    name: "Breakthrough",
+    name: "breakthrough",
     minVocab: 500,
     description: "Basic vocabulary",
     color: "text-blue-400",
   },
   {
     level: "A2",
-    name: "Waystage",
+    name: "waystage",
     minVocab: 1000,
     description: "Daily communication",
     color: "text-green-400",
   },
   {
     level: "B1",
-    name: "Threshold",
+    name: "threshold",
     minVocab: 2000,
     description: "Intermediate understanding",
     color: "text-yellow-400",
   },
   {
     level: "B2",
-    name: "Vantage",
+    name: "vantage",
     minVocab: 3500,
     description: "Fluent expression",
     color: "text-orange-400",
   },
   {
     level: "C1",
-    name: "Proficiency",
+    name: "proficiency",
     minVocab: 5000,
     description: "Advanced usage",
     color: "text-purple-400",
   },
   {
     level: "C2",
-    name: "Mastery",
+    name: "mastery",
     minVocab: 8000,
     description: "Near native",
     color: "text-red-400",
@@ -56,6 +57,7 @@ const germanLevels: GermanLevel[] = [
 ];
 
 export default function GermanChallenge() {
+  const t = useI18n();
   const currentVocab = 138;
   const currentLevel = "A1";
   const targetLevel = "C1";
@@ -78,7 +80,7 @@ export default function GermanChallenge() {
   const dailyTarget = Math.ceil(vocabNeeded / daysLeft);
 
   return (
-    <Widget title="Annual Challenge: German C1">
+    <Widget title={t("widgets.challenges.title")}>
       <div className="space-y-3">
         {/* Current Status */}
         <div className="flex items-center justify-between">
@@ -91,7 +93,13 @@ export default function GermanChallenge() {
                 {currentLevel}
               </span>
               <span className="text-xs text-meta">
-                {germanLevels.find((l) => l.level === currentLevel)?.name}
+                {(() => {
+                  const currentLevelName = germanLevels.find((l) => l.level === currentLevel)?.name;
+                  if (currentLevelName) {
+                    return t(`widgets.challenges.levels.${currentLevelName}.name` as any);
+                  }
+                  return '';
+                })()}
               </span>
             </div>
             <div className="text-xs text-muted">
@@ -235,7 +243,7 @@ export default function GermanChallenge() {
                           ? "var(--color-level-c1)"
                           : "var(--color-text-muted)",
                   }}
-                  title={level.name}
+                  title={t(`widgets.challenges.levels.${level.name}.name` as any)}
                 >
                   {level.level.slice(0, 1)}
                 </div>

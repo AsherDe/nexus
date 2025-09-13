@@ -2,6 +2,16 @@
 
 import { useState } from "react";
 
+/**
+ * TerminalDownloader Component
+ *
+ * NOTE: This component intentionally uses Chinese text and does NOT use translation keys.
+ * The Chinese content is part of the terminal simulation experience and should remain
+ * in Chinese regardless of the selected language.
+ *
+ * 注意：此组件故意使用中文文本，不使用翻译键。
+ * 中文内容是终端模拟体验的一部分，无论选择什么语言都应保持中文。
+ */
 export default function TerminalDownloader() {
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([

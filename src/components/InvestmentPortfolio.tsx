@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useI18n } from "@/locales/client";
 import Widget from "@/components/Widget";
 import { fetchPortfolioDataClient } from "@/lib/portfolio";
 
@@ -41,6 +42,7 @@ function savePortfolioToCache(data: PortfolioData): void {
 }
 
 export default function InvestmentPortfolio() {
+  const t = useI18n();
   const [portfolioData, setPortfolioData] = useState<PortfolioData | null>(
     null,
   );
@@ -76,7 +78,7 @@ export default function InvestmentPortfolio() {
 
   if (isLoading && !portfolioData) {
     return (
-      <Widget title="Investment Portfolio">
+      <Widget title={t("widgets.investment.title")}>
         <div className="animate-pulse space-y-4">
           <div className="h-4 bg-color-text-subdue/20 rounded w-3/4"></div>
           <div className="space-y-2">
@@ -90,9 +92,9 @@ export default function InvestmentPortfolio() {
 
   if (!portfolioData) {
     return (
-      <Widget title="Investment Portfolio">
+      <Widget title={t("widgets.investment.title")}>
         <div className="text-xs text-color-text-subdue">
-          Failed to load portfolio data
+          {t("widgets.investment.failedToLoad")}
         </div>
       </Widget>
     );
@@ -108,14 +110,14 @@ export default function InvestmentPortfolio() {
   );
 
   return (
-    <Widget title="Investment Portfolio">
+    <Widget title={t("widgets.investment.title")}>
       <div className="space-y-4">
         {/* Portfolio Summary */}
         <div className="flex justify-between items-center">
           <div>
-            <div className="text-xs text-color-text-subdue">Total Return</div>
+            <div className="text-xs text-color-text-subdue">{t("widgets.investment.totalReturn")}</div>
             <div className="text-xs text-color-text-muted">
-              {holdingDays} days (since Aug 21)
+              {holdingDays} {t("widgets.investment.days")} (since Aug 21)
             </div>
           </div>
           <span
@@ -169,7 +171,7 @@ export default function InvestmentPortfolio() {
                 {/* Allocation Bar */}
                 <div className="space-y-1">
                   <div className="flex justify-between text-xs text-color-text-subdue">
-                    <span>Allocation: {holding.allocation.toFixed(2)}%</span>
+                    <span>{t("widgets.investment.allocation")}: {holding.allocation.toFixed(2)}%</span>
                   </div>
                   <div className="w-full bg-color-border rounded-full h-1">
                     <div
@@ -185,7 +187,7 @@ export default function InvestmentPortfolio() {
 
         {/* Last Updated */}
         <div className="text-xs text-color-text-subdue">
-          Last updated:{" "}
+          {t("widgets.investment.lastUpdated")}:{" "}
           {new Date(portfolioData.lastUpdated).toLocaleTimeString()}
         </div>
 
@@ -195,7 +197,7 @@ export default function InvestmentPortfolio() {
             href="/blog/my-investment-strategy"
             className="text-xs text-color-text-subdue hover:text-color-text-highlight transition-colors italic"
           >
-            Inspired by the Norwegian model →
+            {t("widgets.investment.inspiredBy")}
           </Link>
         </div>
       </div>
