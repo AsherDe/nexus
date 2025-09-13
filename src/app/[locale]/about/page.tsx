@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   BarChart3,
   Brain,
@@ -9,6 +10,7 @@ import {
   Layers,
   Mail,
   Palette,
+  Rss,
   Search,
   Settings,
   Sparkles,
@@ -20,6 +22,18 @@ import ProfileImage from "@/components/ProfileImage";
 import Widget from "@/components/Widget";
 
 export default function About() {
+  const [emailCopied, setEmailCopied] = useState(false);
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText("di6f5dhgp@mozmail.com");
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 2000); // 2秒后隐藏提示
+    } catch (err) {
+      console.error("Failed to copy email:", err);
+    }
+  };
+
   return (
     <div className="page-container animate-entrance">
       <Navigation />
@@ -232,19 +246,24 @@ export default function About() {
               </a>
               <button
                 type="button"
-                onClick={() =>
-                  navigator.clipboard?.writeText("your-email@example.com")
-                }
-                className="flex items-center gap-3 text-sm hover:text-color-primary transition-colors w-full text-left"
+                onClick={handleCopyEmail}
+                className="flex items-center gap-3 text-sm hover:text-color-primary transition-colors w-full text-left cursor-pointer relative"
+                style={{ color: "var(--color-link)" }}
+                title="Click to copy email address"
               >
                 <Mail className="w-4 h-4" />
-                <span>Email</span>
+                <span>di6f5dhgp@mozmail.com</span>
+                {emailCopied && (
+                  <span className="text-xs text-color-positive ml-auto animate-pulse">
+                    Copied!
+                  </span>
+                )}
               </button>
               <a
                 href="/blog/feed.xml"
                 className="flex items-center gap-3 text-sm hover:text-color-primary transition-colors"
               >
-                <ExternalLink className="w-4 h-4" />
+                <Rss className="w-4 h-4" />
                 <span>RSS Feed</span>
               </a>
             </div>
