@@ -1,10 +1,11 @@
 ---
 title: "编译原理第一次实验课"
-date: "2025-09-12"
+date: "2025-09-19"
 excerpt: "这个问题要求我们为一个特定的类C语言文法编写一个词法分析器。词法分析器是编译器的第一个阶段，它的任务是读取源代码（一个字符流），并将其转换成一系列的“单词”（Token），供后续的语法分析器使用。"
 language: "zh"
 tags: ["compiler", "lab", "tutorial", "student-life"]
 ---
+# 以下代码仅供参考 （建议让ai拿走重写一遍防止重复）
 这个问题要求我们为一个特定的类C语言文法编写一个词法分析器。词法分析器是编译器的第一个阶段，它的任务是读取源代码（一个字符流），并将其转换成一系列的“单词”（Token），供后续的语法分析器使用。
 
 我们将按照以下步骤来构建这个C++程序：
@@ -25,65 +26,87 @@ tags: ["compiler", "lab", "tutorial", "student-life"]
   * [cite\_start]**Token结构体**: 我们需要一个结构体来表示一个被识别出的单词。根据题目要求，每个单词包含“类别码”和“单词的字符串形式” [cite: 10]。
   * **关键字/符号映射表**: 为了快速查找一个字符串是关键字（如`if`, `while`）还是特殊符号（如`+`, `*`），我们可以使用C++的`std::map`。它能将字符串映射到对应的类别码。
 
-**C++ 代码实现**:
+**C 代码实现**:
 
-```cpp
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-#include <map>
-#include <cctype>
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX_TOKENS 1000
+#define MAX_TOKEN_LEN 100
+#define MAX_KEYWORDS 30
 
 // 用于存储一个单词（Token）
-struct Token {
-    std::string type;   // 类别码，例如 "IDENFR"
-    std::string value;  // 单词的字符串，例如 "myVar"
-};
+typedef struct {
+    char type[20];   // 类别码，例如 "IDENFR"
+    char value[MAX_TOKEN_LEN];  // 单词的字符串，例如 "myVar"
+} Token;
+
+// 关键字映射结构
+typedef struct {
+    char keyword[20];
+    char tokenType[20];
+} KeywordMap;
 
 // 全局变量，用于存储关键字和符号的映射表
-std::map<std::string, std::string> tokenMap;
+KeywordMap keywords[MAX_KEYWORDS];
+int keywordCount = 0;
 
-// 初始化映射表，将文法中定义的关键字和符号存入 map
-void initializeTokenMap() {
+// 初始化关键字映射表
+void initializeKeywords() {
     // 关键字
-    tokenMap["const"] = "CONSTTK";
-    tokenMap["int"] = "INTTK";
-    tokenMap["char"] = "CHARTK";
-    tokenMap["void"] = "VOIDTK";
-    tokenMap["main"] = "MAINTK";
-    tokenMap["if"] = "IFTK";
-    tokenMap["else"] = "ELSETK";
-    tokenMap["switch"] = "SWITCHTK";
-    tokenMap["case"] = "CASETK";
-    tokenMap["default"] = "DEFAULTTK";
-    tokenMap["while"] = "WHILETK";
-    tokenMap["for"] = "FORTK";
-    tokenMap["scanf"] = "SCANFTK";
-    tokenMap["printf"] = "PRINTFTK";
-    tokenMap["return"] = "RETURNTK";
+    strcpy(keywords[keywordCount].keyword, "const"); strcpy(keywords[keywordCount++].tokenType, "CONSTTK");
+    strcpy(keywords[keywordCount].keyword, "int"); strcpy(keywords[keywordCount++].tokenType, "INTTK");
+    strcpy(keywords[keywordCount].keyword, "char"); strcpy(keywords[keywordCount++].tokenType, "CHARTK");
+    strcpy(keywords[keywordCount].keyword, "void"); strcpy(keywords[keywordCount++].tokenType, "VOIDTK");
+    strcpy(keywords[keywordCount].keyword, "main"); strcpy(keywords[keywordCount++].tokenType, "MAINTK");
+    strcpy(keywords[keywordCount].keyword, "if"); strcpy(keywords[keywordCount++].tokenType, "IFTK");
+    strcpy(keywords[keywordCount].keyword, "else"); strcpy(keywords[keywordCount++].tokenType, "ELSETK");
+    strcpy(keywords[keywordCount].keyword, "switch"); strcpy(keywords[keywordCount++].tokenType, "SWITCHTK");
+    strcpy(keywords[keywordCount].keyword, "case"); strcpy(keywords[keywordCount++].tokenType, "CASETK");
+    strcpy(keywords[keywordCount].keyword, "default"); strcpy(keywords[keywordCount++].tokenType, "DEFAULTTK");
+    strcpy(keywords[keywordCount].keyword, "while"); strcpy(keywords[keywordCount++].tokenType, "WHILETK");
+    strcpy(keywords[keywordCount].keyword, "for"); strcpy(keywords[keywordCount++].tokenType, "FORTK");
+    strcpy(keywords[keywordCount].keyword, "scanf"); strcpy(keywords[keywordCount++].tokenType, "SCANFTK");
+    strcpy(keywords[keywordCount].keyword, "printf"); strcpy(keywords[keywordCount++].tokenType, "PRINTFTK");
+    strcpy(keywords[keywordCount].keyword, "return"); strcpy(keywords[keywordCount++].tokenType, "RETURNTK");
+}
 
-    // 运算符和分隔符
-    tokenMap["+"] = "PLUS";
-    tokenMap["-"] = "MINU";
-    tokenMap["*"] = "MULT";
-    tokenMap["/"] = "DIV";
-    tokenMap["<"] = "LSS";
-    tokenMap["<="] = "LEQ";
-    tokenMap[">"] = "GRE";
-    tokenMap[">="] = "GEQ";
-    tokenMap["=="] = "EQL";
-    tokenMap["!="] = "NEQ";
-    tokenMap["="] = "ASSIGN";
-    tokenMap[";"] = "SEMICN";
-    tokenMap[","] = "COMMA";
-    tokenMap["("] = "LPARENT";
-    tokenMap[")"] = "RPARENT";
-    tokenMap["["] = "LBRACK";
-    tokenMap["]"] = "RBRACK";
-    tokenMap["{"] = "LBRACE";
-    tokenMap["}"] = "RBRACE";
-    tokenMap[":"] = "COLON";
+// 查找关键字，返回对应的token类型，如果不是关键字返回NULL
+char* findKeyword(char* word) {
+    for (int i = 0; i < keywordCount; i++) {
+        if (strcmp(keywords[i].keyword, word) == 0) {
+            return keywords[i].tokenType;
+        }
+    }
+    return NULL;
+}
+
+// 获取运算符和分隔符的token类型
+char* getOperatorType(char* op) {
+    if (strcmp(op, "+") == 0) return "PLUS";
+    if (strcmp(op, "-") == 0) return "MINU";
+    if (strcmp(op, "*") == 0) return "MULT";
+    if (strcmp(op, "/") == 0) return "DIV";
+    if (strcmp(op, "<") == 0) return "LSS";
+    if (strcmp(op, "<=") == 0) return "LEQ";
+    if (strcmp(op, ">") == 0) return "GRE";
+    if (strcmp(op, ">=") == 0) return "GEQ";
+    if (strcmp(op, "==") == 0) return "EQL";
+    if (strcmp(op, "!=") == 0) return "NEQ";
+    if (strcmp(op, "=") == 0) return "ASSIGN";
+    if (strcmp(op, ";") == 0) return "SEMICN";
+    if (strcmp(op, ",") == 0) return "COMMA";
+    if (strcmp(op, "(") == 0) return "LPARENT";
+    if (strcmp(op, ")") == 0) return "RPARENT";
+    if (strcmp(op, "[") == 0) return "LBRACK";
+    if (strcmp(op, "]") == 0) return "RBRACK";
+    if (strcmp(op, "{") == 0) return "LBRACE";
+    if (strcmp(op, "}") == 0) return "RBRACE";
+    if (strcmp(op, ":") == 0) return "COLON";
+    return NULL;
 }
 ```
 
@@ -100,37 +123,46 @@ void initializeTokenMap() {
 5.  将Token存起来，并更新索引，跳过已识别的字符。
 6.  重复此过程，直到所有字符都被处理。
 
-**C++ 代码框架**:
+**C 代码框架**:
 
-```cpp
+```c
 // (接上文)
 int main() {
-    initializeTokenMap();
+    initializeKeywords();
 
     // 1. 读取源文件 testfile.txt
-    std::ifstream inputFile("testfile.txt");
-    if (!inputFile.is_open()) {
-        std::cerr << "Error opening testfile.txt" << std::endl;
+    FILE *inputFile = fopen("testfile.txt", "r");
+    if (inputFile == NULL) {
+        printf("Error opening testfile.txt\n");
         return 1;
     }
-    std::string sourceCode((std::istreambuf_iterator<char>(inputFile)), std::istreambuf_iterator<char>());
-    inputFile.close();
 
-    std::vector<Token> tokens; // 存储所有识别出的Token
+    // 获取文件大小并读取所有内容
+    fseek(inputFile, 0, SEEK_END);
+    long fileSize = ftell(inputFile);
+    fseek(inputFile, 0, SEEK_SET);
+
+    char *sourceCode = (char*)malloc(fileSize + 1);
+    fread(sourceCode, 1, fileSize, inputFile);
+    sourceCode[fileSize] = '\0';
+    fclose(inputFile);
+
+    Token tokens[MAX_TOKENS]; // 存储所有识别出的Token
+    int tokenCount = 0;
     int currentIndex = 0;
 
     // 2. 主扫描循环
-    while (currentIndex < sourceCode.length()) {
+    while (currentIndex < strlen(sourceCode)) {
         char currentChar = sourceCode[currentIndex];
 
-        if (std::isspace(currentChar)) {
+        if (isspace(currentChar)) {
             // 如果是空白符，跳过
             currentIndex++;
             continue;
-        } else if (std::isalpha(currentChar) || currentChar == '_') {
+        } else if (isalpha(currentChar) || currentChar == '_') {
             // 处理标识符或关键字
             // ... (将在第3步实现)
-        } else if (std::isdigit(currentChar)) {
+        } else if (isdigit(currentChar)) {
             // 处理数字常量
             // ... (将在第4步实现)
         } else if (currentChar == '\'') {
@@ -148,6 +180,7 @@ int main() {
     // 3. 将结果写入 output.txt
     // ... (将在第6步实现)
 
+    free(sourceCode);
     return 0;
 }
 ```
@@ -163,22 +196,31 @@ int main() {
 3.  如果找到了，说明它是一个关键字，类别码就是`map`中对应的值。
 4.  如果没找到，它就是一个标识符，类别码是`IDENFR`。
 
-**C++ 代码实现**:
+**C 代码实现**:
 
-```cpp
-// (在主循环的 `if (std::isalpha(currentChar) || currentChar == '_')` 分支中)
+```c
+// (在主循环的 `if (isalpha(currentChar) || currentChar == '_')` 分支中)
 int start = currentIndex;
-currentIndex++;
-while (currentIndex < sourceCode.length() && (std::isalnum(sourceCode[currentIndex]) || sourceCode[currentIndex] == '_')) {
+while (currentIndex < strlen(sourceCode) && (isalnum(sourceCode[currentIndex]) || sourceCode[currentIndex] == '_')) {
     currentIndex++;
 }
-std::string word = sourceCode.substr(start, currentIndex - start);
 
-if (tokenMap.count(word)) {
-    tokens.push_back({tokenMap[word], word});
+// 提取单词
+char word[MAX_TOKEN_LEN];
+int wordLen = currentIndex - start;
+strncpy(word, sourceCode + start, wordLen);
+word[wordLen] = '\0';
+
+// 查找是否为关键字
+char* tokenType = findKeyword(word);
+if (tokenType != NULL) {
+    strcpy(tokens[tokenCount].type, tokenType);
+    strcpy(tokens[tokenCount].value, word);
 } else {
-    tokens.push_back({"IDENFR", word});
+    strcpy(tokens[tokenCount].type, "IDENFR");
+    strcpy(tokens[tokenCount].value, word);
 }
+tokenCount++;
 ```
 
 ### 第4步：识别常量（整数、字符、字符串）
@@ -186,50 +228,65 @@ if (tokenMap.count(word)) {
 #### 整数常量 (`INTCON`)
 
 如果当前字符是数字，就连续读取所有数字。
-**C++ 代码实现**:
+**C 代码实现**:
 
-```cpp
-// (在主循环的 `if (std::isdigit(currentChar))` 分支中)
+```c
+// (在主循环的 `if (isdigit(currentChar))` 分支中)
 int start = currentIndex;
-while (currentIndex < sourceCode.length() && std::isdigit(sourceCode[currentIndex])) {
+while (currentIndex < strlen(sourceCode) && isdigit(sourceCode[currentIndex])) {
     currentIndex++;
 }
-std::string number = sourceCode.substr(start, currentIndex - start);
-tokens.push_back({"INTCON", number});
+char number[MAX_TOKEN_LEN];
+int numLen = currentIndex - start;
+strncpy(number, sourceCode + start, numLen);
+number[numLen] = '\0';
+strcpy(tokens[tokenCount].type, "INTCON");
+strcpy(tokens[tokenCount].value, number);
+tokenCount++;
 ```
 
 #### 字符常量 (`CHARCON`)
 
 以单引号`'`开始和结束。我们需要提取单引号之间的内容。
-**C++ 代码实现**:
+**C 代码实现**:
 
-```cpp
+```c
 // (在主循环的 `if (currentChar == '\'')` 分支中)
 int start = currentIndex + 1; // 跳过开头的 '
 currentIndex++;
 // 注意：这里简化了处理，实际应处理转义字符等，但根据题目要求，这样足够
-while (currentIndex < sourceCode.length() && sourceCode[currentIndex] != '\'') {
+while (currentIndex < strlen(sourceCode) && sourceCode[currentIndex] != '\'') {
     currentIndex++;
 }
-std::string char_val = sourceCode.substr(start, currentIndex - start);
-tokens.push_back({"CHARCON", char_val});
+char char_val[MAX_TOKEN_LEN];
+int charLen = currentIndex - start;
+strncpy(char_val, sourceCode + start, charLen);
+char_val[charLen] = '\0';
+strcpy(tokens[tokenCount].type, "CHARCON");
+strcpy(tokens[tokenCount].value, char_val);
+tokenCount++;
 currentIndex++; // 跳过结尾的 '
 ```
 
 #### 字符串常量 (`STRCON`)
 
 以双引号`"`开始和结束。逻辑与字符常量类似。
-**C++ 代码实现**:
+**C 代码实现**:
 
-```cpp
+```c
 // (在主循环的 `if (currentChar == '"')` 分支中)
 int start = currentIndex + 1; // 跳过开头的 "
 currentIndex++;
-while (currentIndex < sourceCode.length() && sourceCode[currentIndex] != '"') {
+while (currentIndex < strlen(sourceCode) && sourceCode[currentIndex] != '"') {
     currentIndex++;
 }
-std::string str_val = sourceCode.substr(start, currentIndex - start);
-tokens.push_back({"STRCON", str_val});
+char str_val[MAX_TOKEN_LEN];
+int strLen = currentIndex - start;
+strncpy(str_val, sourceCode + start, strLen);
+str_val[strLen] = '\0';
+strcpy(tokens[tokenCount].type, "STRCON");
+strcpy(tokens[tokenCount].value, str_val);
+tokenCount++;
 currentIndex++; // 跳过结尾的 "
 ```
 
@@ -243,20 +300,46 @@ currentIndex++; // 跳过结尾的 "
 2.  如果是，就将其作为一个双字符Token处理，并将索引`+2`。
 3.  如果不是，就将当前字符作为一个单字符Token处理，并将索引`+1`。
 
-**C++ 代码实现**:
+**C 代码实现**:
 
-```cpp
+```c
 // (在主循环的 `else` 分支中)
-std::string two_char_op = sourceCode.substr(currentIndex, 2);
-if (tokenMap.count(two_char_op)) {
-    tokens.push_back({tokenMap[two_char_op], two_char_op});
-    currentIndex += 2;
-} else {
-    std::string one_char_op = sourceCode.substr(currentIndex, 1);
-    if (tokenMap.count(one_char_op)) {
-        tokens.push_back({tokenMap[one_char_op], one_char_op});
+char two_char_op[3];
+char one_char_op[2];
+char* tokenType;
+
+// 检查双字符运算符
+if (currentIndex + 1 < strlen(sourceCode)) {
+    strncpy(two_char_op, sourceCode + currentIndex, 2);
+    two_char_op[2] = '\0';
+    tokenType = getOperatorType(two_char_op);
+    if (tokenType != NULL) {
+        strcpy(tokens[tokenCount].type, tokenType);
+        strcpy(tokens[tokenCount].value, two_char_op);
+        tokenCount++;
+        currentIndex += 2;
+    } else {
+        // 检查单字符运算符
+        one_char_op[0] = sourceCode[currentIndex];
+        one_char_op[1] = '\0';
+        tokenType = getOperatorType(one_char_op);
+        if (tokenType != NULL) {
+            strcpy(tokens[tokenCount].type, tokenType);
+            strcpy(tokens[tokenCount].value, one_char_op);
+            tokenCount++;
+        }
+        currentIndex++;
     }
-    // 如果是未定义符号，可以忽略或报错，这里我们选择忽略
+} else {
+    // 只能是单字符运算符
+    one_char_op[0] = sourceCode[currentIndex];
+    one_char_op[1] = '\0';
+    tokenType = getOperatorType(one_char_op);
+    if (tokenType != NULL) {
+        strcpy(tokens[tokenCount].type, tokenType);
+        strcpy(tokens[tokenCount].value, one_char_op);
+        tokenCount++;
+    }
     currentIndex++;
 }
 ```
@@ -267,22 +350,22 @@ if (tokenMap.count(two_char_op)) {
 
 [cite\_start]最后，我们将所有识别出的Token写入到`output.txt`文件中，格式为`类别码 单词值`，中间用一个空格隔开 [cite: 10]。
 
-**C++ 代码实现**:
+**C 代码实现**:
 
-```cpp
+```c
 // (在主循环结束后)
-std::ofstream outputFile("output.txt");
-if (!outputFile.is_open()) {
-    std::cerr << "Error opening output.txt" << std::endl;
+FILE *outputFile = fopen("output.txt", "w");
+if (outputFile == NULL) {
+    printf("Error opening output.txt\n");
     return 1;
 }
 
-for (const auto& token : tokens) {
-    outputFile << token.type << " " << token.value << std::endl;
+for (int i = 0; i < tokenCount; i++) {
+    fprintf(outputFile, "%s %s\n", tokens[i].type, tokens[i].value);
 }
-outputFile.close();
+fclose(outputFile);
 
-std::cout << "Lexical analysis completed. Output written to output.txt." << std::endl;
+printf("Lexical analysis completed. Output written to output.txt.\n");
 ```
 
 ### 还有一步
@@ -309,42 +392,48 @@ std::cout << "Lexical analysis completed. Output written to output.txt." << std:
 
 你需要一个辅助函数来将字符串转为小写。
 
-```cpp
-#include <string>
-#include <algorithm> // for std::transform
-#include <cctype>    // for ::tolower
-
+```c
 // 将字符串转为小写的辅助函数
-std::string toLower(std::string s) {
-    std::transform(s.begin(), s.end(), s.begin(),
-                   [](unsigned char c){ return std::tolower(c); });
-    return s;
+void toLower(char* str) {
+    for (int i = 0; str[i]; i++) {
+        str[i] = tolower(str[i]);
+    }
 }
 ```
 
 然后修改你处理标识符和关键字的逻辑：
 
-```cpp
+```c
 // ... 在主循环中 ...
-if (std::isalpha(currentChar) || currentChar == '_') {
+if (isalpha(currentChar) || currentChar == '_') {
     int start = currentIndex;
-    while (currentIndex < sourceCode.length() && (std::isalnum(sourceCode[currentIndex]) || sourceCode[currentIndex] == '_')) {
+    while (currentIndex < strlen(sourceCode) && (isalnum(sourceCode[currentIndex]) || sourceCode[currentIndex] == '_')) {
         currentIndex++;
     }
+
     // 1. 保留原始单词
-    std::string originalWord = sourceCode.substr(start, currentIndex - start);
+    char originalWord[MAX_TOKEN_LEN];
+    int wordLen = currentIndex - start;
+    strncpy(originalWord, sourceCode + start, wordLen);
+    originalWord[wordLen] = '\0';
 
     // 2. 创建小写版本用于匹配
-    std::string lowercaseWord = toLower(originalWord);
+    char lowercaseWord[MAX_TOKEN_LEN];
+    strcpy(lowercaseWord, originalWord);
+    toLower(lowercaseWord);
 
-    // 3. 使用小写版本在 map 中查找
-    if (tokenMap.count(lowercaseWord)) {
-        // 4. 找到了！使用 map 的 type 和 原始的 value
-        tokens.push_back({tokenMap[lowercaseWord], originalWord});
+    // 3. 使用小写版本查找关键字
+    char* tokenType = findKeyword(lowercaseWord);
+    if (tokenType != NULL) {
+        // 4. 找到了！使用查找到的 type 和 原始的 value
+        strcpy(tokens[tokenCount].type, tokenType);
+        strcpy(tokens[tokenCount].value, originalWord);
     } else {
         // 5. 没找到，是普通标识符
-        tokens.push_back({"IDENFR", originalWord});
+        strcpy(tokens[tokenCount].type, "IDENFR");
+        strcpy(tokens[tokenCount].value, originalWord);
     }
+    tokenCount++;
 }
 // ... 其他逻辑 ...
 ```
