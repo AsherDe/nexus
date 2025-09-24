@@ -591,6 +591,19 @@ pre code {
 
 .nav-link.active {
   color: var(--color-link); /* Use theme color for active state */
+  position: relative; /* Enable positioning for pseudo-element */
+}
+
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  bottom: -6px; /* Position below the text */
+  left: 0;
+  right: 0;
+  height: 2px; /* Height of the horizontal bar */
+  background: var(--color-link); /* Same color as active text */
+  border-radius: 1px; /* Slightly rounded bar */
+  transition: background var(--transition-fast);
 }
 
 /* Buttons - Flat Design */
